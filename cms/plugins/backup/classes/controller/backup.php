@@ -122,7 +122,7 @@ class Controller_Backup extends Controller_System_Plugin {
 		
 		if(!is_writable(BACKUP_PLUGIN_FOLDER))
 		{
-			$errors[] = __('Folder (:folder) mus be writable!', array(
+			$errors[] = __('Folder (:folder) must be writable!', array(
 				':folder' => BACKUP_PLUGIN_FOLDER
 			));
 		}
