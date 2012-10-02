@@ -110,7 +110,7 @@ class Controller_System_Install extends Controller_System_Template {
 		$dump_content = file_get_contents( $dump_file );
 		
 		$replace = array(
-			'__SITE_NAME__' => Arr::get($post, 'site_name', 'Kohana frog CMS'),
+			'__SITE_NAME__' => Arr::get($post, 'site_name', 'KoDi CMS'),
 			'__EMAIL__' => Arr::get($post, 'email', 'admin@yoursite.com'),
 			'__USERNAME__' => Arr::get($post, 'username', 'admin'),
 			'TABLE_PREFIX_' => $post['table_prefix'],

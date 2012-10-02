@@ -78,7 +78,7 @@
 				<label class="control-label" for="installSiteNameField"><?php echo __( 'Site name' ); ?></label>
 				<div class="controls">
 					<?php
-					echo Form::input( 'install[site_name]', Arr::get( $data, 'site_name', 'Kohana frog CMS' ), array(
+					echo Form::input( 'install[site_name]', Arr::get( $data, 'site_name', 'KoDi CMS' ), array(
 						'class' => 'span6', 'id' => 'installSiteNameField'
 					) );
 					?> <?php echo UI::label( __( 'Required.' ) ); ?>
