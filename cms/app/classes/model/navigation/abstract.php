@@ -11,6 +11,7 @@ class Model_Navigation_Abstract {
 	 * @var array
 	 */
 	protected $params = array();
+	
 
 	/**
 	 * 
