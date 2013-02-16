@@ -8,6 +8,7 @@ KodiCMS основана на базе [Kohana framework](http://kohanaframework
 который позволит вам не тратить много времени на разработку шаблонов для новых
 разделов.
 
+
 ## Ключевые особенности.
 
 * В качестве ядра используется [Kohana framework](http://kohanaframework.org/)
@@ -34,14 +35,15 @@ http://demo.kodicms.ru/
 http://www.kodicms.ru/screenshots.html
 
 
-
 ## Требования
 
 * Apache server with .htaccess либо NGINX
 * PHP 5.3.3 (или более новая)
 * MySQL (и доступ к управлению данными)
 
+
 ## Установка
+
 1. Создайте клон репозитория `https://github.com/butschster/kodicms.git` или 
 [скачайте zip архив](https://github.com/butschster/kodicms/zipball/master)
 с последней версией.
@@ -67,29 +69,88 @@ http://www.kodicms.ru/screenshots.html
 5. После установки системы вы окажетесь на странице авторизации, где будет 
 указан ваш логин и пароль для входа в систему.
 
-### Пример конфигурации для NGINX
-<pre>
-server {
-        charset        utf8;
-        listen          80;
-        root            /var/www;
-        server_name     backend_node_1;
-        autoindex off;
-        location / {
-                try_files $uri /index.php?$args;
-        }
-        location = /index.php {
-                fastcgi_pass   127.0.0.1:9000;
-                fastcgi_index  index.php;
-                fastcgi_param  KOHANA_ENV production;
-                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_n$
-                include        fastcgi_params;
-        }
-        location ~ /\.ht {
-            deny all;
-        }
+### Пример конфигурации для Nginx
+```nginx
+server{
+  listen 127.0.0.1:80;
+  server_name   example.com www.example.com;
+
+  # PublicRoot нашего сайта
+  root          /srv/http/example.com/public_html;
+  index         index.php;
+
+  # Устанавливаем пути к логам
+  # Для access_log делаем буферизацию
+  access_log    /srv/http/example.com/logs/access.log main buffer=50k;
+  error_log     /srv/http/example.com/logs/error.log;
+
+  charset       utf8;
+  autoindex     off;
+
+  location / {
+    if (!-f $request_filename) {
+      rewrite ^/(.*)$ /index.php;
+    }
+  }
+
+  # Подключаем обработчик php-fpm
+  location ~ \.php$ {
+    # Этой строкой мы указываем,
+    # что текущий location можно использовать
+    # только для внутренних запросов
+    # Тем самым запрещаем обработку всех php файлов,
+    # для которых не создан location
+    internal;
+
+    # php-fpm. Подключение через сокет.
+    fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
+    # или fastcgi_pass   127.0.0.1:9000;
+    fastcgi_param   KOHANA_ENV development;
+    # или fastcgi_param   KOHANA_ENV production;
+    fastcgi_index  index.php;
+    fastcgi_param  DOCUMENT_ROOT  /srv/http/oskmedia/public_html;
+    fastcgi_param  SCRIPT_FILENAME  /srv/http/oskmedia/public_html$fastcgi_script_name;
+    include fastcgi_params;
+  }
+
+  # Блокируем доступ для всех скрытых файлов,
+  # таких как .htaccess, .git, .svn и т.д.
+  location ~ /\.ht {
+      deny all;
+  }
 }
-</pre>
+```
+
+### Пример файла .htaccess для Apache
+```apache
+# Set environment
+SetEnv KOHANA_ENV production
+# SetEnv KOHANA_ENV development
+SetEnv KOHANA_BASE /
+SetEnv BASE_URL http://www.example.com
+
+# Turn on URL rewriting
+RewriteEngine On
+
+# Installation directory
+RewriteBase /
+
+# Protect hidden files from being viewed
+<Files .*>
+  Order Deny,Allow
+  Deny From All
+</Files>
+
+# Protect application and system files from being viewed
+RewriteRule ^(?:cms|layouts|public|snippets)\b.* index.php/$0 [L]
+
+# Allow any files or directories that exist to be displayed directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all other URLs to index.php/URL
+RewriteRule .* index.php/$0 [PT]# Set environment
+```
 
 ## Bug tracker
 
@@ -98,8 +159,9 @@ server {
 
 https://github.com/butschster/kodicms/issues
 
-## Copyright and license
 
+## Copyright and license
+```
 Copyright 2012 Buchnev Pavel <butschster@gmail.com>.
 
 ---
@@ -119,3 +181,4 @@ along with KodiCMS.  If not, see <http://www.gnu.org/licenses/>.
 
 KodiCMS has made an exception to the GNU General Public License for plugins.
 See exception.txt for details and the full text.
+```
