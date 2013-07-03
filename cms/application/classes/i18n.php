@@ -16,14 +16,20 @@ class I18n extends Kohana_I18n {
 				// Start a new benchmark
 				$benchmark = Profiler::start('i18n', 'Generate file for lang - ' . $lang);
 			}
-			
-			// Create the log file
-			file_put_contents($filename, '// Auto generated i18n lang file for lang '. $lang."\n");
-			file_put_contents($filename, 'cms.addTranslation(' . json_encode($table) . ');', FILE_APPEND);
-	
-			// Allow anyone to write to log files
-			chmod($filename, 0666);
-			
+			try
+			{
+				// Create the log file
+				file_put_contents($filename, '// Auto generated i18n lang file for lang '. $lang."\n");
+				file_put_contents($filename, 'cms.addTranslation(' . json_encode($table) . ');', FILE_APPEND);
+				
+				// Allow anyone to write to log files
+				chmod($filename, 0777);
+			}
+			catch(Exception $e)
+			{
+				// do something
+			}
+
 			if (isset($benchmark))
 			{
 				// Stop the benchmark

@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-$plugin = Plugins_Item::factory( array(
-	'id' => 'page_not_found',
+Plugin::factory('page_not_found', array(
 	'title' => 'Page not found',
-	'description' => 'Provides Page not found type.'
-) )->register();
+	'description' => 'Provides Page not found type.',
+))->register();

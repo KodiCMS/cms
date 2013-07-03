@@ -58,8 +58,16 @@ INSERT INTO `TABLE_PREFIX_settings` (`name`, `value`) VALUES
 ('profiling', 'no'),
 ('date_format', 'd F Y'),
 ('debug', 'no'),
-('find_similar', 'yes'),
-('plugins', 'a:7:{s:7:"archive";b:1;s:11:"filemanager";b:1;s:14:"page_not_found";b:1;s:8:"redactor";b:1;s:13:"slug_translit";b:1;s:9:"tagsinput";b:1;s:11:"maintenance";b:1;}');
+('find_similar', 'yes');
+
+INSERT INTO `TABLE_PREFIX_plugins` (`id`, `title`, `settings`) VALUES
+('archive', 'Archive', 'a:0:{}'),
+('maintenance', 'Maintenance mode', 'a:0:{}'),
+('page_not_found', 'Page not found', 'a:0:{}'),
+('redactor', 'Redactor', 'a:0:{}'),
+('slug_translit', 'Slug translit', 'a:0:{}'),
+('tagsinput', 'jQuery Tags Input', 'a:0:{}');
+
 
 INSERT INTO `TABLE_PREFIX_users` (`id`, `email`, `username`, `password`, `logins`, `last_login`) VALUES
 (1, '__EMAIL__', '__USERNAME__', '__ADMIN_PASSWORD__', 0, 0);

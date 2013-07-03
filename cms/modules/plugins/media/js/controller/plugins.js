@@ -5,12 +5,12 @@ $(function() {
 			description: '',
 			version: '0.0.0',
 			settings: false,
-			status: false
+			installed: false
 		},
 
 		toggleStatus: function(remove_data) {
 			if(!remove_data) remove_data = false;
-			this.save({status: ! this.get("status"), remove_data: remove_data});
+			this.save({installed: ! this.get("installed"), remove_data: remove_data});
 		},
 
 		clear: function() {
@@ -33,7 +33,7 @@ $(function() {
 		},
 
 		comparator: function(a) {
-			return !a.get('status');
+			return !a.get('installed');
 		}
 	});
 
@@ -53,7 +53,7 @@ $(function() {
 
 		toggleStatus: function() {
 			remove_data = false;
-			if( this.model.get('status') && confirm(__('Remove database data')))
+			if( this.model.get('installed') && confirm(__('Remove database data')))
 				remove_data = true;
 			
 			this.model.toggleStatus(remove_data);
@@ -61,13 +61,13 @@ $(function() {
 
 		// Re-render the titles of the todo item.
 		render: function() {
-			this.$el.toggleClass('success', this.model.get('status'));
+			this.$el.toggleClass('success', this.model.get('installed'));
 
 			this.$el.html(this.template(this.model.toJSON()));
 			
 			var button = this.$el.find('button');
 
-			if(this.model.get('status')) {
+			if(this.model.get('installed')) {
 				button.addClass('btn-danger');
 				button.html('<span class="icon icon-off icon-white" />');
 			} else {

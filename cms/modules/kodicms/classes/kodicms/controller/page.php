@@ -15,9 +15,25 @@ class KodiCMS_Controller_Page extends Controller_System_Backend {
 	{
 		$this->template->title = __('Pages');
 
+		Assets::js('nestable', ADMIN_RESOURCES . 'libs/nestable/jquery.nestable.js', 'jquery');
+		
 		$this->template->content = View::factory( 'page/index', array(
 			'page' => Model_Page::findById( 1 ),
 			'content_children' => $this->children( 1, 0, true )
+		) );
+	}
+	
+	public function action_sort()
+	{
+		
+		$this->template->title = __('Sort pages');
+		$this->auto_render = FALSE;
+
+		$this->breadcrumbs
+			->add($this->template->title);
+		
+		echo View::factory( 'page/sort', array(
+			'pages' => Model_Page_Sitemap::get()->as_array()
 		) );
 	}
 
@@ -345,9 +361,6 @@ class KodiCMS_Controller_Page extends Controller_System_Backend {
 
 		echo $content;
 	}
-	
-	
-	
 
 	public function action_children( )
 	{
@@ -357,102 +370,6 @@ class KodiCMS_Controller_Page extends Controller_System_Backend {
 		$level = $this->request->query('level');
 		
 		return $this->children($parent_id, $level);
-	}
-
-	/**
-	 * Ajax action to reorder (page->position) a page
-	 *
-	 * all the child of the new page->parent_id have to be updated
-	 * and all nested tree has to be rebuild
-	 */
-	public function action_reorder( )
-	{
-		$this->auto_render = FALSE;
-		$parent_id = $this->request->post('parent_id');
-
-		$pages = $this->request->post('pages');
-		if ( $pages )
-		{
-			foreach ( $pages as $position => $page_id )
-			{
-				$page = Record::findByIdFrom( 'Model_Page', $page_id );
-				$page->position = (int) $position;
-				$page->parent_id = (int) $parent_id;
-				$page->save();
-			}
-		}
-	}
-
-	public function action_search()
-	{
-		$this->auto_render = FALSE;
-
-		$query = trim( $this->request->post('search') );
-
-		$childrens = array( );
-
-		if ( $query == '*' )
-		{
-			$childrens = Model_Page::findAll();
-		}
-		else if ( strlen( $query ) == 2 AND $query[0] == '.' )
-		{
-			$page_status = array(
-				'd' => Model_Page::STATUS_DRAFT,
-				'r' => Model_Page::STATUS_REVIEWED,
-				'p' => Model_Page::STATUS_PUBLISHED,
-				'h' => Model_Page::STATUS_HIDDEN
-			);
-
-			if ( isset( $page_status[$query[1]] ) )
-			{
-				$childrens = Model_Page::find( array( 
-					'where' => array(
-						array('page.status_id', '=', $page_status[$query[1]])
-					)));
-			}
-		}
-		else if ( substr( $query, 0, 1 ) == '-' )
-		{
-			$query = trim( substr( $query, 1 ) );
-			
-			$subreqest = DB::select('p.id')
-				->from(array(Model_Page::tableName(), 'p'))
-				->where('p.slug', '=', $query)
-				->limit(1);
-			$childrens = Model_Page::find( array( 
-				'where' => array(array('page.parent_id', '=', $subreqest))
-			));
-		}
-		else
-		{
-			$childrens = Model_Page::findAllLike( $query );
-		}
-
-		foreach ( $childrens as $index => $child )
-		{
-			$childrens[$index]->is_expanded = false;
-			$childrens[$index]->has_children = false;
-		}
-
-		echo View::factory( 'page/children', array(
-			'childrens' => $childrens,
-			'level' => 0
-		) );
-	}
-
-	private function _getPartView( $index = 1, $name = '', $filter_id = '', $content = '' )
-	{
-		$page_part = new Model_Page_Part( array(
-			'name' => $name,
-			'filter_id' => $filter_id,
-			'content' => $content
-		) );
-
-		echo View::factory('page/blocks/part_edit', array(
-			'index' => $index,
-			'page_part' => $page_part
-		) );
 	}
 }
 // end PageController class

@@ -1,8 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-$plugin = Plugins_Item::factory( array(
-	'id' => 'messages',
+Plugin::factory('messages', array(
 	'title' => 'User messages',
 	'description' => 'Provides user messages system.',
-	'javascripts' => 'messages.js'
-) )->register();
+))->register();

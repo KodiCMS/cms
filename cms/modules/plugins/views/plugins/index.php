@@ -1,9 +1,9 @@
 <script id="plugin-item" type="text/template">
 	<td class="plugin-name">
 		<h5>
-			<% if (status  && settings) { %>
-			<a href="/backend/<%= id %>/settings" class="btn">
-				<i class="icon-cog"></i> <%= title %>
+			<% if (installed  && settings) { %>
+			<%= title %> <a href="/backend/plugins/settings/<%= id %>" class="btn pull-right">
+				<i class="icon-cog"></i> <%= __('Settings') %>
 			</a>
 			<% } else { %>
 				<%= title %>

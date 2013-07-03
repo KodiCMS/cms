@@ -9,7 +9,7 @@ class Plugins {
 	 *
 	 * @var array
 	 */
-	protected static $_plugins = array();
+	protected static $_installed = array();
 	
 	/**
 	 *
@@ -18,27 +18,17 @@ class Plugins {
 	protected static $_registered = array();
 
 	public static function init()
-	{
-		$plugins = self::_get_list_from_db();
-		
-		
-		self::$_plugins = empty($plugins) 
-			? array()
-			: unserialize($plugins);
+	{	
+		self::$_installed = self::_load_from_db();
 
 		$plugins = array();
 
-		foreach ( self::$_plugins as $plugin_id => $tmp )
+		foreach ( self::$_installed as $plugin_id => $tmp )
 		{
-			if(  is_dir( self::path($plugin_id) ) )
+			if(  is_dir( PLUGPATH . $plugin_id ) )
 			{
-				$plugins[$plugin_id] = self::path($plugin_id);
+				$plugins[$plugin_id] = PLUGPATH . $plugin_id;
 			}
-		}
-
-		if ( ! Plugins_Settings::is_loaded() )
-		{
-			Plugins_Settings::get_settings();
 		}
 
 		Kohana::modules( Kohana::modules() + $plugins );
@@ -46,53 +36,16 @@ class Plugins {
 	
 	/**
 	 * 
-	 * @return string Serialized data
+	 * @return array
 	 */
-	protected static function _get_list_from_db()
+	protected static function _load_from_db()
 	{
-		return DB::select('value')
-			->from(Setting::TABLE_NAME)
-			->where( 'name', '=', 'plugins' )
-			->cache_key('plugins_list')
+		return DB::select('id')
+			->from(Plugin_Decorator::TABLE_NAME)
+			->cache_key(Plugin_Decorator::CACHE_KEY . '::list')
 			->cached(Date::DAY)
 			->execute()
-			->get('value');
-	}
-	
-	/**
-	 * 
-	 * @return array Return the number of rows affected
-	 */
-	protected static function _save()
-	{
-		Cache::instance()->delete('Database::cache(plugins_list)');
-		
-		Kohana::cache('Route::cache()', NULL, -1);
-		Kohana::cache('Kohana::find_file()', NULL, -1);
-
-		return DB::update( Setting::TABLE_NAME)
-			->set(array('value' => serialize( self::$_plugins )))
-			->where('name', '=', 'plugins')
-			->execute();
-	}
-
-	/**
-	 * 
-	 * @return array
-	 */
-	public static function get_loaded()
-	{
-		return self::$_plugins;
-	}
-
-	/**
-	 * 
-	 * @param string $plugin_id
-	 * @return array
-	 */
-	public static function get( $plugin_id )
-	{
-		return Arr::get(self::$_plugins, $plugin_id);
+			->as_array('id', 'id');
 	}
 
 	/**
@@ -100,15 +53,9 @@ class Plugins {
 	 * @param Plugins_Item $plugin
 	 * @return boolean
 	 */
-	public static function register( Plugins_Item $plugin )
+	public static function register( Plugin_Decorator $plugin )
 	{
-		if ( isset( self::$_registered[$plugin->id] ) )
-		{
-			return NULL;
-		}
-
-		self::$_registered[$plugin->id] = $plugin;
-
+		self::$_registered[$plugin->id()] = $plugin;
 		return TRUE;
 	}
 
@@ -126,44 +73,34 @@ class Plugins {
 
 		return Arr::get( self::$_registered, $plugin_id );
 	}
-
+	
 	/**
 	 * 
-	 * @param string $plugin_id
+	 * @return array
 	 */
-	public static function activate( $plugin_id )
+	public static function installed( )
 	{
-		if ( self::is_exists($plugin_id, 'enable.php') )
-		{
-			require_once self::path( $plugin_id, 'enable.php' );
-		}
-
-		self::$_plugins[$plugin_id] = TRUE;
-
-		self::_save();
+		return self::$_installed;
 	}
 
 	/**
 	 * 
 	 * @param string $plugin_id
 	 */
-	public static function deactivate( $plugin_id, $uninstal = TRUE )
+	public static function install( Plugin_Decorator $plugin )
 	{
-		if ( isset( self::$_plugins[$plugin_id] ) )
+		self::$_installed[$plugin->id()] = TRUE;
+	}
+
+	/**
+	 * 
+	 * @param string $plugin_id
+	 */
+	public static function uninstall( Plugin_Decorator $plugin )
+	{
+		if ( isset( self::$_installed[$plugin->id()] ) )
 		{
-			if($uninstal === TRUE)
-			{
-				Plugins_Settings::delete_settings($plugin_id);
-
-				if ( self::is_exists($plugin_id, 'disable.php') )
-				{
-					require_once self::path( $plugin_id, 'disable.php' );
-				}
-			}
-
-			unset( self::$_plugins[$plugin_id] );
-
-			self::_save();
+			unset( self::$_installed[$plugin->id()] );
 		}
 	}
 
@@ -177,16 +114,21 @@ class Plugins {
 
 		if ( $handle = opendir( $dir ) )
 		{
-			while ( FALSE !== ($plugin_id = readdir( $handle )) ) {
-
-				if ( is_dir( $dir . $plugin_id ) && strpos( $plugin_id, '.' ) !== 0 )
+			while ( FALSE !== ($plugin_id = readdir( $handle )) ) 
+			{
+				$path = $dir . $plugin_id . DIRECTORY_SEPARATOR;
+				if(  file_exists( $path . 'init' . EXT))
 				{
-					if ( self::is_exists($plugin_id, 'init.php') )
+					include_once $path . 'init' . EXT;
+					
+					// If exists plugin model, include them
+					if($file = Kohana::find_file( $path . 'plugin', $plugin_id ))
 					{
-						require_once self::path( $plugin_id, 'init.php' );
+						include_once $file;
 					}
 				}
 			}
+
 			closedir( $handle );
 		}
 
@@ -195,27 +137,17 @@ class Plugins {
 	}
 
 	/**
-	 * Returns TRUE if a plugin is enabled for use.
-	 *
+	 * 
 	 * @param string $plugin_id
+	 * @return boolean
 	 */
-	public static function is_enabled( $plugin_id )
+	public static function is_installed( $plugin_id )
 	{
-		if ( array_key_exists( $plugin_id, self::$_plugins ) AND self::$_plugins[$plugin_id] == 1 )
+		if($plugin_id instanceof Plugin_Decorator)
 		{
-			return TRUE;
+			$plugin_id = $plugin_id->id();
 		}
 
-		return FALSE;
-	}
-	
-	public static function path($plugin_id, $file = NULL)
-	{
-		return PLUGPATH . $plugin_id . DIRECTORY_SEPARATOR . $file;
-	}
-	
-	public static function is_exists($plugin_id, $file)
-	{
-		return file_exists( self::path( $plugin_id, $file ) );
+		return isset(self::$_installed[$plugin_id]);
 	}
 }

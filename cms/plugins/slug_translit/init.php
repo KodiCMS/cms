@@ -1,11 +1,6 @@
 <?php defined( 'SYSPATH' ) or die( 'No direct script access.' );
 
-$plugin = Plugins_Item::factory( array(
-	'id' => 'slug_translit',
+Plugin::factory('slug_translit', array(
 	'title' => 'Slug translit',
-	'author' => 'ButscH',
-	'javascripts' => array(
-		'slug_translit.js'
-	)
-) )
-	->register();
+	'description' => 'Реформал – это простой и эффективный сервис обратной связи',
+))->register();

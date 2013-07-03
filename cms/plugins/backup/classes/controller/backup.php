@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Backup extends Controller_System_Plugin {
+class Controller_Backup extends Controller_System_Backend {
 	
 	public function action_index() 
 	{

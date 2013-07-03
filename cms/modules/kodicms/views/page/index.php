@@ -9,7 +9,8 @@
 		)); ?>
 
 		<?php echo UI::button(__('Reorder'), array(
-			'id' => 'pageMapReorderButton', 'class' => 'btn btn-primary',
+			'id' => 'pageMapReorderButton', 
+			'class' => 'btn btn-primary',
 			'icon' => UI::icon('move icon-white')
 		)); ?>
 

@@ -102,144 +102,57 @@ cms.init.add('page_index', function () {
 	// Reordering
 	$('#pageMapReorderButton').click(function () {
 		var self = $(this);
-		var $pageMapUl = $('#pageMapItems > li > ul');
-
-		if (self.hasClass('btn-inverse')) {
+		
+		
+		if(self.hasClass('btn-inverse')) {
+			$('#pageMapSearchItems').empty().hide();
+			$('#pageMapHeader').show();
 			self.removeClass('btn-inverse');
+			
+			$.get(SITE_URL + ADMIN_DIR_NAME + '/page/children', {parent_id: 1, level: 0}, function(resp) {
+				$('#pageMapItems')
+					.find('ul')
+					.remove();
+		
+				$('#pageMapItems')
+					.show()
+					.find('li')
+					.append(resp);
+			}, 'html');
 
-			$pageMapUl
-				.removeClass('map-drag')
-				.sortable('destroy')
-				.find('li')
-				.draggable('destroy');
-
-			return false;
-		}
-
-		if (!$pageMapUl.hasClass('map-drag')) {
-
-			var dragStart_handler = function (event, ui) {
-				ui.item.find('ul').hide();
-			};
-
-			var dragOver_handler = function (event, ui) {
-				var level = parseInt(ui.placeholder.parent().data('level'));
-				$('.item .title', ui.item).css('padding-left', (35 * level) + 'px');
-			};
-
-			var dragStopped_handler = function (event, ui) {
-				ui.item.find('ul').show();
-
-				var ul = ui.item.parent();
-				var parent_id = parseInt(ul.parent().data('id'));
-
-				var li = ul.children('li');
-
-				var pages_ids = [];
-
-				li.each(function(i){
-					var child_id = $(this).data('id');
-					if (child_id !== undefined)
-						pages_ids.push(child_id);
-				});
-
-				var success_handler = function () {
-					cms.loader.hide();
-				};
-
-				var error_handler = function () {
-					cms.error('Ajax return error (pages reordering).');
-					cms.loader.hide();
-				};
-
-				cms.loader.show();
-
-				// Save reordered positons
-				jQuery.ajax({
-					// options
-					url:SITE_URL + ADMIN_DIR_NAME + '/page/reorder/',
-					type:'post',
-
-					data:{
-						parent_id:parent_id,
-						pages:pages_ids
-					},
-
-					// events
-					success:success_handler,
-					error:error_handler
-				});
-			};
-
-			// Begin sorting
-			$pageMapUl
-				.addClass('map-drag')
-				.sortable({
-					// options
-					axis:'y',
-					items:'li',
-					connectWith:'ul',
-					placeholder: 'map-placeholder',
-					grid: [5, 8],
-					cursor: 'move',
-
-					// events
-					start: dragStart_handler,
-					over: dragOver_handler,
-					stop: dragStopped_handler
-				});
-
+		}else {
 			self.addClass('btn-inverse');
-		}
-		else {
-			$pageMapUl
-				.removeClass('map-drag')
-				.sortable('destroy');
+			$('#pageMapItems').hide();
+			$('#pageMapHeader').hide();
+			$.get(SITE_URL + ADMIN_DIR_NAME + '/page/sort', function(resp) {
+				$('#pageMapSearchItems')
+					.html(resp)
+					.show();
 
-			self.removeClass('btn-inverse');
+				$('#nestable').nestable({
+					group: 1,
+					listNodeName: 'ul',
+					listClass: 'dd-list unstyled',
+				}).on('change', function(e, el) {
+					var list   = e.length ? e : $(e.target);
+					Api.post('pages.sort', {'pages': list.nestable('serialize')});
+				});
+			}, 'html');
 		}
 	});
-
-	// Search
-	var search = function (form) {
-		var success_handler = function (data) {
-			$('#pageMapSearchItems')
-				.removeClass('map-wait')
-				.html(data);
-		};
-
-		var error_handler = function () {
-			cms.error('Search: Ajax return error.');
-		};
-
-		$('#pageMapItems').hide();
-		$('#pageMapSearchItems')
-			.addClass('map-wait')
-			.show();
-
-		$.ajax({
-			url:form.attr('action'),
-			type:'post',
-			dataType:'html',
-
-			data:form.serialize(),
-
-			success:success_handler,
-			error:error_handler
-		});
-	};
 
 	$('#pageMap .form-search')
 		.on('submit', function (event) {
 			var form = $(this);
 
-			if (form.attr('action').length == 0) {
-				$.jGrowl('Не указанна ссылка для отправки данных');
-				return false;
-			}
-
 			if ($('.search-query', this).val() !== '') {
-				search(form);
+				$('#pageMapItems').hide();
+				
+				Api.get('pages.search', form.serialize(), function(resp) {
+					$('#pageMapSearchItems')
+						.html(resp.response);
+				});
+		
 			} else {
 				$('#pageMapItems').show();
 				$('#pageMapSearchItems').hide();

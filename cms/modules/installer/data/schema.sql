@@ -6,12 +6,12 @@ CREATE TABLE `TABLE_PREFIX_settings` (
   UNIQUE KEY `id` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `TABLE_PREFIX_plugin_settings` (
-  `plugin_id` varchar(40) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  UNIQUE KEY `plugin_setting_id` (`plugin_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `TABLE_PREFIX_plugins` (
+  `id` varchar(50) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `settings` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `TABLE_PREFIX_layout_blocks` (
   `layout_name` varchar(100) NOT NULL,
