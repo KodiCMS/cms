@@ -55,7 +55,10 @@ class Controller_API_Snippet extends Controller_System_Api {
 			Observer::notify( 'snippet_after_edit', array( $snippet ) );
 		}
 		
-		$this->response($snippet);
+		$this->response(array(
+			'name' => $snippet->name,
+			'content' => $snippet->content
+		));
 	}
 	
 	public function rest_put()
@@ -86,7 +89,10 @@ class Controller_API_Snippet extends Controller_System_Api {
 			Observer::notify( 'snippet_after_add', array( $snippet ) );
 		}
 		
-		$this->response($snippet);
+		$this->response(array(
+			'name' => $snippet->name,
+			'content' => $snippet->content
+		));
 	}
 	
 	public function rest_delete()

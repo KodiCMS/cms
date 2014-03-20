@@ -8,7 +8,6 @@
 	<h3><?php echo __(ucfirst($title)); ?></h3>
 </div>
 <div class="widget-content widget-nopad">
-
 	<table class="table table-hover" id="permissions-list">
 		<colgroup>
 			<col width="20px" />
@@ -36,7 +35,6 @@
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-
 </div>
 <?php endforeach; ?>
 	

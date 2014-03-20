@@ -11,13 +11,13 @@ return array(
 					array(
 						'name' => __('Email templates'),
 						'url' => Route::url('email_controllers', array('controller' => 'templates')),
-						'permissions' => 'email_templates.index',
+						'permissions' => 'email.templates.index',
 						'priority' => 400,
 					),
 					array(
 						'name' => __('Email types'),
 						'url' => Route::url('email_controllers', array('controller' => 'types')),
-						'permissions' => 'email_types.index',
+						'permissions' => 'email.types.index',
 						'priority' => 410,
 					)
 				)

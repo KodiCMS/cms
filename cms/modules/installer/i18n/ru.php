@@ -4,7 +4,7 @@ return array(
 	/********************* Database information *******************/
 	':cms_name &rsaquo; installation' => 'Установка системы :cms_name',
 	'Database information' => 'Информация о базе данных',
-	
+	'Database driver' => 'Драйвер',
 	'Database server' => 'Сервер',
 	'Database port' => 'Порт',
 	'Database user' => 'Имя пользователя',

@@ -26,6 +26,9 @@ return array(
 			'action' => 'delete',
 			'description' => 'Delete widget'
 		),
-		
+		array(
+			'action' => 'roles',
+			'description' => 'Manage widget permissions'
+		),
 	),
 );

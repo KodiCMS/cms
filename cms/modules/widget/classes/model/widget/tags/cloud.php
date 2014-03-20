@@ -7,12 +7,31 @@
  */
 class Model_Widget_Tags_Cloud extends Model_Widget_Decorator {
 	
+	/**
+	 *
+	 * @var array 
+	 */
 	protected $_data = array(
 		'min_size' => 8,
 		'max_size' => 50,
 		'order_by' => 'name_asc'
 	);
 	
+	/**
+	 *
+	 * @var array 
+	 */
+	protected $_ids = array();
+	
+	/**
+	 * 
+	 * @param array $ids
+	 */
+	public function set_ids( array $ids )
+	{
+		$this->_ids = $ids;
+	}
+
 	public function fetch_data()
 	{
 		$tags = $this->get_tags();
@@ -25,9 +44,6 @@ class Model_Widget_Tags_Cloud extends Model_Widget_Decorator {
 			$fmin = $this->min_size;
 			$tmin = min($tags);
 			$tmax = max($tags);
-
-
-
 			foreach ($tags as $word => $frequency) 
 			{
 				$font_size = floor(($frequency - $tmin) / ($tmax - $tmin) * ($fmax - $fmin) + $fmin);
@@ -47,10 +63,19 @@ class Model_Widget_Tags_Cloud extends Model_Widget_Decorator {
 		);
 	}
 	
+	/**
+	 * 
+	 * @return array
+	 */
 	public function get_tags()
 	{
 		$query = DB::select()
 			->from(Model_Tag::tableName());
+		
+		if(!empty($this->_ids) AND is_array($this->_ids))
+		{
+			$query->where('id', 'in', $this->_ids);
+		}
 		
 		switch($this->order_by)
 		{

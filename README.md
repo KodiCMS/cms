@@ -1,5 +1,9 @@
 # [KodiCMS](http://www.kodicms.ru/)
 
+## [Канал на Youtube](http://www.youtube.com/channel/UCgZ25N9C1F8uoTXZZK55mqQ)
+
+http://www.kodicms.ru/forum.html
+
 KodiCMS основана на базе [Kohana framework](http://kohanaframework.org/). Kohana - 
 фреймворк для создания web приложений. Вы можете создавать собственные модули, 
 плагины в полном объеме используя инструменты Kohana.
@@ -36,10 +40,6 @@ http://demo.kodicms.ru/
 > Login: demo
 > Password: demodemo
 
-
-## Screenshots / Скриншоты
-
-http://www.kodicms.ru/screenshots.html
 
 ## Forum / Форум
 

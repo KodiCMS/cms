@@ -23,9 +23,9 @@ class Controller_API_Elfinder extends Controller_System_Api {
 					'path'          => substr(PUBLICPATH, 0, -1),			// path to files (REQUIRED)
 					'URL'           => PUBLIC_URL,			// URL to files (REQUIRED),
 					'rootAlias'     => __('Public'),
-					'uploadMaxSize'	=> '10M',
-					'mimeDetect'	=> 'internal',
-					'imgLib'		=> 'gd',
+					'uploadMaxSize'	=> Config::get('elfinder', 'uploadMaxSize'),
+					'mimeDetect'	=> Config::get('elfinder', 'mimeDetect'),
+					'imgLib'		=> Config::get('elfinder', 'imgLib'),
 					
 				)
 			)

@@ -13,9 +13,7 @@ class Controller_FileManager extends Controller_System_Backend {
 		$this->breadcrumbs
 			->add($this->template->title, $this->request->controller());
 
-		Assets::css('elfinder.lib', ADMIN_RESOURCES . 'libs/elfinder/css/elfinder.min.css');
-		Assets::js('elfinder.lib', ADMIN_RESOURCES . 'libs/elfinder/js/elfinder.min.js', 'global');
-		Assets::js('elfinder'.I18n::lang(), ADMIN_RESOURCES . 'libs/elfinder/js/i18n/elfinder.'.I18n::lang().'.js', 'elfinder.lib');
+		Assets::package(array('elfinder', 'jquery-ui'));
 
 		$this->template->content = View::factory('elfinder/filemanager');
 	}

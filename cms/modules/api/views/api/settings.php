@@ -18,7 +18,7 @@ $(function(){
 	<div class="lead">
 		<?php echo __( 'KodiCMS API key'); ?>: <span id="api-key"><?php echo Config::get('api', 'key'); ?></span>
 		
-		<?php if( ACL::check('api.refresh')): ?>
+		<?php if( ACL::check('system.api.refresh')): ?>
 		<?php echo HTML::anchor('#', UI::icon('refresh') . ' ' . __( 'Change key' ), array(
 			'class' => 'btn btn-primary', 'id' => 'refresh-api-key'
 		)); ?>

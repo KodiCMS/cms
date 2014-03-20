@@ -4,7 +4,6 @@
 @import "custom-bootstrap.less";
 @import "helpers.less";
 
-
 /* ===================================================
 	Design
  =================================================== */
@@ -16,7 +15,7 @@ body {}
 html, body {
 	width: 100%;
 	height: 100%;
-	background-color: #F5F5F5;
+	background-color: #f1f2f3;
 }
 
 #content-wrapper {
@@ -26,8 +25,8 @@ html, body {
 }
 
 #content {
-	margin-top: 15px;
-	margin-bottom: @footerHeight + @contentBottomPadding - 15px;
+	padding-top: 15px;
+	padding-bottom: @footerHeight + @contentBottomPadding - 15px;
 }
 
 .iframe {
@@ -35,6 +34,7 @@ html, body {
 		margin: 0; padding: 0;
 	}
 }
+
 
 footer {
     background-color: #6E6D71;
@@ -54,6 +54,7 @@ footer {
 		text-decoration: underline;
 	}
 }
+
 
 /* ===================================================
 	Loader
@@ -321,7 +322,7 @@ padding: 0 5px;
 	border: 1px solid #d4d4d4;
 	*zoom: 1;
 	.box-shadow(0 1px 4px rgba(0, 0, 0, 0.065));
-	.border-radius(4px);
+	
 
 	.title {
 		font-weight: bold;
@@ -474,7 +475,7 @@ padding: 0 5px;
 			background: #fff;
 			border: none;
 			
-			.border-radius(0);
+			
 
 			&:focus {
 				outline: none;
@@ -496,6 +497,10 @@ padding: 0 5px;
 		&:first-child {
 			margin-top: 0;
 		}
+	}
+	
+	.select2-container {
+		min-width: 0;
 	}
 }
 
@@ -610,7 +615,7 @@ padding: 0 5px;
 
 #jGrowl {
 	.alert {
-		.border-radius(0);
+		
 		margin-bottom: 0;
 		padding-right: 10px;
 	}

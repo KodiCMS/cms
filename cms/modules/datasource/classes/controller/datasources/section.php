@@ -77,6 +77,8 @@ class Controller_Datasources_Section extends Controller_System_Datasource
 			Messages::errors($e->errors('validation'));
 			$this->go_back();
 		}
+		
+		Messages::success( __( 'Datasource has been saved!' ) );
 
 		$this->go( Route::url('datasources', array(
 			'directory' => 'datasources',
@@ -93,7 +95,9 @@ class Controller_Datasources_Section extends Controller_System_Datasource
 			return $this->_edit($this->section());
 		}
 		
-		$this->template->title = __('Edit ' . $this->section()->name);
+		$this->template->title = __('Edit section :name', array(
+			':name' => $this->section()->name
+		));
 		
 		$this->breadcrumbs
 			->add($this->section()->name, Route::url('datasources', array(
@@ -131,6 +135,8 @@ class Controller_Datasources_Section extends Controller_System_Datasource
 			Messages::errors($e->errors('validation'));
 			$this->go_back();
 		}
+		
+		Messages::success( __( 'Datasource has been saved!' ) );
 
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
@@ -149,6 +155,7 @@ class Controller_Datasources_Section extends Controller_System_Datasource
 	public function action_remove()
 	{
 		$this->section()->remove();
+		Messages::succes(__('Datasource has been deleted!'));
 		$this->go_back();
 	}
 }

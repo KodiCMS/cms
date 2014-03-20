@@ -9,7 +9,7 @@ class Controller_API_Api extends Controller_System_API
 {
 	public function get_new_key()
 	{
-		if( ! ACL::check('api.new_key'))
+		if( ! ACL::check('system.api.new_key'))
 		{
 			throw HTTP_API_Exception::factory(API::ERROR_PERMISSIONS, 'You dont hanve permissions to generate api key');
 		}
@@ -21,7 +21,7 @@ class Controller_API_Api extends Controller_System_API
 	
 	public function post_refresh()
 	{
-		if( ! ACL::check('api.refresh')) 
+		if( ! ACL::check('system.api.refresh')) 
 		{
 			throw HTTP_API_Exception::factory(API::ERROR_PERMISSIONS, 'You dont hanve permissions to refresh api key');
 		}

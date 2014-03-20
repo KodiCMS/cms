@@ -1,4 +1,4 @@
-<div id="message_<?php echo $message->id; ?>" class="message widget-content widget-no-border-radius <?php if(AuthUser::getId() == $message->from_user_id): ?>own-message<?php endif; ?> <?php if( $message->is_read == Model_API_Message::STATUS_NEW AND AuthUser::getId() != $message->from_user_id ): ?>new-message<?php endif; ?>">
+<div id="message_<?php echo $message->id; ?>" class="message widget-content  <?php if(AuthUser::getId() == $message->from_user_id): ?>own-message<?php endif; ?> <?php if( $message->is_read == Model_API_Message::STATUS_NEW AND AuthUser::getId() != $message->from_user_id ): ?>new-message<?php endif; ?>">
 	<h4><?php echo HTML::anchor(Route::url('backend', array(
 			'controller' => 'users',
 			'action' => 'profile',

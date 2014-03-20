@@ -26,7 +26,7 @@
 		<div class="widget-header widget-inverse">
 			<h4><?php echo __('Content'); ?></h4>
 			
-			<?php if( $layout->is_writable()): ?>
+			<?php if( $layout->is_writable() OR ! $layout->is_exists()): ?>
 			<?php echo UI::button(__('File manager'), array(
 				'class' => 'btn btn-filemanager', 'data-el' => 'textarea_content',
 				'icon' => UI::icon( 'folder-open')

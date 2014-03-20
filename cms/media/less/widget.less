@@ -1,16 +1,20 @@
 /* ===================================================
 	Widget
  ===================================================*/
-@WidgetBorderRadius:       5px;
 .widget {
     clear: both;
     margin-bottom: 2em;
     position: relative;
     width: auto;
+	
+	&.widget-sidebar {
+		.select2-container {
+			min-width: 0;
+		}
+	}
 
 	.widget-title, .widget-header {
 		border: 1px solid #D5D5D5;
-		.border-radius(@WidgetBorderRadius @WidgetBorderRadius 0 0);
 		position: relative;
 		margin: 0;
 		padding: 10px;
@@ -21,7 +25,6 @@
 
 		& + .widget-content {
 			border-top: medium none;
-			.border-radius(0);
 		}
 	}
 
@@ -34,12 +37,12 @@
 
 		& + .widget-header {
 			border-top: medium none;
-			.border-radius(0);
 		}
 	}
 
 	.widget-header {
 		.gradientBar(#FAFAFA, #E9E9E9, #555555);
+		text-shadow: none;
 
 		h3, h4 {
 			color: #555555;
@@ -50,7 +53,6 @@
 			line-height: 18px;
 			margin: 0 3em 0 0;
 			position: relative;
-			text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 			top: 2px;
 		}
 
@@ -67,39 +69,27 @@
 			vertical-align: middle;
 		}
 
-		.widget-options {
-
-		}
-
 		&.widget-inverse {
 			.gradientBar(#444, #222);
+			text-shadow: none;
 
 			h3, h4 {
 				color: #fff;
-				text-shadow: 0 0 1px #eee;
 			}
 		}
-
-		
 	}
 
 	.widget-tabs {
-		.shadow-block();
 		padding: 10px 10px 0 10px;
 		border: 1px solid #D5D5D5;
 		border-top-color: #fff;
 		border-bottom-width: 0;
 		margin-bottom: -1px;
-	
-		.nav {
-			margin-bottom: 0;
-		}
 	}
 
 	.widget-content {
 		background: none repeat scroll 0 0 #FFFFFF;
 		border: 1px solid #D5D5D5;
-		.border-radius(@WidgetBorderRadius);
 		padding: 15px;
 
 		&.widget-nopad {
@@ -121,11 +111,6 @@
 
 		& + .widget-header {
 			border-top: medium none;
-			.border-radius(0);
-		}
-
-		.nav-stacked a {
-			.border-radius(0);
 		}
 	}
 
@@ -133,7 +118,6 @@
 		border: 1px solid #D5D5D5;
 		border-top: 1px solid #fff;
 		background: whitesmoke;
-		.border-radius(0 0 @WidgetBorderRadius @WidgetBorderRadius);
 		padding: 10px 15px;
 		margin: 0;
 	}
@@ -149,10 +133,6 @@
 			padding: 5px;
 		}
 	}
-
-	.widget-no-border-radius {
-		.border-radius(0);
-	}
 }
 
 .iframe {
@@ -160,7 +140,6 @@
 	.widget-header,
 	.widget-content, 
 	.widget-footer {
-		.border-radius(0);
 	}
 
 	.widget:last-child {

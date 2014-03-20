@@ -25,7 +25,7 @@ class Controller_Part extends Controller_System_Backend
 		
 		if(!empty($part->id)) 
 		{
-			$page = Record::findByIdFrom( 'Model_Page', $part->page_id );
+			$page = ORM::factory('page', $part->page_id);
 		
 			$this->breadcrumbs
 				->add($page->title, Route::url('backend', array(

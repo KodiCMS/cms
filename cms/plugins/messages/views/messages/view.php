@@ -22,7 +22,7 @@
 	
 	<?php echo $tpl->set('message', $message); ?>
 	
-	<div class="widget-content widget-no-border-radius">
+	<div class="widget-content ">
 		<?php echo Form::open(); ?>
 		<h4><?php echo __('Answer'); ?></h4>
 		<?php echo Form::hidden('parent_id', $message->id); ?>

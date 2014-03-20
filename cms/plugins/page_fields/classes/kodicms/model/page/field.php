@@ -7,6 +7,15 @@
  */
 class KodiCMS_Model_Page_Field extends ORM {
 	
+	public function labels()
+	{
+		return array(
+			'title' => __('Field title'),
+			'key' => __('Field key'),
+			'value' => __('Field value')
+		);
+	}
+
 	public function rules()
 	{
 		return array(

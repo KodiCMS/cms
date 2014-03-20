@@ -41,10 +41,14 @@ class Log_Database extends Log_Writer {
 	{
 		$user = Auth::instance()->get_user(ORM::factory('user'));
 		$request = Request::initial();
+		
+		if($user === NULL) return;
+
+		$logs_level = (int) Config::get('site', 'log_level' );
 
 		foreach ($messages as $message)
 		{
-			if($message['level'] < Log::INFO) continue;
+			if($message['level'] < $logs_level) continue;
 
 			$values = array(
 				':user' => HTML::anchor(Route::url('backend', array(
@@ -52,10 +56,10 @@ class Log_Database extends Log_Writer {
 					'action' => 'profile',
 					'id' => $user->id
 				)), '@' . $user->username),
-				':controller' => $request->controller()
+				':controller' => $request !== NULL ? $request->controller() : 'none'
 			);
 
-			$message['additional'][':url'] = $request->url();
+			$message['additional'][':url'] = $request !== NULL ? $request->url() : 'none';
 			$message['additional'][':ip'] = Request::$client_ip;
 			
 			$message['body'] = strtr($message['body'], $values);
@@ -65,12 +69,11 @@ class Log_Database extends Log_Writer {
 				'user_id' => AuthUser::getId(),
 				'level' => $message['level'],
 				'message' => $message['body'],
-				'additional' => serialize($message['additional'])
+				'additional' => json_encode($message['additional'])
 			);
 
 			// Write each message into the log database table
 			DB::insert($this->_table, array_keys($data))->values($data)->execute();
 		}
 	}
-
 }

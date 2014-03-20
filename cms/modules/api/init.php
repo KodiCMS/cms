@@ -13,7 +13,7 @@ Route::set('api', 'api(/<directory>)-<controller>(.<action>)(/<id>)', array('dir
 		'directory' => 'api'
 	));
 
-if(ACL::check('api.settings'))
+if(ACL::check('system.api'))
 {
 	Observer::observe('view_setting_plugins', 'api_mode_settings_page');
 	Observer::observe('validation_settings', 'api_mode_validation_settings');

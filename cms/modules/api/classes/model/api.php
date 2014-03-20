@@ -1,7 +1,7 @@
 <?php defined( 'SYSPATH' ) or die( 'No direct access allowed.' );
 
 /**
- * @package		KodiCMS/Api
+ * @package		KodiCMS/API
  * @category	Model
  * @author		ButscHSter
  */

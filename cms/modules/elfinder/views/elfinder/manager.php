@@ -6,6 +6,9 @@
 			height: 595,
 			resizable: false,
 			getFileCallback : function(file) {
+				if(_.isObject(file)) {
+					file = file.url;
+				}
 				if(_.isObject(id)) {
 					id.val(file);
 					window.top.$.fancybox.close();

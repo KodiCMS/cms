@@ -13,5 +13,6 @@ return array(
 	'Cache status' => 'Статус кеша',
 	'APC cache' => 'APC кеш',
 	'The cache driver can change in the config file (:path)' => 'Драйвер кеширования можно изменить через конфиг файл (:path)',
-	'View cache settings' => 'Видеть настройки кеша'
+	'View cache settings' => 'Видеть настройки кеша',
+	'You dont hanve permissions to clear cache' => 'У вас нет прав на очистку кеша'
 );

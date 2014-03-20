@@ -25,7 +25,7 @@
 		<div class="widget-header widget-inverse">
 			<h4><?php echo __('Content'); ?></h4>
 			
-			<?php if( $snippet->is_writable()): ?>
+			<?php if( $snippet->is_writable() OR ! $snippet->is_exists()): ?>
 			<?php echo UI::button(__('File manager'), array(
 				'class' => 'btn btn-filemanager', 'data-el' => 'textarea_content',
 				'icon' => UI::icon( 'folder-open')
@@ -44,7 +44,7 @@
 			(ACL::check('snippet.edit')
 		AND
 			(
-				! $snippet->is_exists() 
+				! $snippet->is_exists()
 			OR 
 				($snippet->is_exists() AND $snippet->is_writable())
 			))

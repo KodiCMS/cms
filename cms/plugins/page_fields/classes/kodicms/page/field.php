@@ -11,7 +11,7 @@ class KodiCMS_Page_Field
 	 *
 	 * @var array 
 	 */
-	protected static $_fields = NULL;
+	protected static $_fields = array();
 	
 	/**
 	 * 
@@ -26,7 +26,6 @@ class KodiCMS_Page_Field
 		if (self::exists( $page, $key ))
 		{
 			return self::$_fields[$page->id()][$key];
-			
 		}
 		else if ($inherit !== FALSE
 				AND $page->parent() instanceof Model_Page_Front )
@@ -46,9 +45,9 @@ class KodiCMS_Page_Field
 	 */
 	public static function exists( Model_Page_Front $page, $key, $inherit = FALSE)
 	{
-		if(self::$_fields === NULL)
+		if(Arr::get(self::$_fields, $page->id()) === NULL)
 		{
-			self::$_fields = ORM::factory('Page_Field')
+			self::$_fields[$page->id()] = ORM::factory('Page_Field')
 				->get_by_page_id($page->id())
 				->as_array('key', 'value');
 		}

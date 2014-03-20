@@ -16,34 +16,38 @@
 		<h3><?php echo __('General information'); ?></h3>
 	</div>
 	<div class="widget-content">
-		<?php 
-			echo Bootstrap_Form_Element_Control_Group::factory(array(
-				'element' => Bootstrap_Form_Element_Input::factory(array(
-					'name' => 'role[name]', 'value' => $role->name
-				))
-				->attributes('class', 'slug')
-				->attributes('data-separator', '_')
-				->label(__('Name'))
-			));
-
-			echo Bootstrap_Form_Element_Control_Group::factory(array(
-				'element' => Bootstrap_Form_Element_Textarea::factory(array(
-					'name' => 'role[description]', 'body' => $role->description
-				))
-				->attributes('class', 'input-xxlarge')
-				->label(__('Description'))
-			));
-		?>
+		<div class="control-group">
+			<?php echo $role->label('name', array('class' => 'control-label')); ?>
+			<div class="controls">
+				<?php echo $role->field('name', array(
+					'class' => 'input-medium slug',
+					'prefix' => 'role',
+					'data-separator' => '_'
+				)); ?>	
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<?php echo $role->label('description', array('class' => 'control-label')); ?>
+			<div class="controls">
+				<?php echo $role->field('description', array(
+					'class' => 'input-xxlarge',
+					'prefix' => 'role',
+					'rows' => 5
+				)); ?>	
+			</div>
+		</div>
 	</div>
+
 	<?php if (Acl::check( 'roles.change_permissions') AND ($role->id > 2 OR $role->id === NULL)): ?>
 	<?php echo View::factory('roles/permissions', array(
 			'permissions' => Acl::get_permissions(),
 			'role_permissions' => $role->permissions()
 		)); ?>
 	<?php endif; ?>
+
 	<div class="form-actions widget-footer">
 		<?php echo UI::actions($page_name); ?>
 	</div>
-
 </div>
 <?php Form::close(); ?>

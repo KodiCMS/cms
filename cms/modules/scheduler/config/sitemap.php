@@ -12,5 +12,17 @@ return array(
 				'permissions' => 'scheduler.index'
 			)
 		)
+	),
+	array(
+		'name' => 'System',
+		'children' => array(
+			array(
+				'name' => __('Jobs'),
+				'icon' => 'bolt',
+				'url' => Route::url('backend', array('controller' => 'scheduler', 'action' => 'jobs')),
+				'permissions' => 'scheduler.jobs',
+				'priority' => 150,
+			)
+		)
 	)
 );

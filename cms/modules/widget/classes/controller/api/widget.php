@@ -25,7 +25,7 @@ class Controller_API_Widget extends Controller_System_API {
 		
 		foreach ($res_widgets as $widget)
 		{
-			$widgets[$widget->type][$widget->id] = $widget;
+			$widgets[$widget->type()][$widget->id] = $widget;
 		}
 		
 		$this->json = (string) View::factory( 'widgets/ajax/list', array(

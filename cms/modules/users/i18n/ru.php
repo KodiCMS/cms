@@ -20,6 +20,7 @@ return array(
 	'Password' => 'Пароль',
 	'Password:' => 'Пароль:',
 	'Roles' => 'Роли',
+	'Add role' => 'Добавить роль',
 	'User has been deleted!' => 'Пользователь удален!',
 	'User has been saved!' => 'Пользователь сохранен!',
 	'User not found!' => 'Пользователь не найден!',
@@ -53,5 +54,6 @@ return array(
 	'Delete roles' => 'Удалять роли',
 	'Section' => 'Раздел',
 	'Section permissions' => 'Доступ к разделам',
-	'Notifications' => 'Уведомления'
+	'Notifications' => 'Уведомления',
+	'View user permissions' => 'Видеть права пользователя'
 );

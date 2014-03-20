@@ -27,11 +27,21 @@
     <h1><?php echo __( 'Database information' ); ?></h1>
     <div>
 		<div class="widget">
-			<div id="install-page" class="widget-content">
-				<?php echo Form::hidden( 'install[db_driver]', Arr::get( $data, 'db_driver' ) ); ?>
-				
+			<div id="install-page" class="widget-content">				
 				<p class="lead"><?php echo __('Below you should enter your database connection details. If you’re not sure about these, contact your host.'); ?>
 				<hr />
+				
+				<?php echo Bootstrap_Form_Element_Control_Group::factory(array(
+					'element' => Bootstrap_Form_Element_Select::factory(array(
+						'name' => 'install[db_driver]', 'options' => array(
+							'mysql' => __('MySQL'),
+							'pdo' => __('PDO')
+						)
+					))
+					->selected(Arr::get( $data, 'db_driver' ))
+					->label(__('Database driver'))
+				)); ?>
+
 				<div class="control-group">
 					<label class="control-label" for="installDBServerField"><?php echo __( 'Database server' ); ?></label>
 					<div class="controls inline">

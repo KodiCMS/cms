@@ -35,7 +35,7 @@ Observer::observe('admin_login_form_after_button', function() {
 	));
 });
 
-if(ACL::check('social.settings'))
+if(ACL::check('system.social.settings'))
 {
 	Observer::observe('view_setting_plugins', function() {
 		echo View::factory('accounts/settings', array(

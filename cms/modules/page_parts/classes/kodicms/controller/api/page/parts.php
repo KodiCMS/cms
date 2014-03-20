@@ -25,7 +25,7 @@ class KodiCMS_Controller_API_Page_Parts extends Controller_System_Api {
 	public function rest_put()
 	{
 		$id = $this->param('id', NULL, TRUE);
-		$part = Record::findByIdFrom('Model_Page_Part', (int)$id);
+		$part = Record::findByIdFrom('Model_Page_Part', (int) $id);
 		
 		$part
 			->setFromData($this->params(), array('id'))
@@ -45,9 +45,12 @@ class KodiCMS_Controller_API_Page_Parts extends Controller_System_Api {
 	public function rest_post()
 	{
 		$part = new Model_Page_Part;
+
+		$params = $this->params();
+		$params['filter_id'] = Config::get('site', 'default_filter_id');
 		
 		$part
-			->setFromData($this->params())
+			->setFromData($params)
 			->save();
 
 		$part = $part->prepare_data();

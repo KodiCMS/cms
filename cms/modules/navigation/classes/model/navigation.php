@@ -9,7 +9,7 @@ class Model_Navigation {
 
 	/**
 	 *
-	 * @var array
+	 * @var Model_Navigation_Section
 	 */
 	protected static $_root_section = NULL;
 	
@@ -163,7 +163,14 @@ class Model_Navigation {
 		});
 	}
 	
-	public static function build_dropdown(Bootstrap_Helper_Elements $nav, $sections, & $is_active = FALSE)
+	/**
+	 * 
+	 * @param Bootstrap_Helper_Elements $nav
+	 * @param array $sections
+	 * @param boolean $is_active
+	 * @return \Bootstrap_Helper_Elements
+	 */
+	public static function build_dropdown(Bootstrap_Helper_Elements $nav, array $sections, & $is_active = FALSE)
 	{
 		foreach ( $sections as $section )
 		{

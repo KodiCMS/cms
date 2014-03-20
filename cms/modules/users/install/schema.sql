@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__page_roles` (
   `role_id` int(11) unsigned NOT NULL,
   KEY `page_id` (`page_id`,`role_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `page_roles_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `__TABLE_PREFIX__pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `page_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `__TABLE_PREFIX__roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__page_roles_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `__TABLE_PREFIX__pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `__TABLE_PREFIX__page_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `__TABLE_PREFIX__roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__users` (
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__user_profiles` (
   `created_on` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
-  CONSTRAINT `user_profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__user_profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__user_tokens` (
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__user_tokens` (
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`),
-  CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__roles_users` (
@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__roles_users` (
   `role_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `fk_role_id` (`role_id`),
-  CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `__TABLE_PREFIX__roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `__TABLE_PREFIX__roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `__TABLE_PREFIX__roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__roles_permissions` (
   `role_id` int(5) unsigned NOT NULL,
   `action` varchar(255) NOT NULL,
   UNIQUE KEY `role_id` (`role_id`,`action`),
-  CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `__TABLE_PREFIX__roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__roles_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `__TABLE_PREFIX__roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

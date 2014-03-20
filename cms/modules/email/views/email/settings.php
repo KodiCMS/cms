@@ -1,12 +1,30 @@
 <script>
 $(function() {
-	var driver = $('#email_driver');
-
-	$('.widget').on('change', '#email_driver', function() {
-		change_email_driver($(this).val());
-	});
-	change_email_driver(driver.val());
+	$('.widget')
+		.on('change', '#email_driver', function() {
+			change_email_driver($(this).val());
+		})
+		.on('change', '#settingEncryption', function() {
+			var $encryption = $(this).val();
+			change_email_port($encryption);
+		});
+	
+	change_email_driver($('#email_driver').val());
+	change_email_port($('#settingEncryption').val());
 });
+
+function change_email_port($encryption) {
+	var $port = $('#settingPort');
+	switch($encryption){
+		case 'ssl':
+		case 'tls':
+			$port.val(465);
+			break;
+		default: 
+			$port.val(25);
+			break;
+	}
+}
 
 function change_email_driver(driver) {
     $('fieldset').attr('disabled', 'disabled').hide();
@@ -43,10 +61,15 @@ function change_email_driver(driver) {
 					<?php 
 					$path = is_array(Arr::get($settings, 'options')) ? NULL : Arr::get($settings, 'options');
 					echo Form::input('setting[email][options]', $path, array(
-						'id' => 'settingPath', 'class' => Bootstrap_Form_Element_Input::XXLARGE
+						'id' => 'settingPath', 'class' => Bootstrap_Form_Element_Input::XXLARGE,
+						'placeholder' => __('For example: :path', array(':path' => '/usr/sbin/sendmail'))
 					) ); ?>
 
-					<p class="help-block"><?php echo __( 'executable path, with -bs or equivalent attached' ); ?></p>
+					<p class="help-block"><?php echo __('Where the sendmail program can be found, usually :path1 or :path2. :link', array(
+						':path1' => '/usr/sbin/sendmail',
+						':path2' => '/usr/lib/sendmail',
+						':link' => HTML::anchor('http://www.php.net/manual/en/mail.configuration.php', 'www.php.net', array('target' => 'blank'))
+					)); ?></p>
 				</div>
 			</div>
 		</fieldset>
@@ -57,7 +80,7 @@ function change_email_driver(driver) {
 				<label class="control-label" for="settingHost"><?php echo __( 'STMP Host' ); ?></label>
 				<div class="controls">
 					<?php echo Form::input('setting[email][options][hostname]', Arr::path($settings, 'options.hostname'), array(
-						'id' => 'settingHost', 'class' => Bootstrap_Form_Element_Input::XXLARGE
+						'id' => 'settingHost', 'class' => Bootstrap_Form_Element_Input::LARGE
 					) ); ?>
 				</div>
 			</div>
@@ -92,7 +115,11 @@ function change_email_driver(driver) {
 			<div class="control-group">
 				<label class="control-label" for="settingEncryption"><?php echo __( 'SMTP Encryption' ); ?></label>
 				<div class="controls">
-					<?php echo Form::select( 'setting[email][options][encryption]', array(NULL => 'Disable', 'ssl' => 'SSL', 'tls' => 'TLS'), Arr::path($settings, 'options.encryption'), array(
+					<?php echo Form::select('setting[email][options][encryption]', array(
+						NULL => 'Disable', 
+						'ssl' => 'SSL', 
+						'tls' => 'TLS'
+					), Arr::path($settings, 'options.encryption'), array(
 						'id' => 'settingEncryption'
 					) ); ?>
 				</div>

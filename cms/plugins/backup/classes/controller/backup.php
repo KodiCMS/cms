@@ -18,6 +18,8 @@ class Controller_Backup extends Controller_System_Backend {
 	
 	public function action_view()
 	{
+		Assets::package('ace');
+
 		$file = $this->request->param('file');
 		$backup = Model_Backup::factory(BACKUP_PLUGIN_FOLDER . $file);
 		$this->template->title = __( 'Backup view :file', array(':file' => $file));

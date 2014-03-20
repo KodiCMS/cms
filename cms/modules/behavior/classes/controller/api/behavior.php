@@ -12,11 +12,11 @@ class Controller_API_Behavior extends Controller_System_Api {
 		$id = $this->param('id', NULL );
 		$page_id = $this->param('page_id', NULL, TRUE);
 		
-		if( ! $id ) return;
+		if(empty($id)) return;
 		
-		$page = Model_Page::findById( (int) $page_id);
+		$page = ORM::factory('page', (int) $page_id);
 		
-		if ( ! $page )
+		if ( ! $page->loaded() )
 		{
 			throw new HTTP_Exception_404('Page :id not found!', array(
 				':id' => $page_id));

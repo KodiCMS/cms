@@ -3,7 +3,7 @@
 </script>
 <div class="widget">
 	<?php echo Form::open(Request::current()->uri()); ?>
-	<div class="widget-content widget-no-border-radius">
+	<div class="widget-content ">
 		<h3>&larr; <?php echo HTML::anchor(Route::url('backend', array(
 				'controller' => 'widgets', 
 				'action' => 'edit',
@@ -27,7 +27,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="widget-content widget-no-border-radius">
+	<div class="widget-content ">
 		<div class="input-prepend input-append">
 			<?php echo Form::input('select_for_all', NULL, array('class' => 'inline')); ?>
 			<?php echo UI::button( __('Select for all pages'), array(
@@ -51,7 +51,7 @@ function recurse_pages( $pages, $spaces = 0, $blocks = array(), $page_widgets = 
 		// Выбираем из всех блоков, для шаблона текущей страницы
 		$current_page_blocks = isset($blocks[$page['layout_file']]) 
 				? $blocks[$page['layout_file']] 
-				: $default_blocks;
+				: array(-1 => __('--- none ---'));
 		
 		// Исключаем из списка блоки, занятые другими виджетами
 //		if(!empty($pages_widgets[$page['id']]) AND is_array($current_page_blocks))

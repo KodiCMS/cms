@@ -1,9 +1,9 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
-	'social' => array(
+	'system' => array(
 		array(
-			'action' => 'settings',
+			'action' => 'social.settings',
 			'description' => 'Manage social accounts'
 		),
 	),

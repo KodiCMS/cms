@@ -15,7 +15,9 @@ class Model_Widget_Page_Pages extends Model_Widget_Decorator_Pagination {
 		
 		if( ! ($page instanceof Model_Page_Front) )
 		{
-			$this->_ctx->throw_404();
+			$this->_ctx->throw_404(__('Selected page in widget :widget_name not found', array(
+				':widget_name' => $this->name
+			)));
 		}
 	}
 	
@@ -58,21 +60,26 @@ class Model_Widget_Page_Pages extends Model_Widget_Decorator_Pagination {
 	{
 		$page = $this->get_current_page();
 		
-		$clause = array(
-			'order_by' => array(array('page.created_on', 'desc'))
-		);
-		
-		if($this->list_offset > 0)
-		{
-			$clause['offset'] = $this->list_offset;
-		}
-		
-		if($this->list_size > 0)
-		{
-			$clause['limit'] = $this->list_size;
-		}
+		$pages = array();
 
-		$pages = $page->children($clause);
+		if($page instanceof Model_Page_Front)
+		{
+			$clause = array(
+				'order_by' => array(array('page.created_on', 'desc'))
+			);
+
+			if($this->list_offset > 0)
+			{
+				$clause['offset'] = $this->list_offset;
+			}
+
+			if($this->list_size > 0)
+			{
+				$clause['limit'] = $this->list_size;
+			}
+
+			$pages = $page->children($clause);
+		}
 
 		return array(
 			'pages' => $pages
@@ -94,7 +101,7 @@ class Model_Widget_Page_Pages extends Model_Widget_Decorator_Pagination {
 	 */
 	public function get_current_page()
 	{
-		if(!$this->current_page)
+		if( ! $this->current_page)
 		{
 			$this->current_page = Model_Page_Front::findById($this->get_page_id());
 		}

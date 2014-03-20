@@ -24,7 +24,8 @@
 				<li><?php echo HTML::anchor(Route::url('datasources', array(
 						'controller' => 'section',
 						'directory' => 'datasources',
-						'action' => 'create'
+						'action' => 'create',
+						'id' => $type
 					)), $title); ?></li>
 				<?php endif; ?>
 			<?php endforeach; ?>

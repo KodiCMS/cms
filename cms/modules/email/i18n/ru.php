@@ -13,6 +13,10 @@ return array(
 	'STMP Password' => 'Пароль',
 	'SMTP Encryption' => 'Шифрование',
 	'Change email settings' => 'Изменение настроек почты',
+	'For example: :path' => 'Например: :path',
+	'Where the sendmail program can be found, usually :path1 or :path2. :link' 
+		=> 'Путь до программы sendmail, обычно :path1 или :path2. :link',
+	'Next page after success send (URL)' => 'Следующая страница при успешной отправке (URL)',
 	
 	/*********************** Email templates *********************************/
 	'Email templates' => 'Почтовые шаблоны',
@@ -30,8 +34,16 @@ return array(
 	'Base url (format: :format)' => 'Адрес сайта (Формат: :format)',
 	'Current date (format: :format)' => 'Текущая дата (Формат: :format)',
 	'Current time (format: :format)' => 'Текущее время (Формат: :format)',
-	'Email template not found!' => 'Почтовый шаблон не найден',
-	'Email template has been saved!' => 'Почтовый шаблон сохранен',
+	'Email template not found!' => 'Почтовый шаблон не найден!',
+	'Email template has been saved!' => 'Почтовый шаблон сохранен!',
+	'Email template has been deleted!' => 'Почтовый шаблон удален!',
+	'View Email Templates' => 'Видеть почтовые шаблоны',
+	'Add Email Templates' => 'Создавать почтовые шаблоны',
+	'Edit Email Templates' => 'Редактировать почтовые шаблоны',
+	'Delete Email Templates' => 'Удалять почтовые шаблоны',
+	'Use queue' => 'Постановка в очередь',
+	'Email send type' => 'Метод отправки сообщения',
+	'Direct sending' => 'Прямая отправка',
 	
 	/*********************** Email types *********************************/
 	'Email types' => 'Типы почтовых событий',
@@ -42,7 +54,12 @@ return array(
 	'Linked email templates' => 'Связанные почтовые шаблоны',
 	'Add linked template' => 'Добавить новый шаблон',
 	'Add email type' => 'Новое событие',
-	'Email type has been saved!' => 'Почтовое событие сохранено',
-	'Email type not found!' => 'Почтовое событие не найдено',
+	'Email type has been saved!' => 'Почтовое событие сохранено!',
+	'Email type not found!' => 'Почтовое событие не найдено!',
 	'Edit email type' => 'Редактирование события',
+	'Email type has been deleted!' => 'Почтовое событие удалено!',
+	'View Email Types' => 'Видеть почтовые события',
+	'Add Email Types' => 'Создавать почтовые события',
+	'Edit Email Types' => 'Редактировать почтовые события',
+	'Delete Email Types' => 'Удалять почтовые события',
 );

@@ -35,6 +35,8 @@ class Controller_Snippet extends Controller_System_Backend {
 			return $this->_add();
 		}
 		
+		Assets::package('ace');
+		
 		$this->template->title = __('Add snippet');
 		$this->breadcrumbs
 			->add($this->template->title);
@@ -119,6 +121,8 @@ class Controller_Snippet extends Controller_System_Backend {
 		{
 			return $this->_edit( $snippet_name );
 		}
+		
+		Assets::package('ace');
 
 		$this->template->content = View::factory( 'snippet/edit', array(
 			'action' => 'edit',

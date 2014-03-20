@@ -10,9 +10,9 @@ class Controller_Archive extends Controller_System_Backend
 	public function action_index() 
 	{
 		$page_id = $this->request->param('id');
-		$page = Record::findByIdFrom('Model_Page', (int) $page_id);
+		$page = ORM::factory('page', (int) $page_id);
 
-		if ( ! $page)
+		if ( ! $page->loaded() )
 		{
 			Flash::set('error', __('Page not found!'));
 			throw new HTTP_Exception_404('Page not found');
@@ -22,22 +22,19 @@ class Controller_Archive extends Controller_System_Backend
 		$this->breadcrumbs
 			->add(__('Pages'), Route::url('backend', array('controller' => 'page')))
 			->add($this->template->title);
+		
+		$pages = ORM::factory('page')->where('parent_id', '=', (int) $page_id);
 
 		$pager = Pagination::factory(array(
-			'total_items' => Record::countFrom('Model_Page', array(
-				'where' => array(array('parent_id', '=', (int) $page_id))
-			))
-		));
-
-		$pages = Record::findAllFrom('Model_Page', array(
-			'where' => array(array('parent_id', '=', (int) $page_id)),
-			'order_by' => array(array('created_on', 'desc')),
-			'limit' => $pager->items_per_page,
-			'offset' => $pager->offset
+			'total_items' => $pages->reset(FALSE)->count_all()
 		));
 		
 		$this->template->content = View::factory('archive/index', array(
-			'items' => $pages,
+			'items' => $pages
+				->order_by('created_on', 'desc')
+				->limit($pager->items_per_page)
+				->offset($pager->offset)
+				->find_all(),
 			'page'	=> $page,
 			'pager' => $pager
 		));

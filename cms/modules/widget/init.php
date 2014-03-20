@@ -46,7 +46,7 @@ Observer::observe( 'frontpage_after_render',  function() {
 
 Observer::observe('view_page_edit_plugins', function($page) {
 
-	$blocks = array(-1 => __('-- Remove from page --'), 0 => __('-- Hide --'), 'PRE' => __('Before page render'));
+	$blocks = array(-1 => __('--- Remove from page ---'), 0 => __('--- Hide ---'), 'PRE' => __('Before page render'));
 	$blocks += ORM::factory( 'layout_block')->find_by_layout($page->layout());
 	$blocks += array('POST' => __('After page render'));
 	
@@ -79,7 +79,8 @@ Observer::observe('page_edit_after_save', function($page) {
 });
 
 Observer::observe(array(
-	'widget_after_delete', 'widget_set_location'
+	'widget_after_delete', 'widget_set_location',
+	'widget_after_edit', 'widget_after_add'
 ), function() {
 	Cache::instance()->delete_tag('layout_blocks');
 });

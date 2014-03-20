@@ -7,8 +7,6 @@
  */
 class KodiCMS_Controller_Layout extends Controller_System_Backend {
 	
-	public $allowed_actions = array('rebuild');
-	
 	public function before()
 	{
 		if($this->request->action() == 'edit' AND ACL::check( 'layout.view' ))
@@ -50,6 +48,8 @@ class KodiCMS_Controller_Layout extends Controller_System_Backend {
 		{
 			return $this->_add();
 		}
+		
+		Assets::package('ace');
 		
 		$this->template->title = __('Add layout');
 		$this->breadcrumbs
@@ -133,6 +133,8 @@ class KodiCMS_Controller_Layout extends Controller_System_Backend {
 		{
 			return $this->_edit( $layout );
 		}
+		
+		Assets::package('ace');
 
 		$this->template->content = View::factory( 'layout/edit', array(
 			'action' => 'edit',

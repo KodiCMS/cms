@@ -41,8 +41,8 @@ final class Flash
 	 * @param none
 	 * @return void
 	 */
-	public static function clear()
+	public static function clear( $var )
 	{
-
-	} // clear
-} // end Flash class
+		Session::instance()->delete( $var );
+	}
+}

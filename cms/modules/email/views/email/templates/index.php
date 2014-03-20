@@ -1,6 +1,6 @@
 <div class="widget widget-nopad">
 	<div class="widget-header">
-		<?php if ( Acl::check( 'email_template.add')): ?>
+		<?php if ( Acl::check( 'email.templates.add')): ?>
 		<?php echo UI::button(__('Add template'), array(
 			'href' => Route::url( 'email_controllers', array('controller' => 'templates', 'action' => 'add')), 'icon' => UI::icon('plus')
 		)); ?>
@@ -31,24 +31,32 @@
 				<?php foreach ($templates as $tpl): ?>
 				<tr class="item">
 					<td class="name">
+						<?php if ( Acl::check( 'email.templates.edit')): ?>
 						<?php echo HTML::anchor(Route::url('email_controllers', array(
 							'controller' => 'templates',
 							'action' => 'edit',
 							'id' => $tpl->id
 						)), $tpl->subject); ?>
+						<?php else: ?>
+						<?php echo UI::icon('lock'); ?> <?php echo $tpl->subject; ?>
+						<?php endif; ?>
 					</td>
 					<td class="email_type">
+						<?php if ( Acl::check( 'email.types.edit')): ?>
 						<?php echo HTML::anchor(Route::url('email_controllers', array(
 							'controller' => 'types',
 							'action' => 'edit',
 							'id' => $tpl->type->id
 						)), $tpl->type->name); ?>
+						<?php else: ?>
+						<?php echo $tpl->type->name; ?>
+						<?php endif; ?>
 					</td>
 					<td class="email"><?php echo UI::label($tpl->email_from); ?></td>
 					<td class="email"><?php echo UI::label($tpl->email_to); ?></td>
 					<td class="status"><?php echo $tpl->status; ?></td>
 					<td class="actions">
-						<?php if ( Acl::check( 'email_template.delete')): ?>
+						<?php if ( Acl::check( 'email.templates.delete')): ?>
 						<?php echo UI::button(NULL, array(
 							'href' => Route::url('email_controllers', array(
 								'controller' => 'templates',
@@ -56,7 +64,7 @@
 								'id' => $tpl->id
 							)), 
 							'icon' => UI::icon('remove'),
-							'class' => 'btn btn-mini btn-confirm'
+							'class' => 'btn btn-mini btn-danger btn-confirm'
 						)); ?>
 						<?php endif; ?>
 					</td>

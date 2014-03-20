@@ -50,26 +50,22 @@ h1, h2, h3, h4 ,h5, h6 {
 	border: 1px solid @border-color;
 	border-top-width: 0;
 	background-color: #f9f9f9;
-	.border-radius(0 0 2px 2px);
 	.box-shadow(0 1px 0 #ccc);
 }
 
 /* ===================================================
 	Outline
  ===================================================*/
-@OutlineBorderRadius: 5px;
 @OutlineMargin: 3px;
 
 .outline {
-    background: rgba(38, 38, 38, 0.1);
-    .border-radius(@OutlineBorderRadius + @OutlineMargin);
+    background: #ddd;
     border: 1px solid #C5C5C5;
     .box-shadow(0 1px 0 rgba(0, 0, 0, 0.05) inset, 0 1px 0 #FFFFFF);
 }
 .outline_inner {
     background-color: #FFFFFF;
-    border-color: #CCCCCC;
-    .border-radius(@OutlineBorderRadius);
+    border-color: #eee;
     border-width: 1px;
     .box-shadow(0 2px 2px -1px rgba(0, 0, 0, 0.1));
     margin: @OutlineMargin;
@@ -132,7 +128,6 @@ h1, h2, h3, h4 ,h5, h6 {
 			.counter {
 				top: 2px;
 				right: 2px;
-				.border-radius(4px);
 				border: 0;
 				background: #60a800;
 			}
@@ -141,7 +136,6 @@ h1, h2, h3, h4 ,h5, h6 {
 }
 
 .dropdown-menu {
-	.border-radius(0);
 	margin: 0;
 }
 
@@ -163,7 +157,7 @@ h1, h2, h3, h4 ,h5, h6 {
  ===================================================*/
 .tabbable {
 	background: rgb(255, 252, 245);
-	border-bottom: 1px solid #ddd;
+	border: 1px solid #ddd;
 	
 	.nav {
 		margin-top: 20px;
@@ -187,12 +181,14 @@ h1, h2, h3, h4 ,h5, h6 {
 				font-weight: normal;
 			}
 			
+			.tab-error {
+				color: red;
+			}
+			
 			&.active {
 				font-weight: bold;
 				
-				a {
-					.box-shadow(-3px 0px 6px 0px #ddd);
-				}
+				a {}
 				
 			}
 			
@@ -280,9 +276,6 @@ table.table {
 	padding: 10px;
 	background: whitesmoke;
 	margin-bottom: 0;
-	
-
-	.border-radius(5px 5px 0 0);
 
 	.form-search {
 		margin-bottom: 0;
@@ -349,10 +342,8 @@ table.table {
 .breadcrumb {
 	margin: 0;
 	padding: 0 20px;
-	.border-radius(0);
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #D4D4D4;
-	background: #fff;
 	
 	li {
 		a, span {
@@ -440,7 +431,6 @@ legend {
 
 			// Remove border radius for top one
 			&:first-child {
-				.border-radius(0);
 			}
 			// But keep it for the last one
 			&:last-child {
@@ -473,7 +463,6 @@ legend {
 		font-size: 25px;
 		
 		img {
-			.border-radius(50%);
 			.box-shadow(0 1px 3px 0px rgba(0, 0, 0, 0.3));
 		}
 	}
@@ -608,5 +597,14 @@ legend {
 			color: #fff;
 			background: #728092;
 		}
+	}
+}
+
+/* ===================================================
+	Flags
+ ===================================================*/
+.flags {
+	* {
+		cursor: pointer;
 	}
 }

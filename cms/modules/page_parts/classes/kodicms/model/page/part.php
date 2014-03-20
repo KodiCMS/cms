@@ -7,17 +7,17 @@
  */
 class KodiCMS_Model_Page_Part extends Record
 {
-    const TABLE_NAME = 'page_parts';
-	
-    const PART_NOT_PROTECTED = 0;
+	const TABLE_NAME = 'page_parts';
+
+	const PART_NOT_PROTECTED = 0;
 	const PART_PROTECTED = 1;
-	
+
 	/**
 	 *
 	 * @var array 
 	 */
 	protected static $_parts = NULL;
-	
+
 	/**
 	 * 
 	 * @param Model_Page_Front $page
@@ -31,7 +31,7 @@ class KodiCMS_Model_Page_Part extends Record
 		{
 			self::$_parts[$page->id()] = self::_load_parts($page->id());
 		}
-		
+
 		if(isset(self::$_parts[$page->id()][$part]))
 		{
 			return TRUE;
@@ -44,7 +44,7 @@ class KodiCMS_Model_Page_Part extends Record
 
 		return FALSE;
 	}
-	
+
 	/**
 	 * 
 	 * @param Model_Page_Front $page
@@ -58,7 +58,7 @@ class KodiCMS_Model_Page_Part extends Record
 		if (self::has_content( $page, $part ))
 		{
 			$view = self::get( $page->id(), $part);
-			
+
 			if( $cache_lifetime !== NULL 
 				AND ! Fragment::load( $page->id() . $part . Request::current()->uri(), (int) $cache_lifetime ))
 			{
@@ -70,7 +70,7 @@ class KodiCMS_Model_Page_Part extends Record
 			{
 				echo $view;
 			}
-			
+
 		}
 		else if ($inherit !== FALSE
 				AND $page->parent() instanceof Model_Page_Front )
@@ -88,7 +88,7 @@ class KodiCMS_Model_Page_Part extends Record
 	public static function get( $page, $part )
 	{
 		$html = NULL;
-		
+
 		$page_id = ($page instanceof Model_Page_Front) ? $page->id() : (int) $page;
 
 		if( empty(self::$_parts[$page_id][$part]) ) return NULL;
@@ -103,7 +103,7 @@ class KodiCMS_Model_Page_Part extends Record
 		{
 			$html = self::$_parts[$page_id][$part]->render();
 		}
-		
+
 		return $html;
 	}
 
@@ -115,18 +115,18 @@ class KodiCMS_Model_Page_Part extends Record
 			'is_protected' => self::PART_NOT_PROTECTED
 		);
 	}
-    
-    public function beforeSave()
-    {
+
+	public function beforeSave()
+	{
 		if (!empty($this->permissions))
 		{
 			$this->savePermissions($this->permissions);
 		}
-		
+
 		unset($this->permissions);
-		
-        // apply filter to save is generated result in the database
-        if ( ! empty($this->filter_id))
+
+		// apply filter to save is generated result in the database
+		if ( ! empty($this->filter_id))
 		{
 			if (WYSIWYG::get($this->filter_id))
 			{
@@ -139,27 +139,27 @@ class KodiCMS_Model_Page_Part extends Record
 				}
 			}
 		}
-		
+
 		$this->content_html = $this->content;
-        
-        return TRUE;
-    }
-    
-    public static function findByPageId($id)
-    {
-        return self::findAllFrom('Model_Page_Part', array(
+
+		return TRUE;
+	}
+
+	public static function findByPageId($id)
+	{
+		return self::findAllFrom('Model_Page_Part', array(
 			'where' => array(array('page_id', '=', (int) $id)),
 			'order_by' => array(array('id', 'asc'))
 		));
-    }
-    
-    public static function deleteByPageId($page_id)
-    {
+	}
+
+	public static function deleteByPageId($page_id)
+	{
 		$parts = self::findAllFrom('Model_Page_Part', array(
 			'where' => array(array('page_id', '=', (int) $page_id))));
-		
+
 		$result = true;
-		
+
 		foreach ($parts as $part)
 		{
 			if ( !$part->delete())
@@ -167,10 +167,10 @@ class KodiCMS_Model_Page_Part extends Record
 				$result = FALSE;
 			}
 		}
-		
+
 		return $result;
-    }
-	
+	}
+
 	public function is_protected($roles = array( 'administrator', 'developer' ))
 	{
 		if(
@@ -181,10 +181,10 @@ class KodiCMS_Model_Page_Part extends Record
 		{
 			return TRUE;
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * @return array
 	 */

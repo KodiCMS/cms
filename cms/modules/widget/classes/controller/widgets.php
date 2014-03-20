@@ -7,6 +7,8 @@
  */
 class Controller_Widgets extends Controller_System_Backend {
 
+	public $allowed_actions = array('template');
+
 	public function before()
 	{
 		parent::before();
@@ -82,7 +84,7 @@ class Controller_Widgets extends Controller_System_Backend {
 		
 		$blocks = array();
 		
-		$default_blocks = array(-1 => '----', 'PRE' => __('Before page render'), 'POST' => __('After page render'));
+		$default_blocks = array(-1 => '--- none ---', 'PRE' => __('Before page render'), 'POST' => __('After page render'));
 		foreach ($res_blocks as $block)
 		{
 			if(empty($blocks[$block->layout_name])) 
@@ -184,20 +186,17 @@ class Controller_Widgets extends Controller_System_Backend {
 			return $this->_edit( $widget );
 		}
 		
-		$templates = array(
-			__('------ none ------')
-		);
-		$snippets = Model_File_Snippet::find_all();
-		
-		foreach ($snippets as $snippet)
+		$roles = array();
+		foreach (Model_Permission::get_all() as $role)
 		{
-			$templates[$snippet->name] = $snippet->name;
+			$roles[$role] = $role;
 		}
 
 		$this->template->content = View::factory( 'widgets/edit', array(
 			'widget' => $widget,
-			'templates' => $templates,
-			'content' =>  $widget->fetch_backend_content()
+			'templates' => Model_File_Snippet::html_select(),
+			'content' =>  $widget->fetch_backend_content(),
+			'roles' => $roles,
 		) );
 	}
 	
@@ -207,13 +206,18 @@ class Controller_Widgets extends Controller_System_Backend {
 		
 		try 
 		{
-			$widget
-				->set_values( $data );
+			if ( ! ACL::check( 'widget.roles' ) AND ! empty($data['roles']))
+			{
+				$data['roles'] = array();
+			}
 			
 			if( ACL::check( 'widgets.cache'))
 			{
 				$widget->set_cache_settings( $data );
 			}
+
+			$widget
+				->set_values( $data );
 			
 			Widget_Manager::update($widget);
 			
@@ -262,6 +266,8 @@ class Controller_Widgets extends Controller_System_Backend {
 			Messages::errors(__( 'Widget not found!' ) );
 			$this->go_back();
 		}
+		
+		Assets::package('ace');
 		
 		$template = $widget->default_template();
 		

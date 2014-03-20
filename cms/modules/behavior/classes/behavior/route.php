@@ -20,6 +20,12 @@ class Behavior_Route {
 	
 	/**
 	 *
+	 * @var array 
+	 */
+	protected $_params = array();
+	
+	/**
+	 *
 	 * @var string 
 	 */
 	protected $_matched_route = NULL;
@@ -28,13 +34,6 @@ class Behavior_Route {
 	{
 		$this->_routes = $routes;
 	}
-	
-	
-	/**
-	 *
-	 * @var array 
-	 */
-	protected $_params = array();
 	
 	/**
 	 * 
@@ -46,6 +45,15 @@ class Behavior_Route {
 		return $this->param($name);
 	}
 	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function matched_route()
+	{
+		return $this->_matched_route;
+	}
+
 	/**
 	 * 
 	 * @param string $name

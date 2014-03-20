@@ -17,14 +17,16 @@ class Model_Widget_SendMail extends Model_Widget_Decorator {
 	const HTML = 20;
 
 	protected $_errors = array();
-	protected $_messages = array();
+	protected $_values = array();
 	
 	public $use_template = FALSE;
+	public $use_caching = FALSE;
 
 	public $fields = array();
 	
 	protected $_data = array(
-		'allowed_tags' => '<b><i><u><p>'
+		'allowed_tags' => '<b><i><u><p>',
+		'next_url' => NULL
 	);
 
 	public function src_types()
@@ -53,6 +55,11 @@ class Model_Widget_SendMail extends Model_Widget_Decorator {
 
 	public function set_values(array $data)
 	{
+		if( ! Valid::url($data['next_url']))
+		{
+			$data['next_url'] = NULL;
+		}
+
 		$data['fields'] = array();
 		if(!empty($data['field']) AND is_array( $data['field'] ))
 		{
@@ -88,7 +95,7 @@ class Model_Widget_SendMail extends Model_Widget_Decorator {
 		foreach ($data['fields'] as $field)
 		{
 			$email_type_fields['key'][] = $field['id'];
-			$email_type_fields['name'][] = Inflector::humanize($field['id']);
+			$email_type_fields['name'][] = ! empty($field['name']) ? $field['name'] : Inflector::humanize($field['id']);
 		}
 
 		$email_type->set('data', $email_type_fields)->update();
@@ -104,34 +111,63 @@ class Model_Widget_SendMail extends Model_Widget_Decorator {
 	public function on_page_load() 
 	{
 		$this->_errors = array();
-		
-		$this->_fetch_template();
 
 		$this->_fetch_fields();
 		
-		if( !empty($this->_errors))
+		$next_url = $this->next_url;
+		
+		if(Request::current()->is_ajax())
 		{
-			Flash::set('errors', $this->_errors);
-			Flash::set('messages', $this->_messages);
+			$json = array('status' => FALSE);
 			
-			$query = URL::query(array('status' => 'error'), FALSE);
-		} 
-		else if( $this->send_message() )
-		{
-			$query = URL::query(array('status' => 'ok'), FALSE);
+			if( !empty($this->_errors))
+			{
+				$json['errors'] = $this->_errors;
+				$json['values'] = $this->_values;
+			} 
+			else if( $this->send_message() )
+			{
+				$json = array('status' => TRUE);
+			}
+			
+			Request::current()->headers( 'Content-type', 'application/json' );		
+			$this->_ctx->response()->body(json_encode($json));
 		}
 		else
 		{
-			$query = URL::query(array('status' => 'error'), FALSE);
+			$referrer = Request::current()->referrer();
+	
+			if( !empty($this->_errors))
+			{
+				Flash::set('form_errors', $this->_errors);
+				Flash::set('form_values', $this->_values);
+
+				$query = URL::query(array('status' => 'error'), FALSE);
+				$next_url = $referrer;
+			} 
+			else if( $this->send_message() )
+			{
+				$query = URL::query(array('status' => 'ok'), FALSE);
+				
+				if(empty($next_url))
+				{
+					$next_url = $referrer;
+				}
+			}
+			else
+			{
+				$query = URL::query(array('status' => 'error'), FALSE);
+				$next_url = $referrer;
+			}
+
+			
+			HTTP::redirect( preg_replace('/\?.*/', '', $next_url) . $query, 302);
 		}
-		
-		$referrer = Request::current()->referrer();
-		HTTP::redirect( preg_replace('/\?.*/', '', $referrer) . $query, 302);
 	}
 
 	public function send_message()
 	{
-		return Email_Type::get($this->get_code())->send($this->_messages);
+		return Email_Type::get($this->get_code())->send($this->_values);
 	}
 
 	protected function _fetch_fields( ) 
@@ -139,47 +175,53 @@ class Model_Widget_SendMail extends Model_Widget_Decorator {
 		foreach($this->fields as $field) 
 		{
 			$value = $this->_get_field_value($field);
-			if(!empty($field['validator']))
+			$field_name = !empty($field['name']) ? $field['name'] : $field['id'];
+			
+			$this->_values[$field['id']] = $value;
+	
+			if( ! empty($field['validator']))
 			{
-				if(  strpos( $field['validator'], '::' ) !== FALSE )
-				{
-					list($class, $method) = explode('::', $field['validator']);
-				}
-				else
-				{
-					$class = 'Valid';
-					$method = $field['validator'];
-				}
+				$validations = explode(',', $field['validator']);
 				
-				if(method_exists($class, $method))
+				foreach($validations as $validator)
 				{
-					if(call_user_func_array($class . '::' . $method, array($value)))
+					$validator = trim($validator);
+
+					if( strpos( $validator, '::' ) !== FALSE )
 					{
-						$this->_messages[$field['id']] = $value;
+						list($class, $method) = explode('::', $validator);
 					}
 					else
 					{
-						$message = Kohana::message('validation', $method);
-						$this->_errors[$field['id']] = array(
+						$class = 'Valid';
+						$method = $validator;
+					}
+					
+					if( $class.'::'.$method != 'Valid::not_empty' AND empty($value) )
+					{
+						continue;
+					}
+
+					if( method_exists($class, $method) )
+					{
+						if( ! call_user_func_array($class . '::' . $method, array($value)))
+						{
+							$message = Kohana::message('validation', $method);
+							$this->_errors[$field['id']][] = array(
+								'value' => $value,
+								'message' => !empty($field['error']) ? $field['error'] : __($message, array(':field' => $field_name))
+							);
+						}
+					}
+					else if( ! preg_match($validator, $value) )
+					{
+						$this->_errors[$field['id']][] = array(
 							'value' => $value,
-							'error' => !empty($field['error']) ? $field['error'] : __($message, array(':field' => $field['id']))
+							'message' => !empty($field['error']) ? $field['error'] : NULL
 						);
 					}
 				}
-				else if(preg_match($field['validator'], $value))
-				{
-					$this->_messages[$field['id']] = $value;
-				}
-				else 
-				{
-					$this->_errors[$field['id']] = array(
-						'value' => $value,
-						'error' => !empty($field['error']) ? $field['error'] : NULL
-					);
-				}
-			} 
-			else
-				$this->_messages[$field['id']] = $value;
+			}
 
 			unset($field);
 		}
@@ -187,7 +229,6 @@ class Model_Widget_SendMail extends Model_Widget_Decorator {
 
 	protected function _get_field_value( $field ) 
 	{
-		
 		$key = $field['id'];
 		$value = NULL;
 

@@ -6,11 +6,7 @@
 	<div class="control-group">
 		<label class="control-label"><?php echo __( 'Enable registration' ); ?></label>
 		<div class="controls">
-			<?php
-			echo Form::select( 'setting[oauth][register]', Form::choises(), Config::get('oauth', 'register' ) );
-			?>
-
-			<p class="help-block"><?php echo __('For detailed profiling use Kohana::$enviroment = Kohana::DEVELOPMENT or SetEnv KOHANA_ENV DEVELOPMENT in .htaccess'); ?></p>
+			<?php echo Form::select( 'setting[oauth][register]', Form::choises(), Config::get('oauth', 'register' ) ); ?>
 		</div>
 	</div>
 

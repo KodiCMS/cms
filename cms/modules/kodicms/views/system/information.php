@@ -44,10 +44,12 @@
 		</table>
 	</div>
 	
+	<?php if(Acl::check('system.phpinfo')): ?>
 	<div class="widget-header"><h3><?php echo __( 'PHP info' ); ?></h3></div>
 	<div class="widget-content">
 		<iframe src="/<?php echo ADMIN_DIR_NAME; ?>/system/phpinfo" width="100%" height="500px" align="left" id="phpinfo" style="border: 0"></iframe>
 	</div>
-	
+	<?php endif; ?>
+
 	<?php Observer::notify( 'view_system_information' ); ?>
 </div>

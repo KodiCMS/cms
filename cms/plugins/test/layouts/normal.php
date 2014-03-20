@@ -4,10 +4,10 @@
 		<?php
 		echo Meta::factory($page)
 				->group('author', '<meta name="author" content="butschster" />')
-				->js('jquery', PUBLIC_URL . 'js/jquery-1.9.0.min.js')
-				->js('bootstrap', PUBLIC_URL . 'js/bootstrap.min.js', 'jquery')
-				->js('holder', PUBLIC_URL . 'js/holder.js', 'jquery')
-				->css('bootstrap', PUBLIC_URL . 'css/bootstrap.min.css'); 
+				->js('jquery', PLUGINS_URL . 'test/public/js/jquery-1.9.0.min.js')
+				->js('bootstrap', PLUGINS_URL . 'test/public/js/bootstrap.min.js', 'jquery')
+				->js('holder', PLUGINS_URL . 'test/public/js/holder.js', 'jquery')
+				->css('bootstrap', PLUGINS_URL . 'test/public/css/bootstrap.min.css'); 
 		?>
 	</head>
 	<body>

@@ -9,6 +9,12 @@ class Model_Navigation_Page extends Model_Navigation_Abstract {
 
 	protected $_section = NULL;
 	
+	/**
+	 * 
+	 * @param string $name
+	 * @param mixed $value
+	 * @return \Model_Navigation_Page
+	 */
 	public function __set( $name, $value )
 	{
 		parent::__set($name, $value);

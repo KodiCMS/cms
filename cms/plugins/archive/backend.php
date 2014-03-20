@@ -27,7 +27,7 @@ if(empty($behaviors))
 if(ACL::check('page.index'))
 {
 	$pages = DB::select()
-		->from(Model_Page::tableName())
+		->from('pages')
 		->where('behavior_id', 'in', $behaviors)
 		->cache_key( 'archive_section' )
 		->cached()
@@ -40,13 +40,13 @@ if(ACL::check('page.index'))
 	foreach ($pages as $page) 
 	{
 		$root_section
-				->add_page(new Model_Navigation_Page(array(
-					'name' => $page->title, 
-					'url' => Route::url('archive', array(
-						'controller' => 'archive', 'id' => $page->id
-					)),
-					'permissions' => 'page.index',
-				)), 999);
+			->add_page(new Model_Navigation_Page(array(
+				'name' => $page->title, 
+				'url' => Route::url('archive', array(
+					'controller' => 'archive', 'id' => $page->id
+				)),
+				'permissions' => 'page.index',
+			)), 999);
 	}
 }
 

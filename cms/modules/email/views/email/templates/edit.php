@@ -73,11 +73,23 @@
 		<div class="control-group">
 			<label class="control-label" for="status"><?php echo __( 'Email status' ); ?></label>
 			<div class="controls">
-				<?php
-				echo Form::select( 'status', array(Model_Email_Template::ACTIVE => __('Active'), Model_Email_Template::INACTIVE => __('Inactive')), (bool) $template->status, array(
+				<?php echo Form::select( 'status', array(
+					Model_Email_Template::ACTIVE => __('Active'), 
+					Model_Email_Template::INACTIVE => __('Inactive')
+					), (bool) $template->status, array(
 					'id' => 'status'
-				) );
-				?>
+				) ); ?>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="status"><?php echo __( 'Email send type' ); ?></label>
+			<div class="controls">
+				<?php echo Form::select( 'use_queue', array(
+					Model_Email_Template::USE_DIRECT => __('Direct sending'),
+					Model_Email_Template::USE_QUEUE => __('Use queue'), 
+					), $template->use_queue, array(
+					'id' => 'use_queue'
+				) ); ?>
 			</div>
 		</div>
 		<div class="control-group">

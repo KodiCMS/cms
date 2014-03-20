@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__messages` (
   `text` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `from_user_id` (`from_user_id`),
-  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from_user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__messages_ibfk_1` FOREIGN KEY (`from_user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__messages_users` (
@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__messages_users` (
   PRIMARY KEY (`message_id`,`user_id`),
   KEY `user_id` (`user_id`),
   KEY `status` (`status`),
-  CONSTRAINT `messages_users_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `__TABLE_PREFIX__messages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `messages_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__messages_users_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `__TABLE_PREFIX__messages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `__TABLE_PREFIX__messages_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

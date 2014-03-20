@@ -5,6 +5,7 @@ return array(
 	'Content of page part :part_name is protected from changes.' 
 		=> 'Контент части страницы :part_name защищен от изменений.',
 	'Is protected' => 'Защищена',
+	'Is indexable' => 'Индексировать',
 	'Filter' => 'Фильтр',
 	'Page part options' => 'Опции части страницы',
 	'Remove part :part_name' => 'Удалить часть :part_name',

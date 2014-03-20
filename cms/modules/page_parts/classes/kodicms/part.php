@@ -22,7 +22,7 @@ class KodiCMS_Part
 	 */
 	public static function exists( Model_Page_Front $page, $part, $inherit = FALSE)
 	{
-		if(self::$_parts === NULL)
+		if(Arr::get(self::$_parts, $page->id()) === NULL)
 		{
 			self::$_parts[$page->id()] = self::_load_parts($page->id());
 		}

@@ -2,11 +2,23 @@
 	<?php
 		echo Bootstrap_Form_Element_Control_Group::factory(array(
 			'element' => Bootstrap_Form_Element_Textarea::factory(array(
-				'name' => 'allowed_tags', 'body' => $widget->get('allowed_tags')
+				'name' => 'allowed_tags', 'body' => $widget->get('allowed_tags'),
 			))
+			->attributes('rows', 2)
 			->label(__('Allowed tags'))
 		));
 	?>
+	
+	<hr />
+	
+	<div class="control-group">
+		<label class="control-label" for="next_url"><?php echo __('Next page after success send (URL)'); ?></label>
+		<div class="controls">
+			<?php echo Form::input( 'next_url', $widget->next_url, array(
+				'class' => 'input-xxlarge'
+			)); ?>
+		</div>
+	</div>
 </div>
 
 <div class="widget-header">
@@ -55,13 +67,9 @@
 		$('#fields_container').on('click', '.remove_field', function() {
 			$(this).parents('.field').remove();
 		});
-		
-		$('#fields').on('click', '.valid-types-label', function() {
-			$(this).parent().find('input').val($(this).data('type'));
-		});
 	})
 </script>
-<div class="widget-content widget-no-border-radius" id="fields">
+<div class="widget-content " id="fields">
 	<div id="sample_field" class="hide">
 		<div class="well field">
 			<h4 class="field-title"></h4>
@@ -96,12 +104,21 @@
 							<?php echo Form::select('field[type][]', $widget->value_types()); ?>
 						</td>
 					</tr>
+					
+					<tr>
+						<td><h5><?php echo __('Field name'); ?></h5></td>
+						<td colspan="3">
+							<?php echo Form::input('field[name][]', NULL, array(
+								'class' => Bootstrap_Form_Element_Input::MEDIUM
+							)); ?>
+						</td>
+					</tr>
 
 					<tr><td colspan="4"><hr /></td></tr>
 
 					<tr>
 						<td></td>
-						<td nowrap><?php echo __('Validation (PCRE)'); ?></td>
+						<td nowrap><?php echo __('Validation'); ?></td>
 						<td colspan="2"></td>
 					</tr>
 					<tr>
@@ -109,21 +126,23 @@
 						<td colspan="3">
 							<?php echo Form::input('field[validator][]'); ?>
 							<br /><br />
-							<span class="label valid-types-label" data-type="not_empty"><?php echo __('Not empty'); ?></span>
-							<span class="label valid-types-label" data-type="url"><?php echo __('URL'); ?></span>
-							<span class="label valid-types-label" data-type="phone"><?php echo __('Phone number'); ?></span>
-							<span class="label valid-types-label" data-type="email"><?php echo __('Email'); ?></span>
-							<span class="label valid-types-label" data-type="email_domain"><?php echo __('Email domain'); ?></span>
-							<span class="label valid-types-label" data-type="ip"><?php echo __('IP'); ?></span>
-							<span class="label valid-types-label" data-type="credit_card"><?php echo __('Credit card'); ?></span>
-							<span class="label valid-types-label" data-type="date"><?php echo __('Date'); ?></span>
-							<span class="label valid-types-label" data-type="alpha"><?php echo __('Alpha'); ?></span>
-							<span class="label valid-types-label" data-type="alpha_dash"><?php echo __('Alpha and hyphens'); ?></span>
-							<span class="label valid-types-label" data-type="alpha_numeric"><?php echo __('Alpha and numbers'); ?></span>
-							<span class="label valid-types-label" data-type="digit"><?php echo __('Integer digit'); ?></span>
-							<span class="label valid-types-label" data-type="decimal"><?php echo __('Decimal'); ?></span>
-							<span class="label valid-types-label" data-type="numeric"><?php echo __('Numeric'); ?></span>
-							<span class="label valid-types-label" data-type="color"><?php echo __('Color'); ?></span>
+							<span class="flags" data-append="true">
+								<span class="label" data-value="not_empty"><?php echo __('Not empty'); ?></span>
+								<span class="label" data-value="url"><?php echo __('URL'); ?></span>
+								<span class="label" data-value="phone"><?php echo __('Phone number'); ?></span>
+								<span class="label" data-value="email"><?php echo __('Email'); ?></span>
+								<span class="label" data-value="email_domain"><?php echo __('Email domain'); ?></span>
+								<span class="label" data-value="ip"><?php echo __('IP'); ?></span>
+								<span class="label" data-value="credit_card"><?php echo __('Credit card'); ?></span>
+								<span class="label" data-value="date"><?php echo __('Date'); ?></span>
+								<span class="label" data-value="alpha"><?php echo __('Alpha'); ?></span>
+								<span class="label" data-value="alpha_dash"><?php echo __('Alpha and hyphens'); ?></span>
+								<span class="label" data-value="alpha_numeric"><?php echo __('Alpha and numbers'); ?></span>
+								<span class="label" data-value="digit"><?php echo __('Integer digit'); ?></span>
+								<span class="label" data-value="decimal"><?php echo __('Decimal'); ?></span>
+								<span class="label" data-value="numeric"><?php echo __('Numeric'); ?></span>
+								<span class="label" data-value="color"><?php echo __('Color'); ?></span>
+							</span>
 						</td>
 					</tr>
 					<tr><td colspan="4"><hr /></td></tr>

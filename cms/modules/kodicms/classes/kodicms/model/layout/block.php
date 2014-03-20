@@ -11,11 +11,17 @@ class KodiCMS_Model_Layout_Block extends ORM {
 		'position' => 'asc'
 	);
 
+	/**
+	 * 
+	 * @param string $name
+	 * @return array
+	 */
 	public function find_by_layout( $name )
 	{
-		return $this
+		return DB::select('block')
+			->from($this->table_name())
 			->where('layout_name', '=', $name)
-			->find_all()
+			->execute()
 			->as_array('block', 'block');
 	}
 }

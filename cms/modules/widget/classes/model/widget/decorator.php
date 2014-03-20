@@ -90,6 +90,12 @@ abstract class Model_Widget_Decorator {
 	 * @var boolean 
 	 */
 	public $crumbs = FALSE;
+	
+	/**
+	 *
+	 * @var boolean 
+	 */
+	public $use_caching = TRUE;
 
 	/**
 	 *
@@ -108,6 +114,12 @@ abstract class Model_Widget_Decorator {
 	 * @var array 
 	 */
 	public $cache_tags = array();
+	
+	/**
+	 *
+	 * @var array 
+	 */
+	public $roles = array();
 
 
 	/**
@@ -128,6 +140,11 @@ abstract class Model_Widget_Decorator {
 	 * @var array 
 	 */
 	protected $_data = array();
+	
+	public function __construct()
+	{
+		$this->_set_type();
+	}
 
 	/**
 	 * 
@@ -241,12 +258,19 @@ abstract class Model_Widget_Decorator {
 		if( empty($this->template) ) 
 		{
 			$this->template = $this->default_template();
-			
 		}
 		else
 		{
 			$snippet = new Model_File_Snippet($this->template);
-			$this->template = $snippet->find_file();
+			
+			if( $snippet->is_exists() )
+			{
+				$this->template = $snippet->get_file();
+			}
+			else if(($this->template = $snippet->find_file()) === FALSE)
+			{
+				$this->template = $this->default_template();
+			}
 		}
 		
 		return $this->template;
@@ -400,6 +424,13 @@ abstract class Model_Widget_Decorator {
 	 */
 	public function set_values(array $data)
 	{
+		unset($data['caching'], $data['cache_lifetime'], $data['cache_tags']);
+
+		if(empty($data['roles']))
+		{
+			$data['roles'] = array();
+		}
+
 		foreach($data as $key => $value)
 		{
 			if( method_exists( $this, 'set_' . $key ))
@@ -414,7 +445,7 @@ abstract class Model_Widget_Decorator {
 		
 		return $this;
 	}
-	
+
 	/**
 	 * 
 	 * @param array $params
@@ -430,6 +461,23 @@ abstract class Model_Widget_Decorator {
 	 */
 	public function render($params = array())
 	{
+		// Проверка правк на видимость виджета
+		if( ! empty($this->roles))
+		{
+			$auth = Auth::instance();
+			if( $auth->logged_in() )
+			{
+				if( ! $auth->get_user()->has_role($this->roles, FALSE) )
+				{
+					return;
+				}
+			}
+			else
+			{
+				return;
+			}
+		}
+		
 		if(Kohana::$profiling === TRUE)
 		{
 			$benchmark = Profiler::start('Widget render', $this->name);
@@ -449,12 +497,15 @@ abstract class Model_Widget_Decorator {
 			echo "<!--{Widget: {$this->name}}-->";
 		}
 		
+		if(Kohana::$caching === FALSE)
+		{
+			$this->caching = FALSE;
+		}
+		
 		if(
-			Kohana::$caching === TRUE
-		AND
 			$this->caching === TRUE
 		AND 
-			! Fragment::load($this->get_cache_id(), $this->cache_lifetime)
+			! Fragment::load($this->get_cache_id(), $this->cache_lifetime, TRUE)
 		)
 		{
 			echo $this->_fetch_render($params);
@@ -488,13 +539,37 @@ abstract class Model_Widget_Decorator {
 	public function __wakeup()
 	{
 		$this->_ctx = Context::instance();
+		
+		$this->_set_type();
 	}
 	
+	protected function _set_type()
+	{
+		$class_name = get_called_class();
+		$this->type = strtolower(substr($class_name, 13));
+		
+		return $this;
+	}
+
 	public function __sleep()
 	{
 		$vars = get_object_vars($this);
 
-		unset($vars['_ctx']);
+		unset(
+			$vars['_ctx'],
+			$vars['id'],
+			$vars['type'],
+			$vars['template'],
+			$vars['name'], 
+			$vars['description'],
+			$vars['backend_template'],
+			$vars['frontend_template'],
+			$vars['use_template'],
+			$vars['block'],
+			$vars['position'],
+			$vars['template_params']
+		);
+
 		return array_keys($vars);
 	}
 

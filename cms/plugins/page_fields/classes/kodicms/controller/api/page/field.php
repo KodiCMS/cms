@@ -31,7 +31,9 @@ class KodiCMS_Controller_API_Page_Field extends Controller_System_Api {
 		$page_id = (int) $this->param('page_id', NULL, TRUE);
 		$field_array = $this->param('field', NULL, TRUE);
 		
-		if( ! Model_Page::findById($page_id))
+		$page = ORM::factory('page', $page_id);
+		
+		if( ! $page->loaded() )
 			throw new HTTP_API_Exception(__('Page not found'));
 		
 		if( !empty($field_array['field_id']))

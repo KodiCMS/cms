@@ -37,6 +37,7 @@ Kohana::modules( array(
 	'logs'			=> MODPATH . 'logs',
 	'auth'			=> MODPATH . 'auth',		// Basic authentication
 	'orm'			=> MODPATH . 'orm',			// Object Relationship Mapping,
+//	'mptt'			=> MODPATH . 'mptt',		// ORM MPTT 
 	'oauth'			=> MODPATH . 'oauth',
 	'sso'			=> MODPATH . 'sso',
 	'minion'		=> MODPATH . 'minion',		// Minion
@@ -48,6 +49,7 @@ Kohana::modules( array(
 	'userguide'		=> MODPATH . 'userguide',	// User guide and API documentation,
 	'scheduler'		=> MODPATH . 'scheduler',
 	'snippet'		=> MODPATH . 'snippet',
+	'pages'			=> MODPATH . 'pages',		// Pages
 	'page_parts'	=> MODPATH . 'page_parts',	// Page parts
 	'tags'			=> MODPATH . 'tags',		// Tags
 	'widget'		=> MODPATH . 'widget',
@@ -61,6 +63,8 @@ Kohana::modules( array(
 	'behavior'		=> MODPATH . 'behavior',
 	'plugins'		=> MODPATH . 'plugins',
 	'datasource'	=> MODPATH . 'datasource',
+	'search'		=> MODPATH . 'search',
+	'sidebar'		=> MODPATH . 'sidebar',
 ) );
 
 Kohana::$config->attach(new Config_Database);
@@ -115,3 +119,5 @@ Route::set( 'default', '(<page>)(<suffix>)' , array(
 		'action' => 'index',
 		'suffix' => URL_SUFFIX
 	) );
+
+Observer::notify('system::init');

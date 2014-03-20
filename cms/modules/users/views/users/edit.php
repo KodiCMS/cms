@@ -7,56 +7,70 @@
 )); ?>
 	<?php echo Form::hidden('token', Security::token()); ?>
 	<div class="widget">
+		<?php if($user->loaded()): ?>
 		<div class="tabbable tabs-left">
 			<ul class="nav nav-tabs"></ul>
 			<div class="tab-content"></div>
 		</div>
+		<?php endif; ?>
 		<div class="widget-header">
 			<h3><?php echo __('General information'); ?></h3>
 		</div>
 		<div class="widget-content">
 			<div class="row-fluid">
 				<div class="span8">
-				<?php 
-					echo Bootstrap_Form_Element_Control_Group::factory(array(
-						'element' => Bootstrap_Form_Element_Input::factory(array(
-							'name' => 'user[name]', 'value' => $user->profile->name
-						), array('id' => 'userEditNameField'))
-						->label(__('Name'))
-					));
+					<div class="control-group">
+						<?php echo $user->profile->label('name', array('class' => 'control-label')); ?>
+						<div class="controls">
+							<?php echo $user->profile->field('name', array(
+								'class' => 'input-medium',
+								'prefix' => 'profile'
+							)); ?>	
+						</div>
+					</div>
 					
-					echo Bootstrap_Form_Element_Control_Group::factory(array(
-						'element' => Bootstrap_Form_Element_Input::factory(array(
-							'name' => 'user[email]', 'value' => $user->email
-						), array('id' => 'userEditEmailField'))
-						->label(__('E-mail'))
-						->append(Bootstrap_Form_Element_Input::add_on(UI::icon('envelope')))
-						->help_text(__('Use a valid e-mail address.'))
-					));
+					<div class="control-group">
+						<?php echo $user->label('email', array('class' => 'control-label')); ?>
+						<div class="controls">
+							<div class=" input-append">
+								<?php echo $user->field('email', array(
+									'class' => 'input-medium',
+									'prefix' => 'user'
+								)); ?>
+								<span class="add-on"><?php echo UI::icon('envelope'); ?></span>
+							</div>
+						</div>
+					</div>
 					
-					echo Bootstrap_Form_Element_Control_Group::factory(array(
-						'element' => Bootstrap_Form_Element_Input::factory(array(
-							'name' => 'user[username]', 'value' => $user->username
-						), array('id' => 'userEditUsernameField'))
-						->label(__('Username'))
-						->append(Bootstrap_Form_Element_Input::add_on(UI::icon('user')))
-						->help_text(__('At least :num characters. Must be unique.', array(
-							':num' => 3
-						)))
-					)); 
-				?>
+					<div class="control-group">
+						<?php echo $user->label('username', array('class' => 'control-label')); ?>
+						<div class="controls">
+							<div class="input-append">
+								<?php echo $user->field('username', array(
+									'class' => 'input-medium',
+									'prefix' => 'user'
+								)); ?>
+								<span class="add-on"><?php echo UI::icon('user'); ?></span>
+							</div>
+							
+							<span class="help-block"><?php echo __('At least :num characters. Must be unique.', array(
+								':num' => 3
+							)); ?></span>
+						</div>
+					</div>
 				</div>
 			</div>
 			
 			<hr />
 			
-			<?php echo Bootstrap_Form_Element_Control_Group::factory(array(
-				'element' => Bootstrap_Form_Element_Select::factory(array(
-					'name' => 'user[locale]', 'options' => I18n::available_langs()
-				))
-				->selected($user->profile->locale)
-				->label(__('Interface language'))
-			)); ?>
+			<div class="control-group">
+				<?php echo $user->profile->label('locale', array('class' => 'control-label')); ?>
+				<div class="controls">
+					<?php echo $user->profile->field('locale', array(
+						'prefix' => 'profile'
+					)); ?>	
+				</div>
+			</div>
 		</div>
 		
 		<div class="widget-header">
@@ -64,18 +78,21 @@
 		</div>
 		
 		<div class="widget-content">
-			<?php echo Bootstrap_Form_Element_Control_Group::factory(array(
-				'element' => Bootstrap_Form_Element_Checkbox::factory(array(
-					'name' => 'user[notice]', 'value' => 1
-				))
-				->checked($user->profile->notice == 1)
-				->label(__('Subscribe to email notifications'))
-			)); ?>
+			<div class="control-group">
+				<div class="controls form-inline">
+					<?php echo $user->profile->field('notice', array(
+						'prefix' => 'profile',
+					)); ?>	
+					<?php echo $user->profile->label('notice', array(
+						'class' => 'checkbox'
+					)); ?>
+				</div>
+			</div>
 			
 			<?php Observer::notify('view_user_edit_notifications', $user->id); ?>
 		</div>
 
-		<?php if( ACL::check('users.change_password') OR $user->id == AuthUser::getId() ): ?>
+		<?php if( ACL::check('users.change_password') OR $user->id == AuthUser::getId() OR !$user->loaded() ): ?>
 		<div class="widget-header spoiler-toggle" data-spoiler=".password-spoiler">
 			<h3><?php echo __('Password'); ?></h3>
 		</div>
@@ -106,8 +123,6 @@
 				->label(__('Confirm Password'))
 			)); 
 			?>
-			
-			
 			<?php Observer::notify('view_user_edit_password', $user->id); ?>
 		</div>
 		<?php endif; ?>

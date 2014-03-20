@@ -52,7 +52,7 @@
 		
 	</div>
 	
-	<?php if ( !empty($permissions) ): ?>
+	<?php if ( !empty($permissions) AND ACL::check('users.view.permissions') ): ?>
 		<div class="widget-header widget-section">
 			<h2><?php echo __('Section permissions'); ?></h2>
 		</div>

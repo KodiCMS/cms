@@ -85,7 +85,7 @@ $(function() {
 </script>
 
 <?php if(!empty($part->id)): ?>
-<h3><?php echo __('Current'); ?>  <button class="btn btn-mini btn-clear"><?php echo __('Clear'); ?></button></h3>
+<h3><?php echo __('Current text'); ?>  <button class="btn btn-mini btn-clear"><?php echo __('Clear diff'); ?></button></h3>
 <pre id="text"><?php echo htmlspecialchars($part->content); ?></pre>
 <?php endif ;?>
 

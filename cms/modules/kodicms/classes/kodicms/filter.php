@@ -138,11 +138,6 @@ class KodiCMS_Filter implements ArrayAccess {
 	 */
 	public function run()
 	{
-		if(Kohana::$profiling === TRUE)
-		{
-			$benchmark = Profiler::start('Filter field', $field);
-		}
-		
 		$rules = $this->_rules;
 
 		// Get the filters for this column
@@ -150,6 +145,11 @@ class KodiCMS_Filter implements ArrayAccess {
 
 		foreach ($rules as $field => $data)
 		{
+			if(Kohana::$profiling === TRUE)
+			{
+				$benchmark = Profiler::start('Filter field', $field);
+			}
+		
 			$data['rules'] = empty($data['rules']) ? $wildcards : array_merge($wildcards, $data['rules']);
 			
 			if($this->offsetExists($field))
@@ -212,11 +212,11 @@ class KodiCMS_Filter implements ArrayAccess {
 			}
 			
 			Arr::set_path($this->_data, $field, $value);
-		}
-		
-		if(isset($benchmark))
-		{
-			Profiler::stop($benchmark);
+			
+			if(isset($benchmark))
+			{
+				Profiler::stop($benchmark);
+			}
 		}
 	}
 }

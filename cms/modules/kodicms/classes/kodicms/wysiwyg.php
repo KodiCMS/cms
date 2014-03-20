@@ -11,7 +11,13 @@ class KodiCMS_WYSIWYG {
 	 *
 	 * @var array
 	 */
-	static $filters = array();
+	public static $filters = array();
+	
+	/**
+	 *
+	 * @var array
+	 */
+	public static $plugins = array();
 
 	/**
 	 * Add a new filter
@@ -22,6 +28,15 @@ class KodiCMS_WYSIWYG {
 	public static function add( $filter_id)
 	{
 		self::$filters[$filter_id] = Inflector::humanize($filter_id);
+	}
+	
+	/**
+	 * 
+	 * @param string $name
+	 */
+	public static function plugin( $name )
+	{
+		self::$plugins[] = (string) $name;
 	}
 
 	/**
@@ -34,6 +49,19 @@ class KodiCMS_WYSIWYG {
 		if ( isset( self::$filters[$filter_id] ) )
 		{
 			unset( self::$filters[$filter_id] );
+		}
+	}
+	
+	public static function load_filters()
+	{
+		foreach (self::$filters as $key => $filter)
+		{
+			Assets::package($key);
+		}
+		
+		foreach (self::$plugins as $plugin)
+		{
+			Assets::package($plugin);
 		}
 	}
 

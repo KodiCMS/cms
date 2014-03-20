@@ -11,6 +11,8 @@ class Model_Widget_Pagination extends Model_Widget_Decorator {
 		'query_key' => 'page'
 	);
 	
+	public $use_caching = FALSE;
+	
 	public function on_page_load() 
 	{
 		$this->widget = $this->_ctx->get_widget($this->related_widget_id);

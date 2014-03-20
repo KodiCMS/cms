@@ -5,7 +5,7 @@ if($plugin->get('maintenance_mode') == Config::YES)
 	// Observe
 	Observer::observe('frontpage_requested', function() {
 		$page = DB::select()
-			->from(Model_Page::TABLE_NAME)
+			->from('pages')
 			->where('behavior_id', '=', 'maintenance_mode')
 			->limit(1)
 			->as_object()

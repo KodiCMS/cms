@@ -6,10 +6,12 @@
 		)); ?>
 		<?php endif; ?>
 
+		<?php if( ACL::check( 'layout.rebuild')): ?>
 		<?php echo UI::button(__('Rebuild blocks'), array(
 			'icon' => UI::icon( 'refresh' ), 'href' => Route::url('backend', array('controller' => 'layout', 'action' => 'rebuild')),
 			'class' => 'btn btn-inverse btn-mini'
 		)); ?>
+		<?php endif; ?>
 	</div>
 
 	<div class="widget-content">
@@ -58,7 +60,7 @@
 						<?php echo Text::bytes( $layout->size()); ?>
 					</td>
 					<td class="direction">
-						<?php echo UI::label($layout->get_relative_path() . EXT); ?>
+						<?php echo UI::label($layout->get_relative_path()); ?>
 					</td>
 					<td class="actions">
 						<?php if( ACL::check( 'layout.delete')): ?>

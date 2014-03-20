@@ -7,8 +7,10 @@
 abstract class Datasource_Section {
 	
 	/**
+	 * Фабрика создания раздела данных
 	 * 
-	 * @param string $type
+	 * @param string $type Тип раздела
+	 * 
 	 * @return \Datasource_Section
 	 */
 	public static function factory($type)
@@ -25,59 +27,95 @@ abstract class Datasource_Section {
 	}
 
 	/**
-	 *
+	 * Загрузка разедла по ID
+	 * 
+	 * @param integer $id
+	 * @return null|Datasource_Section
+	 */
+	public static function load( $id ) 
+	{
+		if($id === NULL)
+		{
+			return NULL;
+		}
+		
+		$query = DB::select('docs', 'indexed', 'code')
+			->from('datasources')
+			->where('id', '=', (int) $id)
+			->execute()
+			->current();
+	
+		if( empty($query) )
+		{
+			return NULL;
+		}
+
+		$result = unserialize($query['code']);
+
+		$result->_id = $id;
+		$result->_docs = (int) $query['docs'];
+		$result->_is_indexable = (bool) $query['indexed'];
+
+		return $result;
+	}
+
+	/**
+	 * Идентификатор раздела
+	 * 
 	 * @var integer
 	 */
 	protected $_id;
 	
 	/**
-	 *
+	 * Тип раздела
+	 * 
 	 * @var string
 	 */
 	protected $_type;
 	
 	/**
-	 *
+	 * Название раздела
+	 * 
 	 * @var string
 	 */
 	public $name;
 	
 	/**
-	 *
+	 * Описание раздела
+	 * 
 	 * @var string
 	 */
 	public $description;
 	
 	/**
-	 *
+	 * Кол-во документов в разделе
+	 * 
 	 * @var integer
 	 */
 	protected $_docs = 0;
 	
 	/**
-	 *
-	 * @var integer
-	 */
-	protected $_size = 0;
-	
-	/**
-	 *
+	 * Таблица раздела в БД
+	 * 
 	 * @var string
 	 */
 	protected $_ds_table;
 	
 	/**
-	 *
+	 * Индексировать раздел
+	 * 
 	 * @var boolean
 	 */
 	protected $_is_indexable = FALSE;
 	
 	/**
-	 *
-	 * @var integer
+	 * Объект загрузки списка документов 
+	 * 
+	 * @var type Datasource_Section_Headline
 	 */
-	protected $_lock;
-	
+	protected $_headline = NULL;
+
+
 	/**
 	 * 
 	 * @param string $type
@@ -85,9 +123,12 @@ abstract class Datasource_Section {
 	public function __construct( $type ) 
 	{
 		$this->_type = $type;
+		
+		$this->_initialize();
 	}
 	
 	/**
+	 * Возвращает тип раздела
 	 * 
 	 * @return string
 	 */
@@ -97,6 +138,7 @@ abstract class Datasource_Section {
 	}
 	
 	/**
+	 * Возвращает идентификатор раздела
 	 * 
 	 * @return integer
 	 */
@@ -106,51 +148,36 @@ abstract class Datasource_Section {
 	}
 	
 	/**
-	 * 
-	 * @return integer
-	 */
-	public function lock()
-	{
-		return $this->_lock;
-	}
-	
-	/**
-	 * 
+	 * Проверка раздела на существование
+	 *  
 	 * @return boolean
 	 */
 	public function loaded()
 	{
 		return $this->_id !== NULL;
 	}
-
+	
 	/**
-	 * @return array Fields
+	 * Возвращает отбъект списка документов
+	 * 
+	 * @return Datasource_Section_Headline
 	 */
-	public function fields()
+	public function headline()
 	{
-		return array(
-			'id' => array(
-				'name' => 'ID',
-				'width' => 50
-			),
-			'header' => array(
-				'name' => 'Header',
-				'width' => NULL,
-				'type' => 'link'
-			)
-		);
+		return $this->_headline;
 	}
 
 	/**
+	 * Создание раздела 
 	 * 
-	 * @param string $name
-	 * @param string $description
+	 * @param array $values Массив полей раздела
 	 *
-	 * @return integer DataSource ID
+	 * @return integer Идентификатор раздела
+	 * @throws DataSource_Exception
 	 */
 	public function create( array $values ) 
 	{
-		$this->valid($values);
+		$this->validate($values);
 
 		$this->name = Arr::get($values, 'name');
 		$this->description = Arr::get($values, 'description');
@@ -178,43 +205,17 @@ abstract class Datasource_Section {
 					array(':name' => $this->name));
 		}
 		
+		unset($query, $values);
+		
 		return $this->_id;
 	}
 	
 	/**
+	 * Обновление раздела.
 	 * 
-	 * @param integer $id
-	 * @return null|Datasource_Section
-	 */
-	public static function load( $id ) 
-	{
-		if($id === NULL)
-		{
-			return NULL;
-		}
-		
-		$query = DB::select('docs', 'indexed', 'locks', 'code')
-			->from('datasources')
-			->where('id', '=', (int) $id)
-			->execute()
-			->current();
-	
-		if( $query === NULL )
-		{
-			return NULL;
-		}
-
-		$result = unserialize($query['code']);
-
-		$result->_id = $id;
-		$result->_lock = (int) $query['locks'];
-		$result->_docs = (int) $query['docs'];
-		$result->_is_indexable = (bool) $query['indexed'];
-
-		return $result;
-	}
-	
-	/**
+	 * При сохранении раздела в БД происходит его сериализация и сохарение данных
+	 * в поле "code". Список полей, которые не должын попадать в БД указывается в 
+	 * методе {@see _serialize()}
 	 * 
 	 * @param array $values
 	 * @return boolean
@@ -228,10 +229,12 @@ abstract class Datasource_Section {
 		
 		if(is_array($values))
 		{
-			$this->valid($values);
+			$this->validate($values);
 
 			$this->name = Arr::get($values, 'name');
 			$this->description = Arr::get($values, 'description');
+		
+			$this->set_indexable(Arr::get($values, 'is_indexable', FALSE));
 		}
 		
 		$data = array(
@@ -249,14 +252,19 @@ abstract class Datasource_Section {
 
 		$this->update_size();
 		
+		unset($data, $values);
+		
 		return TRUE;
 	}
 	
 	/**
+	 * Удаление раздела
+	 * 
+	 * При удалении раздела происходит удаление документов.
 	 * 
 	 * @return \Datasource_Section
 	 */
-	public function remove() 
+	public function remove()
 	{
 		$this->remove_documents();
 		
@@ -270,67 +278,45 @@ abstract class Datasource_Section {
 	}
 	
 	/**
+	 * Удаление разделов документа
+	 * 
+	 * @see Datasource_Section::remove()
+	 * 
 	 * @return \Datasource_Section
 	 */
-	public function remove_documents()
+	public function remove_documents( array $ids = NULL )
 	{
-		DB::delete($this->_ds_table)
-			->where('ds_id', '=', $this->_id)
-			->execute();
+		$query = DB::delete($this->_ds_table);
+		
+		if( ! empty($ids) )
+		{
+			$query->where('id', 'in', $ids);
+		}
+		
+		$query->execute();
+		
+		unset($query);
 		
 		return $this;
 	}
 	
 	/**
+	 * Загрузка документа раздела по ID
 	 * 
-	 * @param integer $doc_id
+	 * @param integer $id
 	 * @return DataSource_Document
 	 */
-	abstract public function get_document($doc_id);
+	abstract public function get_document( $id );
 	
 	/**
+	 * Получение пустого объекта документа
 	 * 
 	 * @return \DataSource_Document
 	 */
 	abstract public function get_empty_document();
 	
 	/**
-	 * 
-	 * @return \Datasource_Section
-	 */
-	public function increase_lock() 
-	{
-		DB::update('datasources')
-			->set(array(
-				'locks' => DB::expr('locks + 1')
-			))
-			->where('id', '=', $this->_id)
-			->execute();
-
-		$this->_lock++;
-		
-		return $this;
-	}
-
-	/**
-	 * 
-	 * @return \Datasource_Section
-	 */
-	public function decrease_lock()	
-	{
-		DB::update('datasources')
-			->set(array(
-				'locks' => DB::expr('locks - 1')
-			))
-			->where('id', '=', $this->_id)
-			->execute();
-
-		$this->_lock--;
-		
-		return $this;
-	}
-	
-	/**
+	 * Публикация документов по ID
 	 * 
 	 * @param array $ids
 	 * @return \Datasource_Section
@@ -341,6 +327,7 @@ abstract class Datasource_Section {
 	}
 
 	/**
+	 * Снятие документов с публикации по ID
 	 * 
 	 * @param array $ids
 	 * @return \Datasource_Section
@@ -351,12 +338,13 @@ abstract class Datasource_Section {
 	}
 	
 	/**
+	 * Смена статуса документов по ID.
 	 * 
 	 * @param array $ids
 	 * @param boolean $value
 	 * @return \Datasource_Section
 	 */
-	protected function _publish(array $ids, $value) 
+	protected function _publish(array $ids, $status) 
 	{
 		DB::update($this->_ds_table)
 			->set(array(
@@ -380,31 +368,7 @@ abstract class Datasource_Section {
 	}
 	
 	/**
-	 * 
-	 * @return boolean
-	 */
-	public function is_full() 
-	{
-		if( ! $this->_size) return FALSE;
-
-		return $this->_size <= $this->_docs;
-	}
-
-	/**
-	 * 
-	 * @param integer $size
-	 * @return \Datasource_Section
-	 */
-	public function set_size($size) 
-	{
-		$size = (int) $size;
-
-		$this->_size = $size == 0 OR $this->_docs <= $size ? $size : $this->_size;
-		
-		return $this;
-	}
-	
-	/**
+	 * Обновление поля кол-ва документов в разделе
 	 * 
 	 * @return \Datasource_Section
 	 */
@@ -426,11 +390,102 @@ abstract class Datasource_Section {
 	}
 	
 	/**
+	 * Валидация данных полей раздела
+	 * 
+	 * @param array $array
+	 * @throws Validation_Exception
+	 */
+	public function validate( array $array )
+	{
+		$validation = Validation::factory($array)
+			->rules('name', array(
+				array('not_empty')
+			))
+			->label('name', __('Header') );
+		
+		if( ! $validation->check() )
+		{
+			throw new Validation_Exception($array);
+		}
+	}
+	
+	/**
+	 * Вызывается при сохранении раздела в БД
+	 * 
+	 * @return array
+	 */
+	public function __sleep()
+	{
+		return array_keys($this->_serialize());
+	}
+	
+	/**
+	 * Список параметров объекта, которые должны сохраняться в БД.
+	 * 
+	 * @return array
+	 */
+	protected function _serialize()
+	{
+		$vars = get_object_vars($this);
+		unset($vars['_docs'], $vars['_is_indexable'], $vars['_headline']);
+		
+		return $vars;
+	}
+
+	/**
+	 * При заггрузке данных раздела из БД происходит десериализация объекта из поля
+	 * "Code", что по сути является загрузкой раздела и в этот момент вызывается этот метод.
+	 * 
+	 * Если после загрузки раздела необходимо восстановить связи с другими объектами, их 
+	 * необходимо описывать в методе {@see _initialize()}
+	 */
+	public function __wakeup()
+	{
+		$this->_initialize();
+	}
+	
+	/**
+	 * Инициализация данных раздела при создании или загрузке
+	 * @throws Kohana_Exception
+	 */
+	protected function _initialize()
+	{
+		$this->_docs = 0;
+		$this->_is_indexable = FALSE;
+
+		$headline_class = 'Datasource_Section_' . ucfirst($this->type()) . '_Headline';
+		if(!class_exists($headline_class))
+		{
+			throw new Kohana_Exception('Headline class :class not found', array(
+				':class' => $headline_class
+			));
+		}
+
+		$this->_headline = new $headline_class($this);
+	}
+	
+	
+	/**************************************************************************
+	 * Search indexation
+	 **************************************************************************/
+
+	/**
+	 * Состояние поисковой индексации раздела
+	 * 
+	 * @return boolean
+	 */
+	public function is_indexable()
+	{
+		return (bool) $this->_is_indexable;
+	}
+
+	/**
+	 * Смена статуса поисковой индексации раздела
 	 * 
 	 * @param boolean $newState
 	 * @return \Datasource_Section
 	 */
-	public function set_indexable($state) 
+	public function set_indexable( $state ) 
 	{
 		$state = (bool) $state;
 
@@ -441,7 +496,7 @@ abstract class Datasource_Section {
 			return $this;
 		}
 
-		if($state == $this->_is_indexable)
+		if($state == $this->is_indexable())
 		{
 			return $this;
 		}
@@ -461,125 +516,101 @@ abstract class Datasource_Section {
 	}
 	
 	/**
+	 * Загрузка списка документов по ID в формате для индексации
 	 * 
-	 * @param array $ids
-	 * @param string $header
-	 * @param string $content
-	 * @param string $intro
-	 * @return \Datasource_Section
+	 * @param integer|array $id
+	 * @return array array([ID] => array('id', 'header', 'content', 'intro'), ...)
 	 */
-	public function add_to_index(array $ids = NULL, $header = NULL, $content = NULL, $intro = NULL) 
-	{
-		if( ! $this->_is_indexable)
-		{
-			return $this;
-		}
-
-		// TODO Add to index
-	}
-	
-	/**
-	 * 
-	 * @param array $id
-	 * @param string $header
-	 * @param string $content
-	 * @param string $intro
-	 * @return \Datasource_Section
-	 */
-	public function update_index(array $ids, $header = NULL, $content = NULL, $intro = NULL) 
-	{
-		if( ! $this->_is_indexable)
-		{
-			return $this;
-		}
-
-		// TODO Update index
-	}
-	
-	/**
-	 * 
-	 * @param array $ids
-	 * @return \Datasource_Section
-	 */
-	public function remove_from_index( array $ids = NULL) 
-	{
-		if( ! $this->_is_indexable)
-		{
-			return $this;
-		}
-		
-		// TODO Remove index
-	}
-	
-	public function get_indexable_docs($id = NULL) 
+	public function get_indexable_documents( array $id = NULL ) 
 	{
 		$result = DB::select('id', 'header', 'content', 'intro')
 			->from($this->_ds_table)
 			->where('published', '=', 1)
 			->where('ds_id', '=', $this->_id);
 		
-		if($id !== NULL)
+		if( ! empty($id) )
 		{
-			if(is_array($id))
-			{
-				$result->where('id', 'in', $id);
-			}
-			else
-			{
-				$result->where('id', '=', $id);
-			}
+			$result->where('id', 'in', $id);
 		}
 
-		return $result->execute()->as_array('id');
+		return $result
+			->execute()
+			->as_array('id');
 	}
 	
 	/**
+	 * Добавление документов раздела в поисковый индекс
+	 * 
+	 * При передаче массива ID другие параметры указывать не нужно, т.к. они 
+	 * загрузятся автоматически 
+	 * 
+	 * @see Datasource_Section::get_indexable_documents()
+	 * 
+	 * @param array $ids Индентификаторы документов
+	 * @param string $header Заголовок документа
+	 * @param string $content Индексируемый текст
+	 * @param string $intro Описание документа
+	 * @return \Datasource_Section
+	 */
+	public function add_to_index(array $ids = array(), $header = NULL, $content = NULL, $intro = NULL) 
+	{
+		if( ! $this->is_indexable())
+		{
+			return $this;
+		}
+
+		if(count($ids) == 1 AND $header !== NULL)
+		{
+			Search::instance()->add_to_index('ds_' . $this->id(), $ids[0], $header, $content, $intro);
+		}
+		else
+		{
+			$docs = $this->get_indexable_documents($ids);
+			
+			foreach($docs as $doc)
+			{
+				Search::instance()->add_to_index('ds_' . $this->id(), $doc['id'], $doc['header'], $doc['content'], $doc['intro']);
+			}
+		}
+	}
+	
+	/**
+	 * Обновление поискового индекса документов раздела
+	 * 
+	 * При передаче массива ID другие параметры указывать не нужно, т.к. они 
+	 * загрузятся автоматически 
+	 * 
+	 * @see Datasource_Section::get_indexable_documents()
 	 * 
 	 * @param array $ids
-	 * @return array
+	 * @param string $header
+	 * @param string $content
+	 * @param string $intro
+	 * @return \Datasource_Section
 	 */
-	public function filter_docs( array $ids) 
+	public function update_index(array $ids = array(), $header = NULL, $content = NULL, $intro = NULL) 
 	{
-		return DB::select('id')
-			->from($this->_ds_table)
-			->where('id', 'in', $ids)
-			->where('ds_id', '=', $this->_id)
-			->execute()
-			->as_array(NULL, 'id');
+		if( ! $this->is_indexable())
+		{
+			return $this;
+		}
+
+		return $this->add_to_index($ids, $header, $content, $intro);
 	}
 	
 	/**
+	 * Удаление документов из поискового индекса
 	 * 
-	 * @param integer $ds_id
-	 * @return array
+	 * @param array $ids
+	 * @return \Datasource_Section
 	 */
-	abstract public function get_headline( array $ids = NULL, $search_word = NULL );
-	
-	public function __sleep()
+	public function remove_from_index( array $ids = NULL) 
 	{
-		$vars = get_object_vars($this);
-		unset($vars['_docs'], $vars['_is_indexable']);
-
-		return array_keys($vars);
-	}
-	
-	public function __wakeup()
-	{
-		$this->_docs = 0;
-		$this->_is_indexable = FALSE;
-	}
-	
-	public function valid(array $array)
-	{
-		$array = Validation::factory($array)
-			->rules('name', array(
-				array('not_empty')
-			))
-			->label('name', __('Header') );
-		
-		if( ! $array->check())
+		if( ! $this->is_indexable())
 		{
-			throw new Validation_Exception($array);
+			return $this;
 		}
+		
+		Search::instance()->remove_from_index('ds_' . $this->id(), $ids);
 	}
 }

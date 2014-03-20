@@ -87,7 +87,9 @@ class Controller_Email_Types extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go();
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'types'
+			)));
 		}
 		else
 		{
@@ -108,7 +110,9 @@ class Controller_Email_Types extends Controller_System_Backend {
 		if( ! $type->loaded() )
 		{
 			Messages::errors( __('Email type not found!') );
-			$this->go();
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'types'
+			)));
 		}
 
 		// check if trying to save
@@ -162,7 +166,9 @@ class Controller_Email_Types extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go();
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'types'
+			)));
 		}
 		else
 		{
@@ -172,5 +178,37 @@ class Controller_Email_Types extends Controller_System_Backend {
 				'id' => $type->id
 			)));
 		}
+	}
+	
+	public function action_delete()
+	{
+		$this->auto_render = FALSE;
+
+		$id = (int) $this->request->param('id');
+		
+		$type = ORM::factory('email_type', $id);
+		
+		if( ! $type->loaded() )
+		{
+			Messages::errors( __('Email type not found!') );
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'types'
+			)));
+		}
+		
+		try
+		{
+			$type->delete();
+			Messages::success( __( 'Email type has been deleted!' ) );
+		} 
+		catch ( Kohana_Exception $e ) 
+		{
+			Messages::errors( __( 'Something went wrong!' ) );
+			$this->go_back();
+		}
+
+		$this->go(Route::url('email_controllers', array(
+			'controller' => 'types'
+		)));
 	}
 }

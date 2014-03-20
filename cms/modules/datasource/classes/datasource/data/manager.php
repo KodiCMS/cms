@@ -25,16 +25,11 @@ class Datasource_Data_Manager {
 	 * 
 	 * @return array
 	 */
-	public static function get_tree()
+	public static function get_tree( $type = NULL )
 	{
 		$result = array();
 		
-		$query = DB::select('id', 'type', 'name', 'description')
-			->from(array('datasources', 'ds'))
-			->order_by('type')
-			->order_by('name')
-			->execute()
-			->as_array('id');
+		$query = self::get_all($type);
 
 		foreach ( $query as $r )
 		{
@@ -56,8 +51,11 @@ class Datasource_Data_Manager {
 	 */
 	public static function get_all($type = NULL) 
 	{
+		if(is_array($type) AND empty($type)) return array();
+
 		$sections = DB::select('id', 'name', 'type', 'description')
 			->from(array('datasources', 'ds'))
+			->order_by('type')
 			->order_by('name');
 		
 		if($type !== NULL)

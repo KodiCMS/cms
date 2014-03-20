@@ -1,9 +1,9 @@
 <?php if( ACL::check('page.custom_fields')): ?>
-<div class="widget-header widget-no-border-radius spoiler-toggle" data-spoiler=".spoiler-page-fields" data-hash="page-fields">
+<div class="widget-header  spoiler-toggle" data-spoiler=".spoiler-page-fields" data-hash="page-fields">
 	<h4><?php echo __('Page fields'); ?></h4>
 </div>
 
-<div class="widget-content widget-no-border-radius spoiler spoiler-page-fields">
+<div class="widget-content  spoiler spoiler-page-fields">
 	<?php if(empty($page->id)): ?>
 	<h4><?php echo __('Copy fields from'); ?></h4>
 	<select name="fields[from_page_id]" class="span12">

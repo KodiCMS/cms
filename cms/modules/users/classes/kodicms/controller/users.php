@@ -26,21 +26,14 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 	
 	public function action_index()
 	{
-		$this->template->title = __('Users');
-
+		$this->set_title(__('Users'), FALSE);
 		$users = ORM::factory('user');
-		
-		$pager = Pagination::factory(array(
-			'total_items' => $users->reset(FALSE)->count_all(),
-			'items_per_page' => 20
-		));
+		$pager = $users->add_pager();
 
 		$this->template->content = View::factory( 'users/index', array(
 			'users' => $users
-				->group_by( 'user.id')
+				->group_by('user.id')
 				->with_roles()
-				->limit($pager->items_per_page)
-				->offset($pager->offset)
 				->find_all(),
 			'pager' => $pager
 		) );
@@ -48,8 +41,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 
 	public function action_add()
 	{
-		// check if user have already enter something
-		$data = Flash::get( 'post_data', array() );
+		$data = Flash::get( 'users::add::data', array() );
 
 		$user = ORM::factory('user')
 			->values($data);
@@ -60,9 +52,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 			return $this->_add($user);
 		}
 		
-		$this->template->title = __('Add user');
-		$this->breadcrumbs
-			->add($this->template->title);
+		$this->set_title(__('Add user'));
 
 		$this->template->content = View::factory( 'users/edit', array(
 			'action' => 'add',
@@ -71,9 +61,10 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 		) );
 	}
 
-	private function _add($user)
+	private function _add(ORM $user)
 	{
 		$data = $this->request->post('user');
+		$profile = $this->request->post('profile');
 		$permissions = $this->request->post('user_permission');
 		$this->auto_render = FALSE;
 		
@@ -82,40 +73,27 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 			$data['notice'] = 0;
 		}
 		
-		Flash::set( 'post_data', $data );
-
-		$user->values($data);
+		Flash::set( 'users::add::data', $data );
 
 		try 
 		{
-			if ( $user->create() )
-			{
-				$user->update_related_ids('roles', explode(',', $permissions));
+			$user = $user->values($data)->create();
+			$user->update_related_ids('roles', explode(',', $permissions));
 
-				$data['user_id'] = $user->id;
-				$user->profile
-					->values($data)
-					->create();
-				
-				Kohana::$log->add(Log::INFO, 'User :new_user has been added by :user', array(
-					':new_user' => HTML::anchor(Route::url('backend', array(
-						'controller' => 'users',
-						'action' => 'profile',
-						'id' => $user->id
-					)), $user->username),
-				))->write();
+			$profile['user_id'] = $user->id;
+			
+			$user->profile
+				->values($profile)
+				->create();
 
-				Messages::success(__( 'User has been added!' ) );
-				Observer::notify( 'user_after_add', $user );
-			}
+			Messages::success(__( 'User has been added!' ) );
 		}
 		catch (ORM_Validation_Exception $e)
 		{
 			Messages::errors( $e->errors('validation') );
 			$this->go_back();
 		}
-		
-		// save and quit or save and continue editing?
+
 		if ( $this->request->post('commit') !== NULL )
 		{
 			$this->go();
@@ -128,8 +106,6 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 			));
 		}
 	}
-	
-	
 	
 	public function action_profile()
 	{
@@ -197,6 +173,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 	private function _edit( $user )
 	{
 		$data = $this->request->post('user');
+		$profile = $this->request->post('profile');
 		$this->auto_render = FALSE;
 
 		if( ACL::check('users.change_password') OR $user->id == AuthUser::getId() )
@@ -212,9 +189,9 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 		}
 		
 
-		if( empty($data['notice'] ))
+		if( empty($profile['notice'] ))
 		{
-			$data['notice'] = 0;
+			$profile['notice'] = 0;
 		}
 
 		try
@@ -225,7 +202,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 			{
 				$data['user_id'] = $user->id;
 				$user->profile
-					->values($data)
+					->values($profile)
 					->save();
 
 				if ( Acl::check('users.change_roles') AND $user->id > 1 )
@@ -234,17 +211,8 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 					$permissions = $this->request->post('user_permission');
 					$user->update_related_ids('roles', explode(',', $permissions));
 				}
-				
-				Kohana::$log->add(Log::INFO, 'User :new_user has been updated by :user', array(
-					':new_user' => HTML::anchor(Route::url('backend', array(
-						'controller' => 'users',
-						'action' => 'profile',
-						'id' => $user->id
-					)), $user->username),
-				))->write();
 
 				Messages::success( __( 'User has been saved!' ) );
-				Observer::notify( 'user_after_edit', $user );
 			}
 		}
 		catch (ORM_Validation_Exception $e)
@@ -272,16 +240,6 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 		$this->auto_render = FALSE;
 		$id = $this->request->param('id');
 
-		// security (dont delete the first admin)
-		if ( $id <= 1 )
-		{
-			Kohana::$log->add(Log::INFO, ':user trying to delete administrator', array(
-				':user_id' => $id,
-			))->write();
-			
-			throw new Kohana_Exception( 'Action disabled!' );
-		}
-
 		// find the user to delete
 		$user = ORM::factory('user', $id);
 
@@ -293,12 +251,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 
 		if ( $user->delete() )
 		{
-			Kohana::$log->add(Log::INFO, 'User with id :user_id has been deleted by :user', array(
-				':user_id' => $id,
-			))->write();
-			
 			Messages::success( __( 'User has been deleted!' ) );
-			Observer::notify( 'user_after_delete', $id );
 		}
 		else
 		{

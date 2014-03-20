@@ -32,7 +32,9 @@
 			<colgroup>
 				<col />
 				<col width="80px" />
+				<?php if( ACL::check('plugins.change_status')): ?>
 				<col width="100px" />
+				<?php endif; ?>
 			</colgroup>
 			<thead>
 				<tr>

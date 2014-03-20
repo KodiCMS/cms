@@ -36,7 +36,6 @@ table tr:nth-child(even) {
 	padding: 1.5em;
 	padding-left: 5em;
 	background: #e8efcf url('../img/lightbulb_48.png') no-repeat 1em center;
-	border-radius: 0.6em;
 	overflow: auto;
 }
 

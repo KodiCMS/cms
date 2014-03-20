@@ -3,7 +3,7 @@
 <div class="widget-header">
 	<h4><?php echo __('List settings'); ?></h4>
 </div>
-<div class="widget-content widget-no-border-radius">
+<div class="widget-content ">
 	<div class="control-group">
 		<label class="control-label" for="list_offset"><?php echo __('Number of documents to omit'); ?></label>
 		<div class="controls">

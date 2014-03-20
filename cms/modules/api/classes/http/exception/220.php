@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 
 /**
- * @package		KodiCMS/Api
+ * @package		KodiCMS/API
  * @category	Exception
  * @author		ButscHSter
  */

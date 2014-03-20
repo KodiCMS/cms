@@ -1,5 +1,17 @@
 if (!RedactorPlugins) var RedactorPlugins = {};
 
+RedactorPlugins.elfinder = {
+	init: function ()
+	{
+		var self = this;
+		this.addBtnSeparator();
+		this.addBtn('filemanager', 'elFinder', function() {
+			cms.filemanager.open(self.$el.attr('id'));
+		});
+	},
+};
+
+
 RedactorPlugins.fullscreen = {
 	init: function()
 	{

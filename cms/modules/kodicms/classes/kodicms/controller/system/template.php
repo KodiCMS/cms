@@ -145,4 +145,22 @@ class KodiCMS_Controller_System_Template extends Controller_System_Security
 
 		return strtolower($path);
 	}
+	
+	/**
+	 * 
+	 * @param string $title
+	 * @param boolean $set_breadcrumbs
+	 * @return Controller
+	 */
+	public function set_title( $title, $set_breadcrumbs = TRUE )
+	{
+		$this->template->title = $title;
+		
+		if($set_breadcrumbs === TRUE)
+		{
+			$this->breadcrumbs->add($title);
+		}
+		
+		return $this;
+	}
 }

@@ -38,13 +38,12 @@ cms.init.add(['datasources_data_index'], function () {
 			return;
 
 		Api.post('/datasource/hybrid-document.' + action, data, function(response) {
-			console.log(response);
 			window.location = '';
 		})
 	})
 });
 
-cms.init.add('hybrid_section_edit', function() {
+cms.init.add('datasources_section_edit', function() {
 	
 	var $fields = $('#section-fields input'),
 		$checked_fields = $fields.filter(':checked');
@@ -78,11 +77,6 @@ cms.init.add('hybrid_section_edit', function() {
 
 cms.init.add(['hybrid_document_view', 'hybrid_document_create'], function () {
 	$('ul.nav-tabs').tabs();
-	
-	$('.input-date').datepicker({
-        // options
-        dateFormat:'yy-mm-dd'
-    });
 });
 
 cms.init.add(['hybrid_field_add'], function () {

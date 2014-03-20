@@ -2,15 +2,15 @@
 	<h3 id="cache-settings"><?php echo __('Cache settings'); ?></h3>
 </div>
 <div class="widget-content spoiler cache-settings">
+	<?php if( ACL::check('system.cache.clear')): ?>
 	<div class="well">
-		<?php if( ACL::check('cache.clear')): ?>
 		<?php echo UI::button(__('Clear cache'), array(
 			'icon' => UI::icon( 'stethoscope' ),
 			'id' => 'clear-cache',
 			'class' => 'btn btn-warning'
 		)); ?>
-		<?php endif; ?>
 	</div>
+	<?php endif; ?>
 	
 	<div class="control-group">
 		<?php echo Form::label('setting_cache_driver', __('Cache driver'), array('class' => 'control-label')); ?>

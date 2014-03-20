@@ -222,6 +222,8 @@ class Plugin_Decorator extends Plugin {
 			Kohana::load($install_file);
 		}
 		
+		Observer::notify('plugin_install', $this->id());
+		
 		Plugins::install( $this );
 	}
 	
@@ -248,6 +250,8 @@ class Plugin_Decorator extends Plugin {
 		{
 			Kohana::load($uninstall_file);
 		}
+
+		Observer::notify('plugin_uninstall', $this->id());
 
 		return $this->_clear_cache();
 	}
@@ -287,8 +291,8 @@ class Plugin_Decorator extends Plugin {
 			->get('settings');
 		
 		$this->_settings = !empty($settings) 
-				? unserialize($settings) 
-				: array();
+			? unserialize($settings) 
+			: array();
 		
 		return $this;
 	}

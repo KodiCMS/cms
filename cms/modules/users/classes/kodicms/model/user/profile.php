@@ -16,7 +16,6 @@ class KodiCMS_Model_User_Profile extends ORM {
 		'user' => array('model' => 'user'),
     );
 
-	// Validation rules
 	public function rules()
 	{
 		return array(
@@ -25,6 +24,30 @@ class KodiCMS_Model_User_Profile extends ORM {
 				array('min_length', array(':value', 2)),
 				array('max_length', array(':value', 32))
 			),
+		);
+	}
+	
+	public function labels()
+	{
+		return array(
+			'name'			=> __('Name'),
+			'locale'		=> __('Interface language'),
+			'notice'        => __('Subscribe to email notifications')
+		);
+	}
+	
+	public function form_columns()
+	{
+		return array(
+			'locale' => array(
+				'type' => 'select',
+				'choises' => 'I18n::available_langs'
+			),
+			'notice' => array(
+				'type' => 'checkbox',
+				'checked' => FALSE,
+				'value' => 1
+			)
 		);
 	}
 }

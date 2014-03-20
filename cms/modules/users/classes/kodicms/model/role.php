@@ -7,6 +7,42 @@
  */
 class KodiCMS_Model_Role extends Model_Auth_Role {
 	
+	public function labels()
+	{
+		return array(
+			'name' => __('Name'),
+			'description' => __('Description')
+		);
+	}
+	
+	public function filters()
+	{
+		return array(
+			'name' => array(
+				array('strtolower'),
+				array('URL::title')
+			)
+		);
+	}
+	
+	public function form_columns()
+	{
+		return array(
+			'id' => array(
+				'type' => 'input',
+				'editable' => FALSE,
+				'length' => 10
+			),
+			'name' => array(
+				'type' => 'input',
+				'length' => 50
+			),
+			'description' => array(
+				'type' => 'textarea'
+			)
+		);
+	}
+
 	public function permissions()
 	{
 		return DB::select('action')
@@ -36,5 +72,53 @@ class KodiCMS_Model_Role extends Model_Auth_Role {
 		}
 		
 		return $this;
+	}
+	
+	public function after_create()
+	{	
+		Kohana::$log->add(Log::INFO, 'Role :role has been added by :user', array(
+			':role' => HTML::anchor(Route::url('backend', array(
+				'controller' => 'roles',
+				'action' => 'edit',
+				'id' => $this->id
+			)), $this->name),
+		))->write();
+
+		Observer::notify( 'role_after_add', $this );
+	}
+	
+	public function after_update()
+	{
+		Kohana::$log->add(Log::INFO, 'Role :role has been updated by :user', array(
+			':role' => HTML::anchor(Route::url('backend', array(
+				'controller' => 'roles',
+				'action' => 'edit',
+				'id' => $this->id
+			)), $this->name),
+		))->write();
+
+		Observer::notify( 'role_after_edit', $this );
+	}
+	
+	public function before_delete()
+	{
+		Kohana::$log->add(Log::INFO, 'Role :role has been deleted by :user', array(
+			':role' => HTML::anchor(Route::url('backend', array(
+				'controller' => 'roles',
+				'action' => 'edit',
+				'id' => $this->id
+			)), $this->name),
+		))->write();
+
+		Observer::notify( 'role_delete', $this->id );
+		
+		return TRUE;
+	}
+	
+	public function after_delete($id)
+	{
+		DB::delete('roles_permissions')
+			->where('role_id', '=', $id)
+			->execute();
 	}
 }

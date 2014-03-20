@@ -7,7 +7,8 @@ $(function() {
 			page_id: PAGE_ID,
 			content: '',
 			is_protected: 0,
-			is_expanded: 1
+			is_expanded: 1,
+			is_indexable: 0
 		},
 	
 		parse: function(response, xhr) {
@@ -29,6 +30,10 @@ $(function() {
 		
 		toggleMinimize: function() {
 			this.save({is_expanded: this.get('is_expanded') == 1 ? 0 : 1});
+		},
+		
+		switchIndexable: function() {
+			this.save({is_indexable: this.get('is_indexable') == 1 ? 0 : 1});
 		},
 		
 		changeFilter: function(filter_id) {
@@ -67,6 +72,7 @@ $(function() {
 			'click .part-minimize-button': 'toggleMinimize',
 			'change .item-filter': 'changeFilter',
 			'change .is_protected': 'switchProtected',
+			'change .is_indexable': 'switchIndexable',
 			'click .item-remove': 'clear',
 			'dblclick .part-name': 'editName',
 			'blur .edit-name': 'closeEditName',
@@ -120,6 +126,10 @@ $(function() {
 		switchProtected: function() {
 			this.model.switchProtected();
 		},
+		
+		switchIndexable: function() {
+			this.model.switchIndexable();
+		},
 
 		initialize: function() {
 			this.model.on('add', this.render, this);
@@ -135,6 +145,10 @@ $(function() {
 			
 			if(this.model.get('is_protected') == 1) {
 				this.$el.find('.is_protected').check();
+			}
+			
+			if(this.model.get('is_indexable') == 1) {
+				this.$el.find('.is_indexable').check();
 			}
 			
 			this.changeFilter();
@@ -159,7 +173,7 @@ $(function() {
 			this.collection.fetch({
 				data: {
 					pid: PAGE_ID,
-					fields: ['filter_id','content','content_html','page_id','is_protected','is_expanded']
+					fields: ['filter_id','content','content_html','page_id','is_protected','is_expanded', 'is_indexable']
 				},
 				success: function () {
 					$self.render();
@@ -204,8 +218,21 @@ $(function() {
 			e.preventDefault();
 
 			this.model = new cms.models.part();
+
 			if(this.collection.length == 0)
 				this.model.set('name', 'body');
+			
+			var i = 0;
+			this.collection.each(function(part) {
+				if(part.get('name') == this.model.get('name')) {
+					do {
+						i++;
+						this.model.set('name', 'part' + i);
+					} while (this.model.get('name') == part.get('name'));
+				}
+				
+			}, this);
+			
 
 			this.model.save();
 			

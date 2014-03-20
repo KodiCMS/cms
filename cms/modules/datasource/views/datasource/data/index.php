@@ -1,3 +1,5 @@
+<?php echo $toolbar; ?>
+
 <div id="headline" class="widget">
 	<div class="tablenav form-inline widget-header page-actions">
 		<?php if(ACL::check($ds_type.$ds_id.'.document.edit')):?>
@@ -29,6 +31,7 @@
 		
 		<div class="clearfix"></div>
 	</div>
+	
 	<div class="widget-content widget-nopad">
 	<?php echo $headline; ?>
 	</div>

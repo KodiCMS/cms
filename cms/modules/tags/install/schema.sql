@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__page_tags` (
   `tag_id` int(11) unsigned NOT NULL,
   UNIQUE KEY `page_id` (`page_id`,`tag_id`),
   KEY `tag_id` (`tag_id`),
-  CONSTRAINT `page_tags_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `__TABLE_PREFIX__pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `page_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `__TABLE_PREFIX__tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__page_tags_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `__TABLE_PREFIX__pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `__TABLE_PREFIX__page_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `__TABLE_PREFIX__tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

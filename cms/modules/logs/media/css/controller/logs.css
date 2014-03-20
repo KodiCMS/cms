@@ -1,0 +1,15 @@
+#logs-table tr.item td {
+	border-top-width: 5px;
+}
+
+#logs-table tr.odd td {
+	background: whitesmoke
+}
+
+#logs-table tr .log-user {
+	text-align: right;
+}
+
+#logs-table tr .log-level {
+	text-align: center;
+}

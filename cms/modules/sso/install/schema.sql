@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__user_social` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `service_key` (`service_id`,`service_type`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `user_social_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__user_social_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `__TABLE_PREFIX__users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;

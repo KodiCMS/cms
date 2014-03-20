@@ -16,7 +16,7 @@ Cache::$default = defined('CACHE_TYPE') ? CACHE_TYPE : 'file';
 //	Cache::$default = Config::get('cache', 'driver');
 //});
 
-if(ACL::check('cache.settings'))
+if(ACL::check('system.cache.settings'))
 {
 	Observer::observe('view_setting_plugins', function() {
 		echo View::factory('cache/settings');

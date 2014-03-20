@@ -41,15 +41,62 @@ class Assets_Core {
 	public static $css = array();
 	
 	/**
+	 *
+	 * @var array  Javascript assets to minify 
+	 */
+	protected static $_css_minify = array();
+	
+	
+	/**
 	 * @var  array  Javascript assets
 	 */
 	public static $js = array();
+	
+	/**
+	 *
+	 * @var array  Javascript assets to minify 
+	 */
+	protected static $_js_minify = array();
 	
 	/**
 	 * @var  array  Other asset groups (meta data, links, etc...)
 	 */
 	public static $groups = array();
 	
+	/**
+	 *
+	 * @var type 
+	 */
+	public static $packages = array();
+	
+	
+	public static function package($names)
+	{
+		if(!is_array($names))
+		{
+			$names = array($names);
+		}
+
+		foreach ( $names as $name )
+		{
+			$package = Arr::get(Assets::$packages, $name);
+
+			if($package === NULL) continue;
+
+			foreach ($package->css() as $handle => $src)
+			{
+				Assets::$css[$handle] = $src;
+			}
+
+			foreach ($package->js() as $handle => $src)
+			{
+				Assets::$js[$handle] = $src;
+			}
+		}
+		
+		return TRUE;
+	}
+
 	/**
 	 * CSS wrapper
 	 *
@@ -85,6 +132,8 @@ class Assets_Core {
 			'src'   => $src,
 			'deps'  => (array) $deps,
 			'attrs' => $attrs,
+			'handle' => $handle,
+			'type' => 'css'
 		);
 	}
 	
@@ -102,6 +151,8 @@ class Assets_Core {
 		}
 		
 		$asset = Assets::$css[$handle];
+
+		if(in_array($asset['src'], Assets::$_css_minify)) return NULL;
 		
 		return HTML::style($asset['src'], $asset['attrs']);
 	}
@@ -123,7 +174,7 @@ class Assets_Core {
 			$assets[] = Assets::get_css($handle);
 		}
 		
-		return implode("\n", $assets);
+		return implode("", $assets);
 	}
 	
 	/**
@@ -169,6 +220,8 @@ class Assets_Core {
 			'src'    => $src,
 			'deps'   => (array) $deps,
 			'footer' => $footer,
+			'handle' => $handle,
+			'type' => 'js'
 		);
 	}
 	
@@ -186,6 +239,8 @@ class Assets_Core {
 		}
 		
 		$asset = Assets::$js[$handle];
+		
+		if(in_array($asset['src'], Assets::$_js_minify)) return NULL;
 		
 		return HTML::script($asset['src']);
 	}
@@ -223,7 +278,7 @@ class Assets_Core {
 			$sorted[] = Assets::get_js($handle);
 		}
 		
-		return implode("\n", $sorted);
+		return implode("", $sorted);
 	}
 	
 	/**
@@ -317,7 +372,7 @@ class Assets_Core {
 			$assets[] = Assets::get_group($group, $handle);
 		}
 		
-		return implode("\n", $assets);
+		return implode("", $assets);
 	}
 	
 	/**
@@ -343,6 +398,65 @@ class Assets_Core {
 		unset(Assets::$groups[$group][$handle]);
 	}
 	
+	public static function minify()
+	{
+		Assets::$_js_minify = Assets::$_css_minify = array();
+
+		foreach (Assets::_sort(Assets::$js) as $handle => $js)
+		{
+			Assets::$_js_minify[] = $js['src'];
+		}
+		
+		foreach (Assets::_sort(Assets::$css) as $css)
+		{
+			Assets::$_css_minify[] = $css['src'];
+		}
+		
+		Assets::css('cache', Assets::_minify(Assets::$_css_minify, 'css'));
+		Assets::js('cache', Assets::_minify(Assets::$_js_minify, 'js'));
+	}
+	
+	protected static function _minify($array, $ext)
+	{
+		$files = '';
+				
+		foreach($array as $src)
+		{
+			$files .= $src;
+		}
+	
+		$filename = md5($files). '.' . $ext;
+		$file_path = CMSPATH . 'media' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . $filename;
+		
+		if( file_exists($file_path) )
+		{
+			return ADMIN_RESOURCES . 'cache/' . $filename;
+		}
+		
+		$minified = '';
+		foreach($array as $src)
+		{
+			$file_content = file_get_contents($src);
+			$minified .= $file_content . ";\n\n\n";
+			
+//			echo debug::vars($src, Text::bytes(strlen($file_content)));
+		}
+		
+		if($ext == 'js')
+		{
+			$minified = Assets::_compress_script($minified);
+		}
+
+		$file = file_put_contents($file_path, $minified, LOCK_EX);
+		return ADMIN_RESOURCES . 'cache/' . $filename;
+	}
+	
+	protected function _compress_script( $script ) 
+	{
+		return Assets_Min_JavaScript::minify( $script );
+	}
+
+
 	/**
 	 * Sorts assets based on dependencies
 	 *

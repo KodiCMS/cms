@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__page_widgets` (
   PRIMARY KEY (`page_id`,`widget_id`),
   KEY `page_block` (`page_id`,`block`),
   KEY `widget_id` (`widget_id`),
-  CONSTRAINT `page_widgets_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `__TABLE_PREFIX__pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `page_widgets_ibfk_2` FOREIGN KEY (`widget_id`) REFERENCES `__TABLE_PREFIX__widgets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `__TABLE_PREFIX__page_widgets_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `__TABLE_PREFIX__pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `__TABLE_PREFIX__page_widgets_ibfk_2` FOREIGN KEY (`widget_id`) REFERENCES `__TABLE_PREFIX__widgets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `__TABLE_PREFIX__widgets` (

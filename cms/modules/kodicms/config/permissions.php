@@ -1,40 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
-	'page' => array(
-		array(
-			'action' => 'index',
-			'description' => 'View pages'
-		),
-		array(
-			'action' => 'add',
-			'description' => 'Add pages'
-		),
-		array(
-			'action' => 'edit',
-			'description' => 'Edit pages'
-		),
-		array(
-			'action' => 'sort',
-			'description' => 'Sort pages'
-		),
-		array(
-			'action' => 'permissions',
-			'description' => 'Set page permissions'
-		),
-		array(
-			'action' => 'custom_fields',
-			'description' => 'Manage custom fields'
-		),
-		array(
-			'action' => 'parts',
-			'description' => 'Manage parts'
-		),
-		array(
-			'action' => 'delete',
-			'description' => 'Delete pages'
-		),
-	),
 	'layout' => array(
 		array(
 			'action' => 'index',
@@ -56,6 +22,10 @@ return array(
 			'action' => 'delete',
 			'description' => 'Delete layout'
 		),
+		array(
+			'action' => 'rebuild',
+			'description' => 'Rebuild block list'
+		),
 	),
 	'system' => array(
 		array(
@@ -65,6 +35,10 @@ return array(
 		array(
 			'action' => 'information',
 			'description' => 'View system information'
+		),
+		array(
+			'action' => 'phpinfo',
+			'description' => 'View PHP info'
 		),
 	),
 );

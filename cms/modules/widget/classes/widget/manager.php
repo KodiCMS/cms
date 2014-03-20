@@ -27,7 +27,6 @@ class Widget_Manager {
 		if( ! class_exists($class) ) return NULL;
 	
 		$widget = new $class;
-		$widget->type = $type;
 
 		return $widget;
 	}
@@ -49,11 +48,16 @@ class Widget_Manager {
 				->from( array( 'widgets', 'w' ) )
 				->join( array( 'page_widgets', 'pw' ), 'left' )
 				->on( 'w.id', '=', 'pw.widget_id' )
-				->where( 'w.type', 'in', $type )
 				->group_by( 'w.id' )
 				->group_by( 'w.name' )
-				->order_by( 'w.name' )
-				->execute();
+				->order_by( 'w.name' );
+		
+		if(!empty($type))
+		{
+			$res->where( 'w.type', 'in', $type );
+		}
+		
+		$res = $res->execute();
 
 		foreach( $res as $row )
 		{
@@ -107,6 +111,8 @@ class Widget_Manager {
 		{
 			$widgets[$id] = unserialize($widget['code']);
 			$widgets[$id]->id = $widget['id'];
+			$widgets[$id]->name = $widget['name'];
+			$widgets[$id]->description = $widget['description'];
 			$widgets[$id]->template = $widget['template'];
 			$widgets[$id]->block = $widget['block'];
 			$widgets[$id]->position = (int) $widget['position'];
@@ -233,7 +239,11 @@ class Widget_Manager {
 
 		$widget = unserialize( $result['code'] );
 		$widget->id = $result['id'];
-
+		$widget->name = $result['name'];
+		$widget->description = $result['description'];
+		$widget->type = $result['type'];
+		$widget->template = $result['template'];
+		
 		return $widget;
 	}
 	
@@ -256,11 +266,12 @@ class Widget_Manager {
 			$i = 0;
 			foreach($data as $page_id => $block)
 			{
-				if(empty($block['name'])) continue;
+				if($block['name'] == -1) continue;
 
 				$insert->values(array(
 					$page_id, (int) $widget_id, $block['name'], (int) $block['position']
 				));
+
 				$i++;
 			}
 			

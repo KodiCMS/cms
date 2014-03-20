@@ -15,6 +15,10 @@ return array(
 			'description' => 'Edit users'
 		),
 		array(
+			'action' => 'view.permissions',
+			'description' => 'View user permissions'
+		),
+		array(
 			'action' => 'change_roles',
 			'description' => 'Change user roles'
 		),

@@ -21,6 +21,6 @@ return array(
 		),
 	),
 	'default_plugins' => array(
-		'archive', 'maintenance', 'page_not_found', 'redactor', 'slug_translit', 'tagsinput'
+		'archive', 'maintenance', 'page_not_found', 'redactor', 'slug_translit'
 	)
 );

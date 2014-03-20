@@ -50,6 +50,8 @@ class Controller_Email_Templates extends Controller_System_Backend {
 			return $this->_add($template);
 		}
 		
+		WYSIWYG::load_filters();
+		
 		$this->template->title = __('Add email template');
 		$this->breadcrumbs
 			->add($this->template->title);
@@ -100,7 +102,9 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go();
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'templates'
+			)));
 		}
 		else
 		{
@@ -121,7 +125,9 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		if( ! $template->loaded() )
 		{
 			Messages::errors( __('Email template not found!') );
-			$this->go();
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'templates'
+			)));
 		}
 
 		// check if trying to save
@@ -129,6 +135,8 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		{
 			return $this->_edit( $template );
 		}
+		
+		WYSIWYG::load_filters();
 
 		$this->template->title = __('Edit email template');
 		$this->breadcrumbs
@@ -178,7 +186,9 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go();
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'templates'
+			)));
 		}
 		else
 		{
@@ -188,5 +198,37 @@ class Controller_Email_Templates extends Controller_System_Backend {
 				'id' => $template->id
 			)));
 		}
+	}
+	
+	public function action_delete()
+	{
+		$this->auto_render = FALSE;
+
+		$id = (int) $this->request->param('id');
+		
+		$template = ORM::factory('email_template', $id);
+		
+		if( ! $template->loaded() )
+		{
+			Messages::errors( __('Email template not found!') );
+			$this->go(Route::url('email_controllers', array(
+				'controller' => 'templates'
+			)));
+		}
+		
+		try
+		{
+			$template->delete();
+			Messages::success( __( 'Email template has been deleted!' ) );
+		} 
+		catch ( Kohana_Exception $e ) 
+		{
+			Messages::errors( __( 'Something went wrong!' ) );
+			$this->go_back();
+		}
+
+		$this->go(Route::url('email_controllers', array(
+			'controller' => 'templates'
+		)));
 	}
 }

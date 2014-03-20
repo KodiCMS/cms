@@ -13,6 +13,9 @@ class Model_Email_Template extends ORM
 	const ACTIVE = 1;
 	const INACTIVE = 0;
 	
+	const USE_QUEUE = 1;
+	const USE_DIRECT = 0;
+	
 	protected $_foreign_key_suffix = '';
 
 	protected $_created_column = array(
@@ -32,7 +35,8 @@ class Model_Email_Template extends ORM
 		'email_from' => '{default_email}',
 		'email_to' => '{email_to}',
 		'message_type' => Model_Email_Template::TYPE_HTML,
-		'status' => Model_Email_Template::ACTIVE
+		'status' => Model_Email_Template::ACTIVE,
+		'use_queue' => Model_Email_Template::USE_DIRECT
 	);
 
 	/**
@@ -61,6 +65,9 @@ class Model_Email_Template extends ORM
 				array('not_empty'),
 				array('in_array', array(':value', array(Model_Email_Template::ACTIVE, Model_Email_Template::INACTIVE))),
 			),
+			'use_queue' => array(
+				array('in_array', array(':value', array(Model_Email_Template::USE_QUEUE, Model_Email_Template::USE_DIRECT))),
+			),
 		);
 	}
 	
@@ -80,10 +87,16 @@ class Model_Email_Template extends ORM
 			'reply_to' => __('Email reply to'),
 			'cc' => __('CC'),
 			'bcc' => __('BCC'),
-			'subject' => __('Email subject')
+			'subject' => __('Email subject'),
+			'use_queue' => __('Use queue')
 		);
 	}
 	
+	public function use_queue()
+	{
+		return (bool) $this->use_queue;
+	}
+
 	/**
 	 * 
 	 * @param array $options
@@ -94,6 +107,11 @@ class Model_Email_Template extends ORM
 	{
 		if ( ! $this->_loaded)
 			throw new Kohana_Exception('Cannot send message because it is not loaded.');
+		
+		if($this->use_queue())
+		{
+			return $this->add_to_queue($options);
+		}
 		
 		foreach($this->_object as $field => $value)
 		{
@@ -132,9 +150,7 @@ class Model_Email_Template extends ORM
 	{
 		if ( ! $this->_loaded)
 			throw new Kohana_Exception('Cannot send message because it is not loaded.');
-		
-		
-		
+
 		foreach($this->_object as $field => $value)
 		{
 			$this->_object[$field] = str_replace(array_keys($options), array_values($options), $value);

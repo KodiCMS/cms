@@ -7,6 +7,14 @@
  */
 class Controller_API_Log extends Controller_System_Api {
 	
+	public function post_clear_old()
+	{
+		ORM::factory('log')->clean_old();
+		
+		$this->response((bool) $delete);
+		$this->message(__('Old logs has been deleted'));
+	}
+
 	public function get_get()
 	{		
 		$uids = $this->param('uids');
@@ -21,11 +29,19 @@ class Controller_API_Log extends Controller_System_Api {
 			$limit == 100;
 		}
 		
-		if(!empty($uids))
+		if( ! empty($uids))
+		{
 			$uids = explode(',', $uids);
+		}
 		
-		if(!empty($level))
+		if( ! empty($level))
+		{
 			$level = explode(',', $level);
+		}
+		else
+		{
+			$level = array(Log::INFO);
+		}
 
 		$list = DB::select('logs.id', 'logs.created_on', 'logs.level', 'logs.message', 'logs.user_id')
 			->select('users.email', 'users.username')

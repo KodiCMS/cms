@@ -9,6 +9,8 @@ class Controller_Messages extends Controller_System_Backend {
 		parent::before();
 		$this->breadcrumbs
 			->add(__('Messages'), strtolower($this->request->controller()));
+		
+		Assets::package('redactor');
 	}
 	
 	public function action_index()

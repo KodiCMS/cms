@@ -54,12 +54,23 @@ class Model_Navigation_Abstract {
 		return Arr::get($this->_params, $name, $default);
 	}
 	
+	/**
+	 * 
+	 * @param string $name
+	 * @param mixed $value
+	 * @return \Model_Navigation_Abstract
+	 */
 	public function __set( $name, $value )
 	{
 		$this->_params[$name] = $value;
 		return $this;
 	}
 	
+	/**
+	 * 
+	 * @param string $name
+	 * @return boolean
+	 */
 	public function __isset($name) 
 	{
 		return isset($this->_params[$name]);
@@ -92,6 +103,10 @@ class Model_Navigation_Abstract {
 		return Arr::get($this->_params, 'url');
 	}
 	
+	/**
+	 * 
+	 * @return integer
+	 */
 	public function counter()
 	{
 		return (int) Arr::get($this->_params, 'counter');

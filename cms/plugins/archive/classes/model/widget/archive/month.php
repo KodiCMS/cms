@@ -13,7 +13,7 @@ class Model_Widget_Archive_Month extends Model_Widget_Archive {
 
 		$result = DB::select(array(DB::expr( 'DATE_FORMAT('. Database::instance()->quote_column('published_on').', "%Y/%m")' ), 'date'))
 			->distinct( TRUE )
-			->from(Model_Page::TABLE_NAME)
+			->from('pages')
 			->where('parent_id', '=', $page->id)
 			->where('status_id', '!=', Model_Page::STATUS_HIDDEN)
 			->order_by( 'published_on', 'desc' )

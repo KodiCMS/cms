@@ -53,6 +53,11 @@ class Model_Navigation_Section extends Model_Navigation_Abstract implements Coun
 		return $this->_pages;
 	}
 	
+	/**
+	 * 
+	 * @param array $pages
+	 * @return \Model_Navigation_Section
+	 */
 	public function add_pages( array $pages )
 	{
 		foreach ($pages as $page)
@@ -119,6 +124,11 @@ class Model_Navigation_Section extends Model_Navigation_Abstract implements Coun
 			->sort();
 	}
 	
+	/**
+	 * 
+	 * @param string $uri
+	 * @return boolean
+	 */
 	public function find_active_page_by_uri($uri)
 	{
 		$found = FALSE;
@@ -151,6 +161,11 @@ class Model_Navigation_Section extends Model_Navigation_Abstract implements Coun
 		return $found;
 	}
 
+	/**
+	 * 
+	 * @param type $name
+	 * @return Model_Navigation_Section
+	 */
 	public function find_section($name)
 	{
 		foreach ($this->_sections as $section)
@@ -173,6 +188,11 @@ class Model_Navigation_Section extends Model_Navigation_Abstract implements Coun
 		return NULL;
 	}
 
+	/**
+	 * 
+	 * @param string $uri
+	 * @return null|Model_Navigation_Page
+	 */
 	public function & find_page_by_uri( $uri )
 	{
 		$_page = NULL;
@@ -197,6 +217,10 @@ class Model_Navigation_Section extends Model_Navigation_Abstract implements Coun
 		return $_page;
 	}
 	
+	/**
+	 * 
+	 * @return \Model_Navigation_Section
+	 */
 	public function update()
 	{
 		$this->counter = 0;

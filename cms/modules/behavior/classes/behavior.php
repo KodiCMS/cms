@@ -116,5 +116,23 @@ class Behavior
 	{
 		return array_keys(self::$behaviors);
 	}
-
-} // end Behavior class
+	
+	/**
+	 * 
+	 * @param string $name
+	 * @param array|string $selected
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function select_choises()
+	{
+		$options = array('' => __('none'));
+				
+		foreach ( self::findAll() as $behavior )
+		{
+			$options[$behavior] = __(ucfirst(Inflector::humanize( $behavior )));
+		}
+		
+		return $options;
+	}
+}
