@@ -16,7 +16,7 @@ class Controller_Snippet extends Controller_System_Backend {
 		
 		parent::before();
 		$this->breadcrumbs
-			->add(__('Snippets'), Route::url('backend', array('controller' => 'snippet')));
+			->add(__('Snippets'), Route::get('backend')->uri(array('controller' => 'snippet')));
 	}
 
 	public function action_index()
@@ -121,9 +121,9 @@ class Controller_Snippet extends Controller_System_Backend {
 		{
 			return $this->_edit( $snippet_name );
 		}
-		
-		Assets::package('ace');
 
+		Assets::package('ace');
+		
 		$this->template->content = View::factory( 'snippet/edit', array(
 			'action' => 'edit',
 			'filters' => WYSIWYG::findAll(),

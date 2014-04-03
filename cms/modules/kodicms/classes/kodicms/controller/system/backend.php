@@ -51,7 +51,8 @@ class KodiCMS_Controller_System_Backend extends Controller_System_Template
 			$this->template->bind_global('navigation', $navigation);
 			
 			Assets::js('jquery', ADMIN_RESOURCES . 'libs/jquery.min.js');
-			
+			// Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
+	
 			Assets::css('dropzone', ADMIN_RESOURCES . 'libs/dropzone/css/basic.css', 'jquery');
 			Assets::js('dropzone', ADMIN_RESOURCES . 'libs/dropzone/dropzone.min.js', 'jquery');
 			

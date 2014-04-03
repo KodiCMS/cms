@@ -5,7 +5,7 @@ cms.init.add(['users_edit', 'users_add'], function () {
 		minimumInputLength: 0,
 		multiple: true,
 		ajax: {
-			url: '/api/user-roles.get',
+			url: SITE_URL + 'api/user-roles.get',
 			data: function(query, pageNumber, context) {
 				return {
 					key: query,
@@ -33,7 +33,7 @@ cms.init.add(['users_edit', 'users_add'], function () {
 				callback([{'id':1, 'text':'login'}]);
 				return ;
 			}
-			$.ajax('/api-users.roles', {
+			$.ajax(SITE_URL + 'api/api-users.roles', {
 				data: {
 					uid: USER_ID,
 					fields: 'id,name'

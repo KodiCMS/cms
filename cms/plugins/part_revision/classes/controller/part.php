@@ -7,7 +7,7 @@ class Controller_Part extends Controller_System_Backend
 		parent::before();
 		
 		$this->breadcrumbs
-			->add(__('Pages'), Route::url('backend', array('controller' => 'page')));
+			->add(__('Pages'), Route::get('backend')->uri(array('controller' => 'page')));
 	}
 	
 	public function action_revision()
@@ -28,7 +28,7 @@ class Controller_Part extends Controller_System_Backend
 			$page = ORM::factory('page', $part->page_id);
 		
 			$this->breadcrumbs
-				->add($page->title, Route::url('backend', array(
+				->add($page->title, Route::get('backend')->uri(array(
 					'controller' => 'page',
 					'action' => 'edit',
 					'id' => $page->id

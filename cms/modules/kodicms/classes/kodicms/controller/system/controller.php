@@ -67,7 +67,7 @@ class KodiCMS_Controller_System_Controller extends Controller
 				$route_params = Arr::merge( $route_params, $url );
 			}
 			
-			$url = Route::url('backend', $route_params);
+			$url = Route::get('backend')->uri($route_params);
 		}
 		
 		if( is_array( $this->query_params ) )
@@ -92,7 +92,7 @@ class KodiCMS_Controller_System_Controller extends Controller
 		$current_params['directory'] = strtolower($this->request->directory());
 		$current_params['action'] = strtolower($this->request->action());
 		$params = $params + $current_params;
-		return Route::url(Route::name(Request::current()->route()), $params, TRUE);
+		return Route::get(Route::name(Request::current()->route()))->uri($params, TRUE);
 	}
 	
 	protected function _save_referer($event, $referer = FALSE)

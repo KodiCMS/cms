@@ -27,7 +27,7 @@ return array(
 	'Job is currently running' => 'В процессе',
 	'Job is complete' => 'Выполнена',
 	'Job run time' => 'Время запуска',
-	'Job hystory' => 'История запука',
+	'Job history' => 'История запука',
 	'Job settings' => 'Настройка задач',
 	'Job agent' => 'Агент',
 	'When using cron you need to add the following line to the crontab file:' => 
@@ -35,4 +35,7 @@ return array(
 	
 	//============Permissions============//
 	'View scheduler' => 'Видеть раздел',
+		
+	/* Validation */
+	'Not true format.' => 'Не верный формат.',
 );

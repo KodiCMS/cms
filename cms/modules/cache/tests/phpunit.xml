@@ -10,6 +10,7 @@
 <php>
 	<includePath>./cache</includePath>
 </php>
+<!-- 
 <phpunit colors="true" bootstrap="/path/to/your/unittest/bootstrap.php">
 	<testsuites>
 		<testsuite name="Kohana Cache Tests">
@@ -17,3 +18,4 @@
 		</testsuite>
 	</testsuites>
 </phpunit>
+ -->

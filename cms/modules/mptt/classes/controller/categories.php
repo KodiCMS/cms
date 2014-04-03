@@ -12,7 +12,11 @@ class Controller_Categories extends Controller_System_Backend {
 		parent::before();
 
 		$this->breadcrumbs
-			->add(__('Categories'), Route::url('backend', array('controller' => 'categories')));
+			->add(__('Categories'), Route::get('backend')->uri(
+					array(
+							'controller' => 'categories'
+					)
+		));
 	}
 
 	public function action_index()

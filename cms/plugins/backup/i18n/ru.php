@@ -14,5 +14,8 @@ return array(
 	'Folder (:folder) mus be writable!' => 'Папка (:folder) должна быть доступна для записи',
 	'File is not attached!' => 'Файл не прекреплен',
 	'Bad format of file!' => 'Не верный формат файла',
-	'File :filename uploaded succefully' => 'Файл :filename успешно загружен на сервер'
+	'File :filename uploaded succefully' => 'Файл :filename успешно загружен на сервер',
+		
+	/* Validation */
+	'Must be a directory' => 'Должен быть каталог',
 );

@@ -1,5 +1,5 @@
 <div id="message_<?php echo $message->id; ?>" class="message widget-content  <?php if(AuthUser::getId() == $message->from_user_id): ?>own-message<?php endif; ?> <?php if( $message->is_read == Model_API_Message::STATUS_NEW AND AuthUser::getId() != $message->from_user_id ): ?>new-message<?php endif; ?>">
-	<h4><?php echo HTML::anchor(Route::url('backend', array(
+	<h4><?php echo HTML::anchor(Route::get('backend')->uri(array(
 			'controller' => 'users',
 			'action' => 'profile',
 			'id' => $message->from_user_id

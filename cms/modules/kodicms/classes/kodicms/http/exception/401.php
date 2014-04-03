@@ -21,7 +21,7 @@ class KodiCMS_HTTP_Exception_401 extends Kohana_HTTP_Exception_401
 	
 		$response = Response::factory()
 			->status(401)
-			->headers('Location', Route::url( 'user', array(
+			->headers('Location', Route::get('user')->uri(array(
 				'action' => 'login'
 			)));
 	

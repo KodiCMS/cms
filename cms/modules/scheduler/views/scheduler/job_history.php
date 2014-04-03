@@ -1,5 +1,5 @@
 <hr />
-<h3><?php echo __('Job hystory'); ?></h3>
+<h3><?php echo __('Job history'); ?></h3>
 <div class="widget widget-nopad">
 	<div class="widget-content">
 		<table class="table table-striped table-hover">
@@ -14,7 +14,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($hystory as $log): ?>
+				<?php foreach ($history as $log): ?>
 					<tr class="item">
 						<td class="log-run-time">
 							<?php echo Date::format($log->created_on, 'j F Y H:i:s'); ?>

@@ -12,7 +12,7 @@ if(AuthUser::isLoggedIn())
 			'children' => array(
 				array(
 					'name' => __('Messages'), 
-					'url' => Route::url('backend', array('controller' => 'messages')),
+					'url' => Route::get('backend')->uri(array('controller' => 'messages')),
 					'permissions' => 'messages.index',
 					'icon' => 'envelope',
 					'divider' => TRUE,

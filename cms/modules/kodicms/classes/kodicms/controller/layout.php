@@ -6,7 +6,7 @@
  * @author		ButscHSter
  */
 class KodiCMS_Controller_Layout extends Controller_System_Backend {
-	
+		
 	public function before()
 	{
 		if($this->request->action() == 'edit' AND ACL::check( 'layout.view' ))
@@ -16,7 +16,7 @@ class KodiCMS_Controller_Layout extends Controller_System_Backend {
 		
 		parent::before();
 		$this->breadcrumbs
-			->add(__('Layouts'), Route::url('backend', array('controller' => 'layout')));
+			->add(__('Layouts'), Route::get('backend')->uri(array('controller' => 'layout')));
 	}
 	public function action_index()
 	{
@@ -207,7 +207,6 @@ class KodiCMS_Controller_Layout extends Controller_System_Backend {
 
 		$this->go();
 	}
-
 }
 
 // end LayoutController class

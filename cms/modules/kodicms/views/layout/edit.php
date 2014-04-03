@@ -1,4 +1,4 @@
-<?php echo Form::open(Route::url('backend', array(
+<?php echo Form::open(Route::get('backend')->uri(array(
 	'controller' => 'layout', 
 	'action' => $action, 
 	'id' => $layout->name)), array(

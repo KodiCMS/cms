@@ -2,7 +2,7 @@
 	var USER_ID = <?php echo (int) $user->id; ?>;
 </script>
 	
-<?php echo Form::open(Route::url('backend', array('controller' => 'users', 'action' => $action, 'id' => $user->id)), array(
+<?php echo Form::open(Route::get('backend')->uri(array('controller' => 'users', 'action' => $action, 'id' => $user->id)), array(
 	'class' => Bootstrap_Form::HORIZONTAL
 )); ?>
 	<?php echo Form::hidden('token', Security::token()); ?>

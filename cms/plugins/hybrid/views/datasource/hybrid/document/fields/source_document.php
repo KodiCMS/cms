@@ -63,7 +63,7 @@
 			</div>
 			<div class="span1">
 				<?php echo UI::button(__('Create new'), array(
-					'href' => Route::url('datasources', array(
+					'href' => Route::get('datasources')->uri(array(
 						'directory' => 'hybrid',
 						'controller' => 'document',
 						'action' => 'create'

@@ -1,8 +1,8 @@
 <script>
 	$(function() {
 		var elfinder = $('#elfinder').elfinder({
-			lang: 'ru',
-			url : '/api-elfinder',
+			lang: '<?php echo explode('-', I18n::lang())[0]; ?>',
+			url : SITE_URL + 'api-elfinder',
             resizable: false,
 			height: cms.content_height,
 			uiOptions: {
@@ -31,10 +31,11 @@
 			node.find('.elfinder-navbar')
 				.add(node.find('.elfinder-cwd'))
 				.add(node.find('.elfinder-cwd-wrapper'))
-				.height(h - node.find('.elfinder-toolbar').height() - node.find('.elfinder-statusbar').height() )
+				.height(h - node.find('.elfinder-toolbar').height() - node.find('.elfinder-statusbar').height() );
 		});
 		
 		$('#elfinder')
+			.resizable({ disabled: true })
 			.addClass('outline_inner')
 			.wrap('<div class="outline"></div>');
 	});

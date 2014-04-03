@@ -6,14 +6,14 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('Information'),
-				'url' => Route::url('backend', array('controller' => 'system', 'action' => 'information')),
+				'url' => Route::get('backend')->uri(array('controller' => 'system', 'action' => 'information')),
 				'permissions' => 'system.information',
 				'priority' => 90,
 				'icon' => 'info-sign',
 			),
 			array(
 				'name' => __('Settings'),
-				'url' => Route::url('backend', array('controller' => 'system', 'action' => 'settings')),
+				'url' => Route::get('backend')->uri(array('controller' => 'system', 'action' => 'settings')),
 				'permissions' => 'system.settings',
 				'priority' => 100,
 				'icon' => 'cog',
@@ -26,7 +26,7 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('Layouts'), 
-				'url' => Route::url('backend', array('controller' => 'layout')),
+				'url' => Route::get('backend')->uri(array('controller' => 'layout')),
 				'permissions' => 'layout.index',
 				'priority' => 100,
 				'icon' => 'desktop'

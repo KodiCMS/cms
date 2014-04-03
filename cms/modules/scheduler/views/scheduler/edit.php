@@ -6,7 +6,7 @@ $(function() {
 })
 </script>
 
-<?php echo Form::open(Route::url('backend', array('controller' => 'scheduler', 'action' => $action, 'id' => $job->id)), array(
+<?php echo Form::open(Route::get('backend')->uri(array('controller' => 'scheduler', 'action' => $action, 'id' => $job->id)), array(
 	'class' => Bootstrap_Form::HORIZONTAL
 )); ?>
 
@@ -18,7 +18,7 @@ $(function() {
 		
 		<?php if($job->loaded() AND  Acl::check( 'scheduler.run')): ?>
 		<?php echo UI::button(__('Run job'), array(
-			'href' => Route::url( 'backend', array('controller' => 'scheduler', 'action' => 'run', 'id' => $job->id)), 'icon' => UI::icon('play')
+			'href' => Route::get('backend')->uri(array('controller' => 'scheduler', 'action' => 'run', 'id' => $job->id)), 'icon' => UI::icon('play')
 		)); ?>
 		<?php endif; ?>
 	</div>
@@ -86,6 +86,6 @@ $(function() {
 </div>
 <?php Form::close(); ?>
 
-<?php if(!empty($hystory)): ?>
-<?php echo $hystory; ?>
+<?php if(!empty($history)): ?>
+<?php echo $history; ?>
 <?php endif; ?>

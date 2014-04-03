@@ -489,7 +489,11 @@ window.elFinder = function(node, opts) {
 	 *
 	 * @type String
 	 **/
+<<<<<<< HEAD
+	this.cssClass = 'ui-helper-reset ui-helper-clearfix ui-widget ui-widget-content ui-corner-all elfinder elfinder-'+(this.direction == 'rtl' ? 'rtl' : 'ltr')+' '+this.options.cssClass;
+=======
 	this.cssClass = 'ui-helper-reset ui-helper-clearfix ui-widget ui-widget-content  elfinder elfinder-'+(this.direction == 'rtl' ? 'rtl' : 'ltr')+' '+this.options.cssClass;
+>>>>>>> upstream/dev
 
 	/**
 	 * Method to store/fetch data
@@ -571,7 +575,11 @@ window.elFinder = function(node, opts) {
 		helper     : function(e, ui) {
 			var element = this.id ? $(this) : $(this).parents('[id]:first'),
 				helper  = $('<div class="elfinder-drag-helper"><span class="elfinder-drag-helper-icon-plus"/></div>'),
+<<<<<<< HEAD
+				icon    = function(mime) { return '<div class="elfinder-cwd-icon '+self.mime2class(mime)+' ui-corner-all"/>'; },
+=======
 				icon    = function(mime) { return '<div class="elfinder-cwd-icon '+self.mime2class(mime)+' "/>'; },
+>>>>>>> upstream/dev
 				hashes, l;
 			
 			self.trigger('dragstart', {target : element[0], originalEvent : e});
@@ -3896,7 +3904,11 @@ elFinder.prototype.resources = {
 		symlink    : '<span class="elfinder-symlink"/>',
 		navicon    : '<span class="elfinder-nav-icon"/>',
 		navspinner : '<span class="elfinder-navbar-spinner"/>',
+<<<<<<< HEAD
+		navdir     : '<div class="elfinder-navbar-wrapper"><span id="{id}" class="ui-corner-all elfinder-navbar-dir {cssclass}"><span class="elfinder-navbar-arrow"/><span class="elfinder-navbar-icon"/>{symlink}{permissions}{name}</span><div class="elfinder-navbar-subtree"/></div>'
+=======
 		navdir     : '<div class="elfinder-navbar-wrapper"><span id="{id}" class=" elfinder-navbar-dir {cssclass}"><span class="elfinder-navbar-arrow"/><span class="elfinder-navbar-icon"/>{symlink}{permissions}{name}</span><div class="elfinder-navbar-subtree"/></div>'
+>>>>>>> upstream/dev
 		
 	},
 	
@@ -4037,7 +4049,11 @@ $.fn.dialogelfinder = function(opts) {
 		
 		var doc     = $(document),
 			toolbar = $('<div class="ui-widget-header dialogelfinder-drag ui-corner-top">'+(opts.title || 'Files')+'</div>'),
+<<<<<<< HEAD
+			button  = $('<a href="#" class="dialogelfinder-drag-close ui-corner-all"><span class="ui-icon ui-icon-closethick"/></a>')
+=======
 			button  = $('<a href="#" class="dialogelfinder-drag-close "><span class="ui-icon ui-icon-closethick"/></a>')
+>>>>>>> upstream/dev
 				.appendTo(toolbar)
 				.click(function(e) {
 					e.preventDefault();
@@ -4498,7 +4514,11 @@ $.fn.elfinderbutton = function(cmd) {
 		if ($.isArray(cmd.variants)) {
 			button.addClass('elfinder-menubutton');
 			
+<<<<<<< HEAD
+			menu = $('<div class="ui-widget ui-widget-content elfinder-button-menu ui-corner-all"/>')
+=======
 			menu = $('<div class="ui-widget ui-widget-content elfinder-button-menu "/>')
+>>>>>>> upstream/dev
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())
@@ -4545,7 +4565,11 @@ $.fn.elfinderbutton = function(cmd) {
 $.fn.elfindercontextmenu = function(fm) {
 	
 	return this.each(function() {
+<<<<<<< HEAD
+		var menu = $(this).addClass('ui-helper-reset ui-widget ui-state-default ui-corner-all elfinder-contextmenu elfinder-contextmenu-'+fm.direction)
+=======
 		var menu = $(this).addClass('ui-helper-reset ui-widget ui-state-default  elfinder-contextmenu elfinder-contextmenu-'+fm.direction)
+>>>>>>> upstream/dev
 				.hide()
 				.appendTo('body')
 				.delegate('.elfinder-contextmenu-item', 'mouseenter mouseleave', function() {
@@ -4612,7 +4636,11 @@ $.fn.elfindercontextmenu = function(fm) {
 							}
 							node = item(cmd.title, cmd.name, function() {});
 							
+<<<<<<< HEAD
+							submenu = $('<div class="ui-corner-all elfinder-contextmenu-sub"/>')
+=======
 							submenu = $('<div class=" elfinder-contextmenu-sub"/>')
+>>>>>>> upstream/dev
 								.appendTo(node.append('<span class="elfinder-contextmenu-arrow"/>'));
 								
 							node.addClass('elfinder-contextmenu-group')
@@ -4815,7 +4843,11 @@ $.fn.elfindercwd = function(fm, options) {
 			 * @type Object
 			 **/
 			templates = {
+<<<<<<< HEAD
+				icon : '<div id="{hash}" class="'+clFile+' {permsclass} {dirclass} ui-corner-all" title="{tooltip}"><div class="elfinder-cwd-file-wrapper ui-corner-all"><div class="elfinder-cwd-icon {mime} ui-corner-all" unselectable="on" {style}/>{marker}</div><div class="elfinder-cwd-filename" title="{name}">{name}</div></div>',
+=======
 				icon : '<div id="{hash}" class="'+clFile+' {permsclass} {dirclass} " title="{tooltip}"><div class="elfinder-cwd-file-wrapper "><div class="elfinder-cwd-icon {mime} " unselectable="on" {style}/>{marker}</div><div class="elfinder-cwd-filename" title="{name}">{name}</div></div>',
+>>>>>>> upstream/dev
 				row  : '<tr id="{hash}" class="'+clFile+' {permsclass} {dirclass}" title="{tooltip}"><td><div class="elfinder-cwd-file-wrapper"><span class="elfinder-cwd-icon {mime}"/>{marker}<span class="elfinder-cwd-filename">{name}</span></div></td><td>{perms}</td><td>{date}</td><td>{size}</td><td>{kind}</td></tr>'
 			},
 			
@@ -5805,7 +5837,11 @@ $.fn.elfinderdialog = function(opts) {
 			buttonpane = $('<div class=" ui-helper-clearfix ui-dialog-buttonpane ui-widget-content"/>')
 				.append(buttonset),
 			
+<<<<<<< HEAD
+			dialog = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable std42-dialog  '+cldialog+' '+opts.cssClass+'"/>')
+=======
 			dialog = $('<div class="ui-dialog ui-widget ui-widget-content  ui-draggable std42-dialog  '+cldialog+' '+opts.cssClass+'"/>')
+>>>>>>> upstream/dev
 				.hide()
 				.append(self)
 				.appendTo(parent)
@@ -5918,8 +5954,13 @@ $.fn.elfinderdialog = function(opts) {
 			})
 		}
 		dialog.prepend(
+<<<<<<< HEAD
+			$('<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">'+opts.title+'</div>')
+				.prepend($('<a href="#" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-closethick"/></a>')
+=======
 			$('<div class="ui-dialog-titlebar ui-widget-header  ui-helper-clearfix">'+opts.title+'</div>')
 				.prepend($('<a href="#" class="ui-dialog-titlebar-close "><span class="ui-icon ui-icon-closethick"/></a>')
+>>>>>>> upstream/dev
 					.mousedown(function(e) {
 						e.preventDefault();
 						self.elfinderdialog('close');
@@ -5930,7 +5971,11 @@ $.fn.elfinderdialog = function(opts) {
 		
 			
 		$.each(opts.buttons, function(name, cb) {
+<<<<<<< HEAD
+			var button = $('<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">'+name+'</span></button>')
+=======
 			var button = $('<button type="button" class="ui-button ui-widget ui-state-default  ui-button-text-only"><span class="ui-button-text">'+name+'</span></button>')
+>>>>>>> upstream/dev
 				.click($.proxy(cb, self[0]))
 				.hover(function(e) { $(this)[e.type == 'mouseenter' ? 'focus' : 'blur']() })
 				.focus(function() { $(this).addClass(clhover) })
@@ -6098,7 +6143,11 @@ $.fn.elfinderoverlay = function(opts) {
 $.fn.elfinderpanel = function(fm) {
 	
 	return this.each(function() {
+<<<<<<< HEAD
+		var panel = $(this).addClass('elfinder-panel ui-state-default ui-corner-all'),
+=======
 		var panel = $(this).addClass('elfinder-panel ui-state-default '),
+>>>>>>> upstream/dev
 			margin = 'margin-'+(fm.direction == 'ltr' ? 'left' : 'right');
 		
 		fm.one('load', function(e) {
@@ -6317,7 +6366,11 @@ $.fn.elfinderplaces = function(fm, opts) {
 			 *
 			 * @type jQuery
 			 **/
+<<<<<<< HEAD
+			places = $(this).addClass(fm.res(c, 'tree')+' elfinder-places ui-corner-all')
+=======
 			places = $(this).addClass(fm.res(c, 'tree')+' elfinder-places ')
+>>>>>>> upstream/dev
 				.hide()
 				.append(wrapper)
 				.appendTo(fm.getUI('navbar'))
@@ -6563,7 +6616,11 @@ $.fn.elfindersortbutton = function(cmd) {
 						menu.slideToggle(100);
 					}
 				}),
+<<<<<<< HEAD
+			menu = $('<div class="ui-widget ui-widget-content elfinder-button-menu ui-corner-all"/>')
+=======
 			menu = $('<div class="ui-widget ui-widget-content elfinder-button-menu "/>')
+>>>>>>> upstream/dev
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())
@@ -6709,7 +6766,11 @@ $.fn.elfindertoolbar = function(fm, opts) {
 
 		while (l--) {
 			if (panels[l]) {
+<<<<<<< HEAD
+				panel = $('<div class="ui-widget-content ui-corner-all elfinder-buttonset"/>');
+=======
 				panel = $('<div class="ui-widget-content  elfinder-buttonset"/>');
+>>>>>>> upstream/dev
 				i = panels[l].length;
 				while (i--) {
 					if ((cmd = commands[panels[l][i]])) {
@@ -8237,8 +8298,13 @@ elFinder.prototype.commands.help = function() {
 		sec     = 'ui-priority-secondary',
 		lic     = 'elfinder-help-license',
 		tab     = '<li class="ui-state-default ui-corner-top"><a href="#{id}">{title}</a></li>',
+<<<<<<< HEAD
+		html    = ['<div class="ui-tabs ui-widget ui-widget-content ui-corner-all elfinder-help">', 
+				'<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">'],
+=======
 		html    = ['<div class="ui-tabs ui-widget ui-widget-content  elfinder-help">', 
 				'<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ">'],
+>>>>>>> upstream/dev
 		stpl    = '<div class="elfinder-help-shortcut"><div class="elfinder-help-shortcut-pattern">{pattern}</div> {descrip}</div>',
 		sep     = '<div class="elfinder-help-separator"/>',
 		
@@ -8431,7 +8497,11 @@ elFinder.prototype.commands.info = function() {
 		};
 		
 	this.tpl = {
+<<<<<<< HEAD
+		main       : '<div class="ui-helper-clearfix elfinder-info-title"><span class="elfinder-cwd-icon {class} ui-corner-all"/>{title}</div><table class="elfinder-info-tb">{content}</table>',
+=======
 		main       : '<div class="ui-helper-clearfix elfinder-info-title"><span class="elfinder-cwd-icon {class} "/>{title}</div><table class="elfinder-info-tb">{content}</table>',
+>>>>>>> upstream/dev
 		itemTitle  : '<strong>{name}</strong><span class="elfinder-info-kind">{kind}</span>',
 		groupTitle : '<strong>{items}: {num}</strong>',
 		row        : '<tr><td>{label} : </td><td>{value}</td></tr>',
@@ -8721,7 +8791,11 @@ elFinder.prototype.commands.netmount = function() {
 
 
 				$.each(inputs, function(name, input) {
+<<<<<<< HEAD
+					name != 'protocol' && input.addClass('ui-corner-all');
+=======
 					name != 'protocol' && input.addClass('');
+>>>>>>> upstream/dev
 					content.append($('<tr/>').append($('<td>'+fm.i18n(name)+'</td>')).append($('<td/>').append(input)));
 				});
 
@@ -9346,7 +9420,11 @@ elFinder.prototype.commands.quicklook = function() {
 						+ (file.mime == 'directory' ? '' : tpl.replace(/\{value\}/, fm.formatSize(file.size)))
 						+ tpl.replace(/\{value\}/, fm.i18n('modify')+': '+ fm.formatDate(file))
 					)
+<<<<<<< HEAD
+				icon.addClass('elfinder-cwd-icon ui-corner-all '+fm.mime2class(file.mime));
+=======
 				icon.addClass('elfinder-cwd-icon  '+fm.mime2class(file.mime));
+>>>>>>> upstream/dev
 
 				if (file.tmb) {
 					$('<img/>')
@@ -10103,7 +10181,11 @@ elFinder.prototype.commands.resize = function() {
 					rhandlec = $('<div class="elfinder-resize-handle"/>'),
 					uiresize = $('<div class="elfinder-resize-uiresize"/>'),
 					uicrop   = $('<div class="elfinder-resize-uicrop"/>'),
+<<<<<<< HEAD
+					uibuttonset = '<div class="ui-widget-content ui-corner-all elfinder-buttonset"/>',
+=======
 					uibuttonset = '<div class="ui-widget-content  elfinder-buttonset"/>',
+>>>>>>> upstream/dev
 					uibutton    = '<div class="ui-state-default elfinder-button"/>',
 					uiseparator = '<span class="ui-widget-content elfinder-toolbar-button-separator"/>',
 					uirotate    = $('<div class="elfinder-resize-rotate"/>'),
@@ -10118,6 +10200,13 @@ elFinder.prototype.commands.resize = function() {
 							rotate.update(rdegree);
 						})),
 					uiprop   = $('<span />'),
+<<<<<<< HEAD
+					reset    = $('<div class="ui-state-default ui-corner-all elfinder-resize-reset"><span class="ui-icon ui-icon-arrowreturnthick-1-w"/></div>'),
+					uitype   = $('<div class="elfinder-resize-type"/>')
+						.append('<input type="radio" name="type" id="'+id+'-resize" value="resize" checked="checked" /><label for="'+id+'-resize">'+fm.i18n('resize')+'</label>')
+						.append('<input type="radio" name="type" id="'+id+'-crop" value="crop" /><label for="'+id+'-crop">'+fm.i18n('crop')+'</label>')
+						.append('<input type="radio" name="type" id="'+id+'-rotate" value="rotate" /><label for="'+id+'-rotate">'+fm.i18n('rotate')+'</label>'),
+=======
 					reset    = $('<div class="ui-state-default  elfinder-resize-reset"><span class="ui-icon ui-icon-arrowreturnthick-1-w"/></div>'),
 					uitype   = $('<div class="elfinder-resize-type"/>')
 						.append('<label for="'+id+'-resize">'+fm.i18n('resize')+'</label>')
@@ -10126,6 +10215,7 @@ elFinder.prototype.commands.resize = function() {
 						.append('<input type="radio" name="type" id="'+id+'-resize" value="resize" checked="checked" />')
 						.append('<input type="radio" name="type" id="'+id+'-crop" value="crop" />')
 						.append('<input type="radio" name="type" id="'+id+'-rotate" value="rotate" />'),
+>>>>>>> upstream/dev
 					type     = $('input', uitype).attr('disabled', 'disabled')
 						.change(function() {
 							var val = $('input:checked', uitype).val();
@@ -11158,7 +11248,11 @@ elFinder.prototype.commands.upload = function() {
 				upload({input : input[0]});
 			});
 
+<<<<<<< HEAD
+		button = $('<div class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">'+fm.i18n('selectForUpload')+'</span></div>')
+=======
 		button = $('<div class="ui-button ui-widget ui-state-default  ui-button-text-only"><span class="ui-button-text">'+fm.i18n('selectForUpload')+'</span></div>')
+>>>>>>> upstream/dev
 			.append($('<form/>').append(input))
 			.hover(function() {
 				button.toggleClass(hover)
@@ -11168,7 +11262,11 @@ elFinder.prototype.commands.upload = function() {
 			.append(button);
 		
 		if (fm.dragUpload) {
+<<<<<<< HEAD
+			dropbox = $('<div class="ui-corner-all elfinder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
+=======
 			dropbox = $('<div class=" elfinder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
+>>>>>>> upstream/dev
 				.prependTo(dialog)
 				.after('<div class="elfinder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
 

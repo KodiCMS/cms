@@ -77,7 +77,7 @@ class UI {
 	{
 		if($uri === NULL)
 		{
-			$uri = Route::url('backend', array('controller' => $page));
+			$uri = Route::get('backend')->uri(array('controller' => $page));
 		}
 			
 		$actions = array(

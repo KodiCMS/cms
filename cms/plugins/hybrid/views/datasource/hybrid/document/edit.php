@@ -28,7 +28,7 @@ function update_documents(e, response) {
 <div class="outline">
 	<div class="widget outline_inner">
 	<?php if(Acl::check('hybrid'.$ds->id().'.document.edit')): ?>
-	<?php echo Form::open(Request::current()->url() . URL::query(array('id' => $doc->id)), array(
+	<?php echo Form::open(Request::current()->uri() . URL::query(array('id' => $doc->id)), array(
 		'class' => 'form-horizontal', 'enctype' => 'multipart/form-data'
 	)); ?>
 	<?php echo Form::hidden('ds_id', $ds->id()); ?>
@@ -101,7 +101,7 @@ function update_documents(e, response) {
 		
 	<?php if(Acl::check('hybrid'.$ds->id().'.document.edit')): ?>
 	<div class="form-actions widget-footer">
-		<?php echo UI::actions(TRUE, Route::url('datasources', array(
+		<?php echo UI::actions(TRUE, Route::get('datasources')->uri(array(
 			'controller' => 'data',
 			'directory' => 'datasources'
 		)) . URL::query(array('ds_id' => $ds->id()), FALSE)); ?>

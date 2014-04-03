@@ -16,7 +16,7 @@ class KodiCMS_Controller_Page extends Controller_System_Backend {
 		parent::before();
 
 		$this->breadcrumbs
-			->add(__('Pages'), Route::url('backend', array('controller' => 'page')));
+			->add(__('Pages'), Route::get('backend')->uri(array('controller' => 'page')));
 	}
 
 	public function action_index()
@@ -282,7 +282,11 @@ class KodiCMS_Controller_Page extends Controller_System_Backend {
 			$link = strtr($behavior['link'], array(':id' => $parent_id));
 			$childrens[] = __(':icon :link', array(
 				':icon' => UI::icon('book'),
-				':link' => HTML::anchor( URL::backend($link), __(ucfirst($page->behavior_id)))
+				':link' => HTML::anchor( 
+						//Route::get('backend')->uri(array('controller'=>$link)),
+						URL::backend($link),
+						__(ucfirst($page->behavior_id))
+					)
 			));
 		}
 

@@ -75,7 +75,7 @@ class KodiCMS_Controller_System_Template extends Controller_System_Security
 			if( isset($routes['backend']) )
 			{
 				$this->breadcrumbs
-						->add(UI::icon('home'), Route::url( 'backend' ));
+						->add(UI::icon('home'), Route::get( 'backend' )->uri());
 			}
 		}
 	}
@@ -127,7 +127,6 @@ class KodiCMS_Controller_System_Template extends Controller_System_Security
 		}
 	}
 	
-	
 	/**
 	 * 
 	 * @param string $separator
@@ -147,7 +146,7 @@ class KodiCMS_Controller_System_Template extends Controller_System_Security
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param string $title
 	 * @param boolean $set_breadcrumbs
 	 * @return Controller
@@ -155,12 +154,12 @@ class KodiCMS_Controller_System_Template extends Controller_System_Security
 	public function set_title( $title, $set_breadcrumbs = TRUE )
 	{
 		$this->template->title = $title;
-		
+	
 		if($set_breadcrumbs === TRUE)
 		{
 			$this->breadcrumbs->add($title);
 		}
-		
+	
 		return $this;
 	}
 }

@@ -107,5 +107,9 @@ return array(
 	'Current date' => 'Текущая дата',
 	'Current datetime' => 'Текущая дата',
 	'One to one relation' => 'Связь один к одному',
-	'Clear coordinates' => 'Очистить координаты',
+  'Clear coordinates' => 'Очистить координаты',
+  
+	/* Validation Messages */
+	'Field with the same key :value exists.' => 'Поле с таким ключом ":value" существует',
+
 );

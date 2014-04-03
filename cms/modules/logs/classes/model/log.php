@@ -87,7 +87,7 @@ class Model_Log extends ORM {
 			return NULL;
 		}
 
-		return HTML::anchor(Route::url('backend', array(
+		return HTML::anchor(Route::get('backend')->uri(array(
 			'controller' => 'users', 
 			'action' => 'profile', 
 			'id' => $this->user->id

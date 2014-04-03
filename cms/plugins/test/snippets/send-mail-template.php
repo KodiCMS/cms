@@ -8,7 +8,7 @@
 		
 		<hr />
 		<?php foreach($data as $title => $value): ?>
-		<p><strong><?php echo $title; ?>:<strong <?php echo $value; ?></p>
+		<p><strong><?php echo $title; ?>:</strong> <?php echo $value; ?></p>
 		<?php endforeach; ?>
 	</body>
 </html>

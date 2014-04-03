@@ -70,7 +70,7 @@ class Controller_Hybrid_Document extends Controller_System_Datasource
 		$doc->convert_values();
 
 		$this->breadcrumbs
-			->add($this->section()->name, Route::url('datasources', array(
+			->add($this->section()->name, Route::get('datasources')->uri(array(
 				'directory' => 'datasources',
 				'controller' => 'data'
 			)) . URL::query(array('ds_id' => $this->section()->id()), FALSE));
@@ -127,14 +127,14 @@ class Controller_Hybrid_Document extends Controller_System_Datasource
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('datasources', array(
+			$this->go(Route::get('datasources')->uri(array(
 				'directory' => 'datasources',
 				'controller' => 'data'
 			)) . URL::query(array('ds_id' => $ds->id()), FALSE));
 		}
 		else
 		{
-			$this->go(Route::url('datasources', array(
+			$this->go(Route::get('datasources')->uri(array(
 				'directory' => 'hybrid',
 				'controller' => 'document',
 				'action' => 'view'

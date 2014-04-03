@@ -118,7 +118,7 @@ class Controller_Messages extends Controller_System_Backend {
 	
 		if((int) $id > 0)
 		{
-			$this->go(Route::url('backend', array('controller' => 'messages', 'action' => 'view', 'id' => (int) $id)));
+			$this->go(Route::get('backend')->uri(array('controller' => 'messages', 'action' => 'view', 'id' => (int) $id)));
 		}
 		
 		$this->go_back();

@@ -11,6 +11,6 @@ cms.init.add(['layout_edit', 'layout_add'], function () {
 	});
 	
 	$(window).resize(function() {
-		$('#textarea_content').trigger('filter:switch:on')
+		$('#textarea_content').trigger('filter:switch:on');
 	});
 });

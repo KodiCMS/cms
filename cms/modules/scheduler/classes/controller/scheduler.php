@@ -13,7 +13,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 		
 		$this->template->title = __('Scheduler');
 		$this->breadcrumbs
-			->add($this->template->title, Route::url('backend', array('controller' => 'scheduler')));
+			->add($this->template->title, Route::get('backend')->uri(array('controller' => 'scheduler')));
 	}
 	
 	public function action_index()
@@ -35,7 +35,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 		
 		$this->template->title = __('Jobs');
 		$this->breadcrumbs
-			->add($this->template->title, Route::url('backend', array(
+			->add($this->template->title, Route::get('backend')->uri(array(
 				'controller' => 'scheduler', 'action' => 'jobs'
 			)));
 		
@@ -63,7 +63,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 		
 		$this->template->title = __('Add job');
 		$this->breadcrumbs
-			->add(__('Jobs'), Route::url('backend', array(
+			->add(__('Jobs'), Route::get('backend')->uri(array(
 				'controller' => 'scheduler', 'action' => 'jobs'
 			)))
 			->add($this->template->title);
@@ -89,7 +89,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 			if ( $job->create() )
 			{
 				Kohana::$log->add(Log::INFO, 'Job :job has been added by :user', array(
-					':job' => HTML::anchor(Route::url('backend', array(
+					':job' => HTML::anchor(Route::get('backend')->uri(array(
 						'controller' => 'scheduler',
 						'action' => 'edit',
 						'id' => $job->id
@@ -109,14 +109,14 @@ class Controller_Scheduler extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('backend', array(
+			$this->go(Route::get('backend')->uri(array(
 				'controller' => 'scheduler', 
 				'action' => 'jobs'
 			)));
 		}
 		else
 		{
-			$this->go(Route::url('backend', array(
+			$this->go(Route::get('backend')->uri(array(
 				'controller' => 'scheduler',
 				'action' => 'edit',
 				'id' => $job->id
@@ -144,7 +144,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 
 		$this->template->title = __('Edit job');
 		$this->breadcrumbs
-			->add(__('Jobs'), Route::url('backend', array(
+			->add(__('Jobs'), Route::get('backend')->uri(array(
 				'controller' => 'scheduler', 
 				'action' => 'jobs'
 			)))
@@ -153,8 +153,8 @@ class Controller_Scheduler extends Controller_System_Backend {
 		$this->template->content = View::factory( 'scheduler/edit', array(
 			'action' => 'edit',
 			'job' => $job,
-			'hystory' => View::factory( 'scheduler/job_hystory', array(
-				'hystory' => $job->logs->order_by('created_on', 'desc')->limit(30)->find_all()
+			'history' => View::factory( 'scheduler/job_history', array(
+				'history' => $job->logs->order_by('created_on', 'desc')->limit(30)->find_all()
 			)),
 			'types' => Config::get('jobs')->as_array()
 		) );
@@ -172,7 +172,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 			if ( $job->update() )
 			{
 				Kohana::$log->add(Log::INFO, 'Job :job has been updated by :user', array(
-					':job' => HTML::anchor(Route::url('backend', array(
+					':job' => HTML::anchor(Route::get('backend')->uri(array(
 						'controller' => 'scheduler',
 						'action' => 'edit',
 						'id' => $job->id
@@ -193,14 +193,14 @@ class Controller_Scheduler extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('backend', array(
+			$this->go(Route::get('backend')->uri(array(
 				'controller' => 'scheduler', 
 				'action' => 'jobs'
 			)));
 		}
 		else
 		{
-			$this->go(Route::url('backend', array(
+			$this->go(Route::get('backend')->uri(array(
 				'controller' => 'scheduler',
 				'action' => 'edit',
 				'id' => $job->id
@@ -233,7 +233,7 @@ class Controller_Scheduler extends Controller_System_Backend {
 			$this->go_back();
 		}
 
-		$this->go(Route::url('backend', array(
+		$this->go(Route::get('backend')->uri(array(
 			'controller' => 'scheduler', 
 			'action' => 'jobs'
 		)));

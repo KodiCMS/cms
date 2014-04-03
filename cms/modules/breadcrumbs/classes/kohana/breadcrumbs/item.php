@@ -63,7 +63,7 @@ class Kohana_Breadcrumbs_Item {
 	 */
 	protected function _set_url($url)
 	{
-		$this->url = url::site($url);
+		$this->url = $url;//URL::site($url);
 		return $this;
 	}
 	

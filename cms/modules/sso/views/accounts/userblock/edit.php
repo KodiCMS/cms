@@ -18,7 +18,7 @@
 			<br />
 			<?php echo UI::button(__('Disconnect'), array(
 				'class' => 'btn btn-mini btn-warning',
-				'href' => Route::url('accounts-auth', array(
+				'href' => Route::get('accounts-auth')->uri(array(
 					'directory' => 'oauth', 
 					'controller' => $social->provider(), 
 					'action' => 'disconnect'))
@@ -43,7 +43,7 @@
 		<?php if(in_array($provider, $linked)) continue; ?>
 		<?php echo UI::button(UI::icon($provider) . ' ' . Arr::path($params, $provider.'.name'), array(
 			'class' => 'btn btn-social-'.$provider,
-			'href' => Route::url('accounts-auth', array(
+			'href' => Route::get('accounts-auth')->uri(array(
 				'directory' => 'oauth', 
 				'controller' => $provider, 
 				'action' => 'connect'))

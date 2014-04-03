@@ -6,7 +6,7 @@ AddDefaultCharset utf8
 RewriteEngine On
 
 # Installation directory
-RewriteBase /
+RewriteBase /kodicms/
 
 # Protect hidden files from being viewed
 <Files .*>

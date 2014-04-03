@@ -44,7 +44,7 @@
 				<div class="actions span1">
 					<?php if ( Acl::check( 'page.add')): ?>
 					<?php echo UI::button(NULL, array(
-						'href' => Route::url('backend', array(
+						'href' => Route::get('backend')->uri(array(
 							'controller' => 'page',
 							'action' => 'add',
 							'id' => $child->id
@@ -55,7 +55,7 @@
 					<?php endif; ?>
 					<?php if (Acl::check( 'page.delete')): ?>
 					<?php echo UI::button(NULL, array(
-						'href' => Route::url('backend', array(
+						'href' => Route::get('backend')->uri(array(
 							'controller' => 'page',
 							'action' => 'delete',
 							'id' => $child->id

@@ -11,7 +11,6 @@
     </a>
     <div class="media-body">
         <h4 class="media-heading"><?php echo $page->link(); ?></h4>
-        </p>
     </div>
 </div>
 <hr />

@@ -18,7 +18,7 @@
     <tr>
         <td><?php echo $data['date']; ?></td>
         <th>
-            <?php echo HTML::anchor(Route::url('backend', array(
+            <?php echo HTML::anchor(Route::get('backend')->uri(array(
                 'controller' => 'backup',
                 'action' => 'view', 'id' => $filename
             )), $filename, array('class' => 'popup fancybox.iframe')); ?>
@@ -27,14 +27,14 @@
         <td>
             <?php echo UI::button(NULL, array(
                 'class' => 'btn', 
-                'href' => Route::url('downloader', array(
+                'href' => Route::get('downloader')->uri(array(
                     'path' => Download::secure_path( BACKUP_PLUGIN_FOLDER . $filename)
                 )),
                 'icon' => UI::icon( 'download' )
             ));?>
             <?php echo UI::button(NULL, array(
                 'class' => 'btn btn-mini btn-success btn-confirm', 
-                'href' => Route::url('backend', array(
+                'href' => Route::get('backend')->uri(array(
                     'controller' => 'backup',
                     'action' => 'restore', 'id' => $filename
                 )), 
@@ -42,7 +42,7 @@
             ));?> 
             <?php echo UI::button(NULL, array(
                 'class' => 'btn btn-mini btn-danger btn-confirm', 
-                'href' => Route::url('backend', array(
+                'href' => Route::get('backend')->uri(array(
                     'controller' => 'backup',
                     'action' => 'delete', 'id' => $filename
                 )), 

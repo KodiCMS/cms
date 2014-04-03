@@ -49,7 +49,7 @@ class Model_Widget_Social_Registration extends Model_Widget_Decorator {
 	
 	public function get_url($provider)
 	{
-		return Route::url('accounts-auth', array(
+		return Route::get('accounts-auth')->uri(array(
 			'directory' => 'oauth', 
 			'controller' => $provider, 
 			'action' => 'register')

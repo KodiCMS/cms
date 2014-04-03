@@ -6,7 +6,7 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('Users'), 
-				'url' => Route::url('backend', array('controller' => 'users')),
+				'url' => Route::get('backend')->uri(array('controller' => 'users')),
 				'permissions' => 'users.index',
 				'priority' => 200,
 				'icon' => 'user',
@@ -14,7 +14,7 @@ return array(
 			),
 			array(
 				'name' => __('Roles'), 
-				'url' => Route::url('backend', array('controller' => 'roles')),
+				'url' => Route::get('backend')->uri(array('controller' => 'roles')),
 				'permissions' => 'roles.index',
 				'priority' => 300,
 				'icon' => 'group'

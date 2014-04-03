@@ -42,7 +42,7 @@ class KodiCMS_Controller_System_Security extends Controller_System_Controller
 		{
 			if($message === NULL)
 			{
-				$message = 'You don`t have permissions to acces this page';
+				$message = __('You don`t have permissions to acces this page');
 			}
 
 			// Forbidden

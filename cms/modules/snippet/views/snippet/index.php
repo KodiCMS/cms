@@ -1,8 +1,8 @@
- <div class="widget widget-nopad outline_inner">
+<div class="widget widget-nopad outline_inner">
 	<div class="widget-header">
 		<?php if( ACL::check( 'snippet.add')): ?>
 		<?php echo UI::button(__('Add snippet'), array(
-			'href' => Route::url('backend', array('controller' => 'snippet', 'action' => 'add')), 'icon' => UI::icon('plus'),
+			'href' => Route::get('backend')->uri(array('controller' => 'snippet', 'action' => 'add')), 'icon' => UI::icon('plus'),
 		)); ?>
 		<?php endif; ?>
 	</div>
@@ -35,7 +35,7 @@
 						<?php endif; ?>
 						
 						<?php if( ACL::check('snippet.edit') OR ACL::check('snippet.view')): ?>
-						<?php echo HTML::anchor(Route::url('backend', array('controller' => 'snippet', 'action' => 'edit', 'id' => $snippet->name)), $snippet->name, array('class' => ! $snippet->is_writable() ? 'popup fancybox.iframe' : '')); ?>
+						<?php echo HTML::anchor(Route::get('backend')->uri(array('controller' => 'snippet', 'action' => 'edit', 'id' => $snippet->name)), $snippet->name, array('class' => ! $snippet->is_writable() ? 'popup fancybox.iframe' : '')); ?>
 						<?php else: ?>
 						<?php echo UI::icon('lock'); ?> <?php echo $snippet->name; ?>
 						<?php endif; ?>
@@ -52,7 +52,7 @@
 					<td class="actions">
 						<?php if( ACL::check( 'snippet.delete')): ?>
 						<?php echo UI::button(NULL, array(
-							'href' => Route::url('backend', array('controller' => 'snippet', 'action' => 'delete', 'id' => $snippet->name)), 
+							'href' => Route::get('backend')->uri(array('controller' => 'snippet', 'action' => 'delete', 'id' => $snippet->name)), 
 							'icon' => UI::icon('remove'),
 							'class' => 'btn btn-mini btn-confirm'
 						)); ?>

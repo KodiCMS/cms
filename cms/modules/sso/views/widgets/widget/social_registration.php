@@ -13,8 +13,7 @@
 			<?php foreach($data as $key => $value): ?>
 				<li><strong><?php echo $key; ?></strong>: <?php echo $value; ?></li>
 			<?php endforeach; ?>
-			</ul>
-		</dd>
+		</ul>
 	</div>
 	<?php endforeach; ?>
 </div>

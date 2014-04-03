@@ -1,4 +1,4 @@
-<?php echo form::open(Route::url('api', array('controller' => 'settings', 'action' => 'save')), array(
+<?php echo form::open(Route::get('api')->uri(array('controller' => 'settings', 'action' => 'save')), array(
 	'id' => 'settingForm', 'class' => 'form-horizontal form-ajax'
 )); ?>
 	<?php echo Form::hidden('token', Security::token()); ?>

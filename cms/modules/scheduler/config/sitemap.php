@@ -6,7 +6,7 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('Scheduler'), 
-				'url' => Route::url('backend', array('controller' => 'scheduler')),
+				'url' => Route::get('backend')->uri(array('controller' => 'scheduler')),
 				'priority' => 900,
 				'icon' => 'calendar',
 				'permissions' => 'scheduler.index'
@@ -19,7 +19,7 @@ return array(
 			array(
 				'name' => __('Jobs'),
 				'icon' => 'bolt',
-				'url' => Route::url('backend', array('controller' => 'scheduler', 'action' => 'jobs')),
+				'url' => Route::get('backend')->uri(array('controller' => 'scheduler', 'action' => 'jobs')),
 				'permissions' => 'scheduler.jobs',
 				'priority' => 150,
 			)

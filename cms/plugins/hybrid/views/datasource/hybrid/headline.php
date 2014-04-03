@@ -30,7 +30,7 @@
 				<?php if(isset($row[$key])): ?>
 					<?php if(Arr::get($field, 'type') == 'link'): ?>
 						<?php if(Acl::check('hybrid'.$ds_id.'.document.view') OR Acl::check('hybrid'.$ds_id.'.document.edit')): ?>
-						<th class="row-<?php echo $key; ?>"><?php echo HTML::anchor(Route::url('datasources', array(
+						<th class="row-<?php echo $key; ?>"><?php echo HTML::anchor(Route::get('datasources')->uri(array(
 								'controller' => 'document',
 								'directory' => 'hybrid',
 								'action' => 'view'

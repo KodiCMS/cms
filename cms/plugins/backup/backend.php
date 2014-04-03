@@ -26,7 +26,7 @@ Observer::observe('scheduler_callbacks', function() {
 				$data[] = array(
 					'title' => 'Backup::(' . $file . ')',
 					'start' => $created,
-					'url' => Route::url('backend', array(
+					'url' => Route::get('backend')->uri(array(
 						'controller' => 'backup',
 						'action' => 'view',
 						'id' => $file

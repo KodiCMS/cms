@@ -11,7 +11,7 @@ cms.init.add('backup_view', function() {
 	});
 
 	$(window).resize(function() {
-		$('#highlight_content').trigger('filter:switch:on')
+		$('#highlight_content').trigger('filter:switch:on');
 	});
 });
 
@@ -23,7 +23,7 @@ cms.init.add('backup_index', function() {
 			response = $.parseJSON(response);
 			if(response.code == 200)
 				Api.get('backup.list', {}, function(response) {
-                    $('#backups-list').html(response.response)
+                    $('#backups-list').html(response.response);
                     
                     self.removeFile(file);
                 });

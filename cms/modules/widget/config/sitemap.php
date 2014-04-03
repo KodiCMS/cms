@@ -7,7 +7,7 @@ return array(
 			array(
 				'divider' => TRUE,
 				'name' => __('Widgets'), 
-				'url' => URL::backend('widgets'),
+				'url' => Route::get('backend')->uri(array('controller'=>'widgets')),
 				'permissions' => 'widgets.index',
 				'priority' => 300,
 				'icon' => 'th-large'

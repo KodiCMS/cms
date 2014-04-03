@@ -6,7 +6,7 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('File manager'), 
-				'url' => Route::url('backend', array('controller' => 'filemanager')),
+				'url' => Route::get('backend')->uri(array('controller' => 'filemanager')),
 				'priority' => 999,
 				'permissions' => 'filemanager.index',
 				'icon' => 'folder-open'

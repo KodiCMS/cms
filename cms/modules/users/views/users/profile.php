@@ -27,14 +27,15 @@
 			<div class="span5">
 				<div class="list-group">
 					<?php if ( Acl::check( 'users.edit') OR $user->id == AuthUser::getId() ): ?>
-					<a href="<?php echo Route::url('backend', array(
-							'controller' => 'users',
-							'action' => 'edit',
-							'id' => $user->id
-						)); ?>" class="list-group-item">
-						<i class="icon-user"></i>&nbsp;&nbsp;<?php echo __('Edit profile'); ?>
-						<i class="list-group-chevron icon-chevron-right"></i>
-					</a>
+					<?php echo HTML::anchor(
+      						Route::get('backend')->uri(array(
+						        'controller' => 'users',
+						        'action' => 'edit',
+						        'id' => $user->id
+						      )),
+						'<i class="icon-user"></i>&nbsp;&nbsp;'.__('Edit profile').'<i class="list-group-chevron icon-chevron-right"></i>',
+					        array('class'=>'list-group-item')
+					); ?>
 					<?php endif; ?>
 					<?php if(!empty($user->email)): ?>
 					<a href="mailto:<?php echo $user->email; ?>" class="list-group-item">
@@ -75,4 +76,4 @@
 		</div>
 		<?php endforeach; ?>
 	<?php endif; ?>
-</div>	
+</div>

@@ -30,7 +30,5 @@
 			'icon' => UI::icon( 'plus'), 'class' => 'btn btn-large'
 		)); ?>
 	</div>
-</form>
-
 <?php echo Form::close(); ?>
 </div>

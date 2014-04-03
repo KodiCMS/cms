@@ -7,7 +7,7 @@ var cms = {
 	
 	// Error
 	error: function (msg, e) {
-		this.message(msg, 'error')
+		this.message(msg, 'error');
 		$.jGrowl(msg, {theme: 'alert alert-error'});
 	},
 		
@@ -28,7 +28,7 @@ var cms = {
 		var $tab_pane = input.parentsUntil('tab-pane');
 		if($tab_pane.length) {
 			$tab_id = $tab_pane.attr('id');
-			$tab_pane.parent().parent().find('.nav-tabs li a[href="#'+$tab_id+'"]').addClass('tab-error')
+			$tab_pane.parent().parent().find('.nav-tabs li a[href="#'+$tab_id+'"]').addClass('tab-error');
 		}
 	},
 	clear_error: function() {
@@ -37,7 +37,7 @@ var cms = {
 			.find('.error-message')
 			.remove();
 	
-		$('.nav-tabs li a').removeClass('tab-error')
+		$('.nav-tabs li a').removeClass('tab-error');
 	},
 	// Convert slug
 	convert_dict: {
@@ -46,7 +46,10 @@ var cms = {
 		'Ą':'A','Č':'C','Ę':'E','Ė':'E','Į':'I','Š':'S','Ū':'U','Ų':'U','Ž':'Z','ą':'a','č':'c','ę':'e','ė':'e','i':'i','į':'i','š':'s','ū':'u','ų':'u','ž':'z'
 	},
 	convertSlug: function (str, separator) {
-		if(!separator) var separator = '-';
+		var default_separator = '-';
+		if(!separator) {
+			separator = default_separator;
+		}
 		return str
 			.toString()
 			.toLowerCase()
@@ -78,8 +81,9 @@ var cms = {
 </div>');
 		},
 		show: function (speed) {
-			if(!speed)
-				speed = 500
+			if(!speed) {
+				speed = 500;
+			}
 			$('._loader_container').fadeTo(speed, 0.4);
 		},
 		hide: function () {
@@ -188,7 +192,7 @@ var cms = {
 				autoSize: false,
 				width: 1000,
 				afterLoad: function() {
-					this.content[0].contentWindow.elfinderInit(object, type)
+					this.content[0].contentWindow.elfinderInit(object, type);
 				}
 			});
 		}
@@ -305,7 +309,7 @@ cms.ui.add('flags', function() {
 		if($array) $value = $value.split(',');
 		
 		$('.label', $container).removeClass('label-success');
-		$(this).addClass('label-success')
+		$(this).addClass('label-success');
 
 		if($append) {
 			var $old_value = '';
@@ -317,7 +321,7 @@ cms.ui.add('flags', function() {
 			else {
 				$old_value += $src.val();
 				$value = $old_value.length > 0 ? $old_value + ', ' : $value;
-				$src.text($value)
+				$src.text($value);
 			}
 		} else {
 			if($src.hasClass('select2-offscreen'))
@@ -328,7 +332,9 @@ cms.ui.add('flags', function() {
 			{
 				$src.val($value);
 			}
-			else $src.text($value)
+			else {
+				$src.text($value);
+			}
 		}
 		
 		e.preventDefault();
@@ -380,7 +386,7 @@ cms.ui.add('flags', function() {
 		});
 		$('.tabbable .nav li a').on('click', function() {
 			window.location.hash = $(this).attr('href');
-		})
+		});
 
 		if(window.location.hash.length > 0 && $('.tabbable .nav li a[href='+window.location.hash+']').length > 0) {
 			$('.tabbable .nav li a[href='+window.location.hash+']').parent().addClass('active');
@@ -560,7 +566,7 @@ cms.ui.add('flags', function() {
 			
 			$(file.previewElement).fadeOut(500, function() {
 				self.removeFile(file);
-			})
+			});
 		},
 		error: function(file, message) {
 			cms.message(message, 'error');
@@ -628,7 +634,7 @@ cms.ui.add('flags', function() {
 	$('.btn-close', $form_actions).on('click', function(e) {
 		window.top.$.fancybox.close();
 		e.preventDefault();
-	})
+	});
 }).add('select2', function() {
 	$('select').not('.no-script').select2();
 	$('.tags').select2({
@@ -683,10 +689,10 @@ cms.ui.add('flags', function() {
 		});
 
 		return false;
-	})
+	});
 }).add('filemanager', function() {
 	var input = $('input.input-filemanager:not(.init)')
-		.addClass('init')
+		.addClass('init');
 	
 	$('<button class="btn" type="button"><i class="icon-folder-open"></i></button>')
 		.insertAfter(input)
@@ -733,11 +739,19 @@ var Api = {
 	request: function(method, uri, data, callback, show_loader) {
 		uri = uri.replace('/' + ADMIN_DIR_NAME,'');
 		
-		if(uri.indexOf('-') == -1) uri = '-' + uri;
-		else if(uri.indexOf('-') > 0 && uri.indexOf('/') == -1)  uri = '/' + uri;
+		if(uri.indexOf('-') == -1)
+		{
+			uri = '-' + uri;
+		}
+		else if(uri.indexOf('-') > 0 && uri.indexOf('/') == -1)
+		{
+			uri = SITE_URL + '/' + uri;
+		}
 		
 		if(uri.indexOf('/api') == -1)
-			uri = '/api' + uri;
+		{
+			uri = SITE_URL + 'api' + uri;
+		}
 		
 		if(show_loader == 'undefined')
 			show_loader = true;
@@ -768,7 +782,7 @@ var Api = {
 					cms.clear_error();
 
 					if(response.message instanceof Object) {
-						parse_messages(response.message)
+						parse_messages(response.message);
 					} else {
 						cms.message(response.message);
 					}
@@ -807,7 +821,7 @@ var Api = {
 	response: function() {
 		return this._response;
 	}
-}
+};
 
 // Run
 $(document).ready(function() {
@@ -878,7 +892,7 @@ $(document).ready(function() {
             b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
         }
         return b;
-    })(window.location.search.substr(1).split('&'))
+    })(window.location.search.substr(1).split('&'));
 
 })(jQuery);
 
@@ -950,8 +964,11 @@ function strtr (str, from, to) {
 }
 
 var __ = function (str, values) {
+
     if (cms.translations[str] !== undefined)
-		var str = cms.translations[str];
+    {
+    	var str = cms.translations[str];
+    }
     return values == undefined ? str : strtr(str, values);
 };
 

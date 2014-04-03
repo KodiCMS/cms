@@ -143,8 +143,6 @@ class Controller_Userguide extends Controller_System_Backend {
 		// Enable the missing class autoloader.  If a class cannot be found a
 		// fake class will be created that extends Kodoc_Missing
 		spl_autoload_register(array('Kodoc_Missing', 'create_class'));
-		
-		set_time_limit(0);
 
 		// Get the class from the request
 		$class = $this->request->param('class');
