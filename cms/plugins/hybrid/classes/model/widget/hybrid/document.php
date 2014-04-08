@@ -122,7 +122,7 @@ class Model_Widget_Hybrid_Document extends Model_Widget_Hybrid {
 		$page = $this->_ctx->get_page();
 		$doc = $this->get_document();
 		
-		$crumb = $crumbs->get_by('url', URL::site($page->url));
+		$crumb = $crumbs->get_by('url', $page->url);
 		
 		if($crumb !== NULL)
 		{

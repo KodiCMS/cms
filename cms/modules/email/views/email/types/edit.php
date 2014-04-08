@@ -2,7 +2,7 @@
 	var EMAIL_TYPE_ID = <?php echo (int) $type->id; ?>;
 </script>
 
-<?php echo Form::open(Route::url('email_controllers', array('controller' => 'types', 'action' => $action, 'id' => $type->id)), array(
+<?php echo Form::open(Route::get('email_controllers')->uri(array('controller' => 'types', 'action' => $action, 'id' => $type->id)), array(
 	'class' => Bootstrap_Form::HORIZONTAL
 )); ?>
 
@@ -55,7 +55,7 @@
 		<?php if(count($templates) > 0): ?>
 		<ul class="unstyled">
 		<?php foreach($templates as $tpl): ?>
-			<li><?php echo HTML::anchor(Route::url('email_controllers', array(
+			<li><?php echo HTML::anchor(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates',
 				'action' => 'edit',
 				'id' => $tpl->id
@@ -67,7 +67,7 @@
 		
 		<?php if ( Acl::check( 'email_template.add')): ?>
 		<?php echo UI::button(__('Add linked template'), array(
-			'href' => Route::url( 'email_controllers', array('controller' => 'templates', 'action' => 'add')) . '?email_type='.$type->id, 'icon' => UI::icon('plus')
+			'href' => Route::get( 'email_controllers')->uri(array('controller' => 'templates', 'action' => 'add')) . '?email_type='.$type->id, 'icon' => UI::icon('plus')
 		)); ?>
 		<?php endif; ?>
 	</div>

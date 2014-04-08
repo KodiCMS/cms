@@ -18,7 +18,14 @@
 	<?php else: ?>
 	
 	<?php if( ACL::check( 'widgets.location')): ?>
-	<a class="btn btn-success fancybox.ajax popup" href="/api-widget.list/<?php echo $page->id; ?>" id="addWidgetToPage"><i class="icon-plus"></i> <?php echo __( 'Add widget to page' ); ?></a>
+	<?php echo HTML::anchor(
+		'/api-widget.list/'.$page->id,
+		'<i class="icon-plus"></i>'.__( 'Add widget to page' ),
+		array(
+			'id' => 'addWidgetToPage',
+			'class' => 'btn btn-success fancybox.ajax popup'
+		)
+	); ?>
 	<br /><br />
 	<?php endif; ?>
 	<table class="table table-hover" id="widget-list">

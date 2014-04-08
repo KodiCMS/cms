@@ -12,7 +12,7 @@ class Controller_Logs extends Controller_System_Backend {
 		parent::before();
 
 		$this->breadcrumbs
-			->add(__('Logs'), Route::url('backend', array('controller' => 'logs')));
+			->add(__('Logs'), Route::get('backend')->uri(array('controller' => 'logs')));
 	}
 	
 	public function action_index()

@@ -98,7 +98,7 @@ $(function() {
 		</button>
 		<?php endif ;?>
 		<?php 
-		$url =  Route::url('backend', array(
+		$url =  Route::get('backend')->uri(array(
 			'controller' => 'part',
 			'action' => 'revert',
 			'id' => $p->id

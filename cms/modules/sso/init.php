@@ -18,7 +18,7 @@ Observer::observe('view_user_edit_plugins', function($user) {
 
 	echo View::factory('accounts/userblock/edit', array(
 		'user' => $user,
-		'settings_link' => Route::url('backend', array(
+		'settings_link' => Route::get('backend')->uri(array(
 			'controller' => 'system', 'action' => 'settings')
 		) . '#social-accounts-settings',
 		'params' => Config::get('social'),

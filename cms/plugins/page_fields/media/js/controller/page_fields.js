@@ -2,7 +2,7 @@ cms.init.add('page_edit', function() {
 	$('.spoiler-page-fields').on('click', '.btn-add', function() {
 		var container = $(this).parent().parent().parent();
 		var fields = container.find('input');
-		Api.put('/page-field', {field: fields.serializeObject(), page_id: PAGE_ID}, function(response) {
+		Api.put('page-field', {field: fields.serializeObject(), page_id: PAGE_ID}, function(response) {
 			if(response.response)
 			{
 				$('.spoiler-page-fields').append(response.response);
@@ -16,7 +16,7 @@ cms.init.add('page_edit', function() {
 	
 	$('.spoiler-page-fields').on('click', '.btn-remove', function() {
 		var field = $(this).parent().parent();
-		Api.delete('/page-field', {field_id: field.data('id')}, function(response) {
+		Api.delete('page-field', {field_id: field.data('id')}, function(response) {
 			field.remove();
 		});
 		return false;
@@ -28,7 +28,7 @@ cms.init.add('page_edit', function() {
 	});
 	
 	function updateField(field) {
-		Api.post('/page-field', {field_id: field.parent().data('id'), value: field.val()}, function(response) {});
+		Api.post('page-field', {field_id: field.parent().data('id'), value: field.val()}, function(response) {});
 	}
 	
 	$('#select-page-field').on('click', function() {
@@ -59,7 +59,7 @@ cms.init.add('page_edit', function() {
 					placeholder: __("Select field"),
 					minimumInputLength: 0,
 					ajax: {
-						url: '/api/page-field.all',
+						url: SITE_URL + 'api/page-field.all',
 						dataType: 'json',
 						results: function (data, page) {
 							return {results: data.response};
@@ -83,6 +83,5 @@ cms.init.add('page_edit', function() {
 		
 		
 		return false;
-	})
-	
+	});
 });

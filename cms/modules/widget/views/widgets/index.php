@@ -2,7 +2,7 @@
 	<div class="widget-header">
 		<?php if( ACL::check('widgets.add')): ?>
 		<?php echo UI::button(__('Add widget'), array(
-			'href' => Route::url('backend', array(
+			'href' => Route::get('backend')->uri(array(
 				'controller' => 'widgets', 
 				'action' => 'add')),
 			'icon' => UI::icon('plus'),
@@ -33,7 +33,7 @@
 				<tr>
 					<th class="name">
 						<?php if( ACL::check('widgets.edit')): ?>
-						<?php echo HTML::anchor(Route::url('backend', array(
+						<?php echo HTML::anchor(Route::get('backend')->uri(array(
 							'controller' => 'widgets', 
 							'action' => 'edit',
 							'id' => $widget->id)), $widget->name); ?>
@@ -57,7 +57,7 @@
 					<td class="actions">
 						<?php if( ACL::check('widgets.location') ): ?>
 						<?php echo UI::button(NULL, array(
-							'href' => Route::url('backend', array(
+							'href' => Route::get('backend')->uri(array(
 								'controller' => 'widgets', 
 								'action' => 'location',
 								'id' => $widget->id)), 
@@ -67,7 +67,7 @@
 						<?php endif; ?>
 						<?php if( ACL::check('widgets.delete')): ?>
 						<?php echo UI::button(NULL, array(
-							'href' => Route::url('backend', array(
+							'href' => Route::get('backend')->uri(array(
 								'controller' => 'widgets', 
 								'action' => 'delete',
 								'id' => $widget->id)), 

@@ -2,13 +2,13 @@
 	<div class="widget-header">
 		<?php if( ACL::check( 'layout.add')): ?>
 		<?php echo UI::button(__('Add layout'), array(
-			'icon' => UI::icon( 'plus' ), 'href' => Route::url('backend', array('controller' => 'layout', 'action' => 'add')),
+			'icon' => UI::icon( 'plus' ), 'href' => Route::get('backend')->uri(array('controller' => 'layout', 'action' => 'add')),
 		)); ?>
 		<?php endif; ?>
 
 		<?php if( ACL::check( 'layout.rebuild')): ?>
 		<?php echo UI::button(__('Rebuild blocks'), array(
-			'icon' => UI::icon( 'refresh' ), 'href' => Route::url('backend', array('controller' => 'layout', 'action' => 'rebuild')),
+			'icon' => UI::icon( 'refresh' ), 'href' => Route::get('backend')->uri(array('controller' => 'layout', 'action' => 'rebuild')),
 			'class' => 'btn btn-inverse btn-mini'
 		)); ?>
 		<?php endif; ?>
@@ -43,7 +43,7 @@
 						<?php endif; ?>
 						
 						<?php if( ACL::check( 'layout.edit') OR ACL::check( 'layout.view')): ?>
-						<?php echo HTML::anchor(Route::url('backend', array('controller' => 'layout', 'action' => 'edit', 'id' => $layout->name)), $layout->name, array('class' => ! $layout->is_writable() ? 'popup fancybox.iframe' : '')); ?>
+						<?php echo HTML::anchor(Route::get('backend')->uri(array('controller' => 'layout', 'action' => 'edit', 'id' => $layout->name)), $layout->name, array('class' => ! $layout->is_writable() ? 'popup fancybox.iframe' : '')); ?>
 						<?php else: ?>
 						<?php echo UI::icon('lock'); ?> <?php echo $layout->name; ?>
 						<?php endif; ?>
@@ -66,7 +66,7 @@
 						<?php if( ACL::check( 'layout.delete')): ?>
 						<?php echo UI::button(NULL, array(
 							'icon' => UI::icon( 'remove' ),
-							'href' => Route::url('backend', array('controller' => 'layout', 'action' => 'delete', 'id' => $layout->name)),
+							'href' => Route::get('backend')->uri(array('controller' => 'layout', 'action' => 'delete', 'id' => $layout->name)),
 							'class' => 'btn btn-mini btn-confirm'
 						)); ?>
 						<?php endif; ?>

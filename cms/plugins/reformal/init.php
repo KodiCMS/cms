@@ -1,6 +1,6 @@
 <?php defined( 'SYSPATH' ) or die( 'No direct script access.' );
 
 Plugin::factory('reformal', array(
-	'title' => 'Reformal',
-	'description' => 'Реформал – это простой и эффективный сервис обратной связи',
+	'title' => __('Reformal'),
+	'description' => __('Reformal - a simple and effective feedback service.'),
 ))->register();

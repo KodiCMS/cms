@@ -2,7 +2,7 @@
 	<div class="widget-header">
 		<?php if ( Acl::check( 'scheduler.add')): ?>
 		<?php echo UI::button(__('Add job'), array(
-			'href' => Route::url( 'backend', array('controller' => 'scheduler', 'action' => 'add')), 'icon' => UI::icon('plus')
+			'href' => Route::get('backend')->uri(array('controller' => 'scheduler', 'action' => 'add')), 'icon' => UI::icon('plus')
 		)); ?>
 		<?php endif; ?>
 	</div>
@@ -32,7 +32,7 @@
 					<tr class="item">
 						<td class="job-name">
 							<?php if ( Acl::check( 'scheduler.edit')): ?>
-							<?php echo HTML::anchor(Route::url('backend', array(
+							<?php echo HTML::anchor(Route::get('backend')->uri(array(
 								'controller' => 'scheduler',
 								'action' => 'edit',
 								'id' => $job->id
@@ -56,7 +56,7 @@
 						<td class="actions">
 							<?php if ( Acl::check( 'scheduleremail.templates.delete')): ?>
 							<?php echo UI::button(NULL, array(
-								'href' => Route::url('backend', array(
+								'href' => Route::get('backend')->uri(array(
 									'controller' => 'scheduler',
 									'action' => 'delete',
 									'id' => $job->id

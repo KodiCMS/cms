@@ -62,14 +62,14 @@ if($navigation !== NULL)
 				->add_divider()
 				->add(
 					Bootstrap_Element_Button::factory(array(
-						'href' => Route::url('backend', array('controller' => 'users', 'action' => 'profile')),
+						'href' => Route::get('backend')->uri(array('controller' => 'users', 'action' => 'profile')),
 						'title' => __( 'Profile' )
 					))->icon('eye-open')
 				)
 				->add_divider()
 				->add(
 					Bootstrap_Element_Button::factory(array(
-							'href' => Route::url('user', array('action' => 'logout')), 'title' => __( 'Logout' )
+							'href' => Route::get('user')->uri(array('action' => 'logout')), 'title' => __( 'Logout' )
 					))->icon('signout')
 				)
 				)

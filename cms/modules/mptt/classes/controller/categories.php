@@ -12,7 +12,11 @@ class Controller_Categories extends Controller_System_Backend {
 		parent::before();
 
 		$this->breadcrumbs
-			->add(__('Categories'), Route::url('backend', array('controller' => 'categories')));
+			->add(__('Categories'), Route::get('backend')->uri(
+					array(
+							'controller' => 'categories'
+					)
+		));
 	}
 
 	public function action_index()
@@ -43,7 +47,10 @@ class Controller_Categories extends Controller_System_Backend {
 		$this->template->content = View::factory('categories/edit', array(
 			'action' => 'add',
 			'parent_id' => $parent_id,
-			'category' => $category
+			'category' => $category,
+			'categories' => ORM::factory('category')
+				->full_tree()
+				->as_array('id', 'name')
 		) );
 	}
 	
@@ -115,10 +122,15 @@ class Controller_Categories extends Controller_System_Backend {
 		}
 		
 		$this->set_title($category->name);
+		
+		echo debug::Vars($category->descendants()->find_all()->as_array('id', 'lvl'));
 
 		$this->template->content = View::factory( 'categories/edit', array(
 			'action' => 'edit',
-			'category' => $category
+			'category' => $category,
+			'categories' => ORM::factory('category')
+				->full_tree()
+				->as_array('id', 'name')
 		) );
 	}
 	

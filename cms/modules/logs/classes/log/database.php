@@ -51,7 +51,7 @@ class Log_Database extends Log_Writer {
 			if($message['level'] < $logs_level) continue;
 
 			$values = array(
-				':user' => HTML::anchor(Route::url('backend', array(
+				':user' => HTML::anchor(Route::get('backend')->uri(array(
 					'controller' => 'users',
 					'action' => 'profile',
 					'id' => $user->id

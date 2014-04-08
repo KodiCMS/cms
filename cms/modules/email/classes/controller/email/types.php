@@ -13,7 +13,7 @@ class Controller_Email_Types extends Controller_System_Backend {
 
 		$this->breadcrumbs
 			->add(__('Email'))
-			->add(__('Email types'), Route::url('email_controllers', array('controller' => 'types')));
+			->add(__('Email types'), Route::get('email_controllers')->uri(array('controller' => 'types')));
 	}
 	
 	public function action_index()
@@ -67,7 +67,7 @@ class Controller_Email_Types extends Controller_System_Backend {
 			if ( $type->create() )
 			{
 				Kohana::$log->add(Log::INFO, 'Email type :type has been added by :user', array(
-					':template' => HTML::anchor(Route::url('email_controllers', array(
+					':template' => HTML::anchor(Route::get('email_controllers')->uri(array(
 						'controller' => 'types',
 						'action' => 'edit',
 						'id' => $type->id
@@ -87,13 +87,13 @@ class Controller_Email_Types extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'types'
 			)));
 		}
 		else
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'types',
 				'action' => 'edit',
 				'id' => $type->id
@@ -110,7 +110,7 @@ class Controller_Email_Types extends Controller_System_Backend {
 		if( ! $type->loaded() )
 		{
 			Messages::errors( __('Email type not found!') );
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'types'
 			)));
 		}
@@ -146,7 +146,7 @@ class Controller_Email_Types extends Controller_System_Backend {
 			if ( $type->update() )
 			{
 				Kohana::$log->add(Log::INFO, 'Email type :type has been updated by :user', array(
-					':template' => HTML::anchor(Route::url('email_controllers', array(
+					':template' => HTML::anchor(Route::get('email_controllers')->uri(array(
 						'controller' => 'types',
 						'action' => 'edit',
 						'id' => $type->id
@@ -166,13 +166,13 @@ class Controller_Email_Types extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'types'
 			)));
 		}
 		else
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'types',
 				'action' => 'edit',
 				'id' => $type->id
@@ -191,7 +191,7 @@ class Controller_Email_Types extends Controller_System_Backend {
 		if( ! $type->loaded() )
 		{
 			Messages::errors( __('Email type not found!') );
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'types'
 			)));
 		}
@@ -207,7 +207,7 @@ class Controller_Email_Types extends Controller_System_Backend {
 			$this->go_back();
 		}
 
-		$this->go(Route::url('email_controllers', array(
+		$this->go(Route::get('email_controllers')->uri(array(
 			'controller' => 'types'
 		)));
 	}

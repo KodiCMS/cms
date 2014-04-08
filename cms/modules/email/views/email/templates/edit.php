@@ -60,7 +60,7 @@
 	
 </script>
 
-<?php echo Form::open(Route::url('email_controllers', array('controller' => 'templates', 'action' => $action, 'id' => $template->id)), array(
+<?php echo Form::open(Route::get('email_controllers')->uri(array('controller' => 'templates', 'action' => $action, 'id' => $template->id)), array(
 	'class' => Bootstrap_Form::HORIZONTAL
 )); ?>
 
@@ -103,7 +103,7 @@
 				
 				<?php if ( Acl::check( 'email_type.add')): ?>
 				<?php echo UI::button(__('Add email type'), array(
-					'href' => Route::url( 'email_controllers', array('controller' => 'types', 'action' => 'add')), 'icon' => UI::icon('plus'),
+					'href' => Route::get( 'email_controllers')->uri(array('controller' => 'types', 'action' => 'add')), 'icon' => UI::icon('plus'),
 					'class' => 'btn btn-primary'
 				)); ?>
 				<?php endif; ?>

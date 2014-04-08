@@ -6,13 +6,13 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('User Guide'), 
-				'url' => Route::url('backend', array('controller' => 'guide', 'action' => 'doc')),
+				'url' => Route::get('backend')->uri(array('controller' => 'guide', 'action' => 'doc')),
 				'priority' => 101,
 				'icon' => 'book',
 			),
 			array(
 				'name' => __('API Browser'), 
-				'url' => Route::url('backend', array('controller' => 'guide', 'action' => 'api')),
+				'url' => Route::get('backend')->uri(array('controller' => 'guide', 'action' => 'api')),
 				'priority' => 102,
 				'icon' => 'beaker',
 			)

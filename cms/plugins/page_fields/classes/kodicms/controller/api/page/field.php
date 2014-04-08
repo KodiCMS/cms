@@ -83,5 +83,4 @@ class KodiCMS_Controller_API_Page_Field extends Controller_System_Api {
 			$this->json['message'] = $v->errors('validation');
 		}		
 	}
-	
 }

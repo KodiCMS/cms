@@ -2,7 +2,7 @@
 	<div class="widget-header">
 		<?php if ( Acl::check( 'users.add')): ?>
 		<?php echo UI::button(__('Add user'), array(
-			'href' => Route::url( 'backend', array('controller' => 'users', 'action' => 'add')), 'icon' => UI::icon('plus')
+			'href' => Route::get('backend')->uri(array('controller' => 'users', 'action' => 'add')), 'icon' => UI::icon('plus')
 		)); ?>
 		<?php endif; ?>
 	</div>
@@ -30,7 +30,7 @@
 				<tr class="item">
 					<td class="name">
 						<?php echo $user->gravatar(20, NULL, array('class' => 'img-circle')); ?>
-						<?php echo HTML::anchor(Route::url('backend', array(
+						<?php echo HTML::anchor(Route::get('backend')->uri(array(
 							'controller' => 'users',
 							'action' => 'profile',
 							'id' => $user->id
@@ -49,7 +49,7 @@
 						if ($user->id > 1 AND ACL::check( 'users.delete'))
 						{
 							echo UI::button(NULL, array(
-								'href' => Route::url('backend', array(
+								'href' => Route::get('backend')->uri(array(
 									'controller' => 'users',
 									'action' => 'delete',
 									'id' => $user->id

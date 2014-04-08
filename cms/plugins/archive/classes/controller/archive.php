@@ -20,7 +20,7 @@ class Controller_Archive extends Controller_System_Backend
 		
 		$this->template->title = $page->title;
 		$this->breadcrumbs
-			->add(__('Pages'), Route::url('backend', array('controller' => 'page')))
+			->add(__('Pages'), Route::get('backend')->uri(array('controller' => 'page')))
 			->add($this->template->title);
 		
 		$pages = ORM::factory('page')->where('parent_id', '=', (int) $page_id);
@@ -39,5 +39,4 @@ class Controller_Archive extends Controller_System_Backend
 			'pager' => $pager
 		));
 	}
-
 }

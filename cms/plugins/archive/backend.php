@@ -42,7 +42,7 @@ if(ACL::check('page.index'))
 		$root_section
 			->add_page(new Model_Navigation_Page(array(
 				'name' => $page->title, 
-				'url' => Route::url('archive', array(
+				'url' => Route::get('archive')->uri(array(
 					'controller' => 'archive', 'id' => $page->id
 				)),
 				'permissions' => 'page.index',
@@ -53,4 +53,3 @@ if(ACL::check('page.index'))
 Observer::observe(array('page_delete', 'page_edit_after_save'), function() {
 	Cache::instance()->delete('Database::cache(archive_section)');
 });
-

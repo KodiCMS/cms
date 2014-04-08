@@ -21,7 +21,7 @@
 			<ul class="dropdown-menu">
 			<?php foreach (Datasource_Data_Manager::types() as $type => $title): ?>
 				<?php if(ACL::check($ds_type.'.section.create')): ?>
-				<li><?php echo HTML::anchor(Route::url('datasources', array(
+				<li><?php echo HTML::anchor(Route::get('datasources')->uri(array(
 						'controller' => 'section',
 						'directory' => 'datasources',
 						'action' => 'create',
@@ -45,7 +45,7 @@
 
 		$title = $name['name'];
 		$result .= '<li class="list-group-item '.$selected.'">';
-		$result .= HTML::anchor(Route::url('datasources', array(
+		$result .= HTML::anchor(Route::get('datasources')->uri(array(
 			'controller' => 'data',
 			'directory' => 'datasources',
 		)) . URL::query(array('ds_id' => $id), FALSE), $title, array('class' => 'list-group-item-heading'));
@@ -54,7 +54,7 @@
 		if(ACL::check($section.$ds_id.'.section.edit'))
 		{
 			$result .= UI::button(NULL, array(
-				'href' => Route::url('datasources', array(
+				'href' => Route::get('datasources')->uri(array(
 					'controller' => 'section',
 					'directory' => 'datasources',
 					'action' => 'edit',
@@ -67,7 +67,7 @@
 		if(ACL::check($section.$ds_id.'.section.edit'))
 		{
 			$result .= UI::button(NULL, array(
-				'href' => Route::url('datasources', array(
+				'href' => Route::get('datasources')->uri(array(
 					'controller' => 'section',
 					'directory' => 'datasources',
 					'action' => 'remove',

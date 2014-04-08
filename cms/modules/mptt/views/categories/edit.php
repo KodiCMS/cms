@@ -3,7 +3,7 @@
 </script>
 
 <div id="pageEdit">
-	<?php echo Form::open(Route::url('backend', array('controller' => 'categories', 'action' => $action, 'id' => $action == 'add' ? $parent_id : $category->id)), array(
+	<?php echo Form::open(Route::get('backend')->uri(array('controller' => 'categories', 'action' => $action, 'id' => $action == 'add' ? $parent_id : $category->id)), array(
 		'class' => Bootstrap_Form::HORIZONTAL, 'method' => Request::POST
 	)); ?>
 		<?php echo Form::hidden('token', Security::token()); ?>

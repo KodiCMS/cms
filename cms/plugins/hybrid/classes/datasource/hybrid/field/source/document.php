@@ -107,7 +107,7 @@ class DataSource_Hybrid_Field_Source_Document extends DataSource_Hybrid_Field_So
 		
 		if(!empty($header))
 		{
-			return HTML::anchor(Route::url('datasources', array(
+			return HTML::anchor(Route::get('datasources')->uri(array(
 					'directory' => 'hybrid',
 					'controller' => 'document',
 					'action' => 'view'

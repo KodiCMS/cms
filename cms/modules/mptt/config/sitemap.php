@@ -6,7 +6,8 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('Categories'),
-				'url' => URL::backend('categories'),
+				'url' => Route::get('backend')->uri(array(
+				  'controller'=>'categories')),
 				'permissions' => 'categories.index',
 				'priority' => 100,
 				'icon' => 'sort-by-attributes'

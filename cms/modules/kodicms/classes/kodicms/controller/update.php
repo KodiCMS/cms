@@ -7,7 +7,7 @@ class KodiCMS_Controller_Update extends Controller_System_Backend {
 		parent::before();
 
 		$this->breadcrumbs
-			->add(__('Update'), Route::url('backend', array('controller' => 'update')));
+			->add(__('Update'), Route::get('backend')->uri(array('controller' => 'update')));
 	}
 	
 	public function action_index() 

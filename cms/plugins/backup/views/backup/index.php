@@ -2,14 +2,14 @@
 	<div class="widget-header">
 		<?php echo UI::button(__('Create database backup'), array(
 			'icon' => UI::icon('list'), 
-			'href' => Route::url('backend', array(
+			'href' => Route::get('backend')->uri(array(
 				'controller' => 'backup',
 				'action' => 'database'
 			))
 		)); ?>
 
 		<?php echo UI::button(__('Create filesystem backup'), array(
-			'icon' => UI::icon('file'), 'href' => Route::url('backend', array(
+			'icon' => UI::icon('file'), 'href' => Route::get('backend')->uri(array(
 				'controller' => 'backup',
 				'action' => 'filesystem'
 			))

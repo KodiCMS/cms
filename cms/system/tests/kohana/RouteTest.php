@@ -726,9 +726,9 @@ class Kohana_RouteTest extends Unittest_TestCase
 	}
 
 	/**
-	 * Tests Route::url()
+	 * Tests Route::get()
 	 *
-	 * Checks the url composing from specific route via Route::url() shortcut
+	 * Checks the url composing from specific route via Route::get() shortcut
 	 *
 	 * @test
 	 * @dataProvider provider_composing_url_from_route
@@ -750,7 +750,7 @@ class Kohana_RouteTest extends Unittest_TestCase
 			'Kohana::$index_file' => '',
 		));
 
-		$this->assertSame($expected, Route::url('foobar', $params, $protocol));
+		$this->assertSame($expected, Route::get('foobar')->uri($params, $protocol));
 	}
 
 	/**

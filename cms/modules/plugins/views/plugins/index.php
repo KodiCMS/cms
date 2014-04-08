@@ -4,7 +4,7 @@
 			<% if (installed  && settings) { %>
 			<%= title %>
 			<?php if( ACL::check('plugins.settings')): ?>
-			<a href="/<?php echo ADMIN_DIR_NAME; ?>/plugins/settings/<%= id %>" class="btn pull-right">
+			<a href="<?php echo URL::base().ADMIN_DIR_NAME; ?>/plugins/settings/<%= id %>" class="btn pull-right">
 				<i class="icon-cog"></i> <%= __('Settings') %>
 			</a>
 			<?php endif; ?>

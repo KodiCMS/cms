@@ -430,7 +430,7 @@ class KodiCMS_Model_Page extends ORM
 	 */
 	public function get_url()
 	{
-		return Route::url('backend', array(
+		return Route::get('backend')->uri(array(
 			'controller' => 'page', 
 			'action' => 'edit', 
 			'id' => $this->id

@@ -1,4 +1,3 @@
-
 <?php defined( 'SYSPATH' ) or die( 'No direct access allowed.' );
 
 /**
@@ -21,7 +20,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 
 		parent::before();
 		$this->breadcrumbs
-			->add(__('Users'), Route::url( 'backend', array('controller' => 'users')));
+			->add(__('Users'), Route::get('backend')->uri(array('controller' => 'users')));
 	}
 	
 	public function action_index()
@@ -157,7 +156,7 @@ class KodiCMS_Controller_Users extends Controller_System_Backend {
 
 		$this->template->title = __('Edit user');
 		$this->breadcrumbs
-			->add(__(':user profile', array(':user' => $user->username)), Route::url('backend', array(
+			->add(__(':user profile', array(':user' => $user->username)), Route::get( 'backend')->uri(array(
 				'controller' => 'users',
 				'action' => 'profile',
 				'id' => $user->id

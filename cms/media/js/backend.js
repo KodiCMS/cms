@@ -752,7 +752,7 @@ var Api = {
 		}
 		else if(uri.indexOf('-') > 0 && uri.indexOf('/') == -1)
 		{
-			uri = '/' + uri;
+			uri = SITE_URL + uri;
 		}
 		
 		if(uri.indexOf('/api') == -1)

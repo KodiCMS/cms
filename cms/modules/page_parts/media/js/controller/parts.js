@@ -255,4 +255,4 @@ $(function() {
 	var AppEdit = new cms.views.PartPanel({
 		collection: PartCollection
 	});
-})
+});

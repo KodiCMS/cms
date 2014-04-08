@@ -82,7 +82,7 @@ class Plugin_Decorator extends Plugin {
 	 */
 	public function version()
 	{
-		return Arr::get($this->_info, 'version');
+		return Arr::get($this->_info, 'version', '0.0.0');
 	}
 	
 	/**

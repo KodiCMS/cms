@@ -98,7 +98,7 @@ class DataSource_Hybrid_Field_Source_Array extends DataSource_Hybrid_Field_Sourc
 			{
 				$header = DataSource_Hybrid_Field_Utils::get_document_header($this->from_ds, $id);
 
-				$docs[$i] = HTML::anchor(Route::url('datasources', array(
+				$docs[$i] = HTML::anchor(Route::get('datasources')->uri(array(
 					'controller' => 'document',
 					'directory' => 'hybrid',
 					'action' => 'view'

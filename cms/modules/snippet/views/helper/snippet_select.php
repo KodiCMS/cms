@@ -67,7 +67,7 @@ $hidden = empty($template) ? 'hidden' : '';
 			<div class="btn-group">
 				<?php if( ACL::check('snippet.edit')): ?>
 				<?php  echo UI::button(__('Edit snippet'), array(
-					'href' => Route::url('backend', array(
+					'href' => Route::get('backend')->uri(array(
 						'controller' => 'snippet', 
 						'action' => 'edit',
 						'id' => $template
@@ -78,7 +78,7 @@ $hidden = empty($template) ? 'hidden' : '';
 
 				<?php if( ACL::check('snippet.add')): ?>
 				<?php echo UI::button(__('Add snippet'), array(
-					'href' => Route::url('backend', array(
+					'href' => Route::get('backend')->uri(array(
 						'controller' => 'snippet', 
 						'action' => 'add'
 					)),

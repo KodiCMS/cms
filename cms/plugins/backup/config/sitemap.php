@@ -6,7 +6,7 @@ return array(
 		'children' => array(
 			array(
 				'name' => __('Backup'), 
-				'url' => Route::url('backend', array('controller' => 'backup')),
+				'url' => Route::get('backend')->uri(array('controller' => 'backup')),
 				'priority' => 110,
 				'icon' => 'medkit'
 			)

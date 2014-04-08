@@ -6,7 +6,7 @@
 	<?php echo UI::button(Arr::path($params, $provider.'.name'), array(
 		'icon' => UI::icon($provider),
 		'class' => 'btn btn-inverse',
-		'href' => Route::url('accounts-auth', array(
+		'href' => Route::get('accounts-auth')->uri(array(
 			
 			'directory' => 'oauth', 
 			'controller' => $provider, 

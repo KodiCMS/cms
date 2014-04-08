@@ -28,7 +28,7 @@
 		'header' => __('Widget template'),
 		'template' => $widget->template,
 		'default' => $widget->default_template() ? UI::button(__('Default template'), array(
-			'href' => Route::url('backend', array(
+			'href' => Route::get('backend')->uri(array(
 				'controller' => 'widgets', 
 				'action' => 'template',
 				'id' => $widget->id
@@ -109,7 +109,7 @@
 	<?php if( ACL::check('widgets.location') ): ?>
 	<div class="widget-content ">
 		<?php echo Bootstrap_Element_Button::factory(array(
-			'href' => Route::url('backend', array(
+			'href' => Route::get('backend')->uri(array(
 					'controller' => 'widgets', 
 					'action' => 'location',
 					'id' => $widget->id)), 

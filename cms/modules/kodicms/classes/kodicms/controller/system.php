@@ -12,7 +12,7 @@ class KodiCMS_Controller_System extends Controller_System_Backend {
 		parent::before();
 
 		$this->breadcrumbs
-			->add(__('System'), Route::url('backend', array('controller' => 'system', 'action' => 'information')));
+			->add(__('System'), Route::get('backend')->uri(array('controller' => 'system', 'action' => 'information')));
 	}
 	
 	public function action_index()

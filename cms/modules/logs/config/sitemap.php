@@ -7,7 +7,7 @@ return array(
 			array(
 				'name' => __('Logs'),
 				'icon' => 'time',
-				'url' => Route::url('backend', array('controller' => 'logs')),
+				'url' => Route::get('backend')->uri(array('controller' => 'logs')),
 				'permissions' => 'logs.index',
 				'priority' => 150,
 			)

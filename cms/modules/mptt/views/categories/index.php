@@ -3,7 +3,7 @@
 		<?php if ( Acl::check( 'categories.add')): ?>
 		<?php echo UI::button(__('Add category'), array(
 			'class' => 'btn',
-			'href' => Route::url('backend', array('controller' => 'categories', 'action' => 'add')),
+			'href' => Route::get('backend')->uri(array('controller' => 'categories', 'action' => 'add')),
 			'icon' => UI::icon('plus')
 		)); ?>
 		<?php endif; ?>
@@ -43,7 +43,7 @@
 							<?php echo UI::icon('lock'); ?>
 							<em title="/"><?php echo $category->name; ?></em>
 							<?php else: ?>
-							<?php echo UI::icon('home') . ' ' . HTML::anchor( Route::url('backend', array(
+							<?php echo UI::icon('home') . ' ' . HTML::anchor( Route::get('backend')->uri(array(
 								'controller' => 'categories', 'action' => 'edit', 'id' => $category->id
 							) ), $category->name ); ?>
 							<?php endif; ?>
@@ -52,13 +52,13 @@
 							<?php if ( Acl::check( 'categories.add')): ?>
 							<?php echo UI::button(NULL, array(
 								'icon' => UI::icon('plus'), 
-								'href' => Route::url('backend', array('controller' => 'categories', 'action' => 'add', 'id' => $category->id)),
+								'href' => Route::get('backend')->uri(array('controller' => 'categories', 'action' => 'add', 'id' => $category->id)),
 								'class' => 'btn btn-mini')); ?>
 							<?php endif; ?>
 							
 							<?php if (Acl::check( 'categories.delete')): ?>
 							<?php echo UI::button(NULL, array(
-								'href' => Route::url('backend', array(
+								'href' => Route::get('backend')->uri(array(
 									'controller' => 'categories',
 									'action' => 'delete',
 									'id' => $category->id
@@ -79,7 +79,7 @@
 							<?php echo UI::icon('lock'); ?>
 							<em title="/"><?php echo $category->name; ?></em>
 							<?php else: ?>
-							<?php echo str_repeat('&nbsp;', $category->lvl * 7) . UI::icon('angle-right') .'  ' . HTML::anchor( Route::url('backend', array(
+							<?php echo str_repeat('&nbsp;', $category->lvl * 7) . UI::icon('angle-right') .'  ' . HTML::anchor( Route::get('backend')->uri(array(
 								'controller' => 'categories', 'action' => 'edit', 'id' => $category->id
 							) ), $category->name ); ?>
 							<?php endif; ?>
@@ -88,13 +88,13 @@
 							<?php if ( Acl::check( 'categories.add')): ?>
 							<?php echo UI::button(NULL, array(
 								'icon' => UI::icon('plus'), 
-								'href' => Route::url('backend', array('controller' => 'categories', 'action' => 'add', 'id' => $category->id)),
+								'href' => Route::get('backend')->uri(array('controller' => 'categories', 'action' => 'add', 'id' => $category->id)),
 								'class' => 'btn btn-mini')); ?>
 							<?php endif; ?>
 							
 							<?php if (Acl::check( 'categories.delete')): ?>
 							<?php echo UI::button(NULL, array(
-								'href' => Route::url('backend', array(
+								'href' => Route::get('backend')->uri(array(
 									'controller' => 'categories',
 									'action' => 'delete',
 									'id' => $category->id

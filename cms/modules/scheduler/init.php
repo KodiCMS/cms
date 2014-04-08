@@ -34,7 +34,7 @@ Observer::observe('scheduler_callbacks', function() {
 			$data[] = array(
 				'title' => $job->name,
 				'start' => strtotime($job->date_next_run),
-				'url' => Route::url('backend', array(
+				'url' => Route::get('backend')->uri(array(
 					'controller' => 'scheduler', 'action' => 'edit',
 					'id' => $job->id
 				)),

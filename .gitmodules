@@ -1,0 +1,6 @@
+[submodule "cms/plugins/gallery"]
+	path = cms/plugins/gallery
+	url = https://github.com/mercury64/plugin-gallery.git
+[submodule "cms/plugins/ckeditor"]
+	path = cms/plugins/ckeditor
+	url = https://github.com/mercury64/plugin-ckeditor.git

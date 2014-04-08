@@ -3,7 +3,7 @@ $(function() {
 		defaults: {
 			title: '',
 			description: '',
-			version: '0.0.0',
+			version: '',
 			settings: false,
 			installed: false
 		},

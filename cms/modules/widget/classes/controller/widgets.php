@@ -16,7 +16,7 @@ class Controller_Widgets extends Controller_System_Backend {
 		Assets::css('widgets', ADMIN_RESOURCES . 'css/widgets.css');
 		
 		$this->breadcrumbs
-			->add(__('Widgets'), Route::url('backend', array(
+			->add(__('Widgets'), Route::get('backend')->uri(array(
 				'controller' => 'widgets'
 			)));
 	}
@@ -55,7 +55,7 @@ class Controller_Widgets extends Controller_System_Backend {
 			->add(__('Widget :name', array(
 				':name' => $widget->name)
 				), 
-				Route::url('backend', array(
+				Route::get('backend')->uri(array(
 					'controller' => 'widgets',
 					'action' => 'edit',
 					'id' => $widget->id

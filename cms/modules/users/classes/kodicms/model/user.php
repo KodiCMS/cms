@@ -204,7 +204,7 @@ class KodiCMS_Model_User extends Model_Auth_User {
 	public function after_create()
 	{	
 		Kohana::$log->add(Log::INFO, 'User :new_user has been added by :user', array(
-			':new_user' => HTML::anchor(Route::url('backend', array(
+			':new_user' => HTML::anchor(Route::get('backend')->uri(array(
 				'controller' => 'users',
 				'action' => 'profile',
 				'id' => $this->id
@@ -227,7 +227,7 @@ class KodiCMS_Model_User extends Model_Auth_User {
 	{
 
 		Kohana::$log->add(Log::INFO, 'User :new_user has been updated by :user', array(
-			':new_user' => HTML::anchor(Route::url('backend', array(
+			':new_user' => HTML::anchor(Route::get('backend')->uri(array(
 				'controller' => 'users',
 				'action' => 'profile',
 				'id' => $this->id

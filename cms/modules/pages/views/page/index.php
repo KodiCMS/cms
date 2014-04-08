@@ -5,7 +5,7 @@
 		<?php if ( Acl::check( 'page.add')): ?>
 		<?php echo UI::button(__('Add page'), array(
 			'id' => 'pageAddButton', 'class' => 'btn',
-			'href' => Route::url('backend', array('controller' => 'page', 'action' => 'add')),
+			'href' => Route::get('backend')->uri(array('controller' => 'page', 'action' => 'add')),
 			'icon' => UI::icon('plus')
 		)); ?>
 		<?php endif; ?>
@@ -59,7 +59,7 @@
 							<?php if ( Acl::check( 'page.add')): ?>
 							<?php echo UI::button(NULL, array(
 								'icon' => UI::icon('plus'), 
-								'href' => Route::url('backend', array('controller' => 'page', 'action' => 'add')),
+								'href' => Route::get('backend')->uri(array('controller' => 'page', 'action' => 'add')),
 								'class' => 'btn btn-mini')); ?>
 							<?php endif; ?>
 						</div>

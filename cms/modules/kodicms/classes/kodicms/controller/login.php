@@ -162,7 +162,7 @@ class KodiCMS_Controller_Login extends Controller_System_Frontend {
 			Email_Type::get('user_request_password')->send(array(
 				'username' => $user->username,
 				'email' => $user->email,
-				'reflink' => ltrim( Route::url( 'reflink', array('code' => $reflink) ), '/'),
+				'reflink' => ltrim( Route::get( 'reflink' )->uri(array('code' => $reflink) ), '/'),
 				'code' => $reflink
 			));
 
@@ -173,6 +173,6 @@ class KodiCMS_Controller_Login extends Controller_System_Frontend {
 			Messages::error( __('Something went wrong' ));
 		}
 
-		$this->go( Route::url( 'user', array('action' => 'login') ) );
+		$this->go( Route::get( 'user')->uri(array('action' => 'login') ) );
 	}
 }

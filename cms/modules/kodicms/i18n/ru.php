@@ -129,11 +129,9 @@ return array(
 	'Password: :password' => 'Пароль: :password',
     
 	'Message sended from' => 'Сообщение отправлено с сайта',
-	'Your new password from :site_name' 
-		=> 'Ваш новый пароль от сайта :site_name',
-
-    'Sorry, an error has occured, Requested page not found!' 
-		=> 'Извините, произошла ошибка. Запрошенной страницы не существует!',
+	'Your new password from :site_name' => 'Ваш новый пароль от сайта :site_name',
+  'Sorry, an error has occured, Requested page not found!' => 'Извините, произошла ошибка. Запрошенной страницы не существует!',
+	'At least :num characters. Must be unique.' => 'По крайней мере :num символов. Должно быть уникальным.',
 	
 	/*********************** Languages *******************/
 	'Russian' => 'Русский',

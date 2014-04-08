@@ -1,7 +1,7 @@
 <div class="widget widget-nopad">
 	<div class="widget-header">
 		<?php echo UI::button(__('Add page'), array(
-			'href' => Route::url('backend', array(
+			'href' => Route::get('backend')->uri(array(
 				'controller' => 'page',
 				'action' => 'add',
 				'id' => $page->id
@@ -53,7 +53,7 @@
 					<td class="actions">
 						<?php if (Acl::check( 'page.delete')): ?>
 						<?php echo UI::button(NULL, array(
-							'href' => Route::url('backend', array(
+							'href' => Route::get('backend')->uri(array(
 								'controller' => 'page',
 								'action' => 'delete',
 								'id' => $page->id

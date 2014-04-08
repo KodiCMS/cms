@@ -60,11 +60,11 @@ class Controller_Hybrid_Field extends Controller_System_Datasource
 			return $this->_add($ds);
 		}
 		$this->breadcrumbs
-			->add($ds->name, Route::url('datasources', array(
+			->add($ds->name, Route::get('datasources')->uri(array(
 				'controller' => 'data',
 				'directory' => 'datasources',
 			)) . URL::query(array('ds_id' => $ds->id()), FALSE))
-			->add(__('Edit section :name', array(':name' => $ds->name)), Route::url('datasources', array(
+			->add(__('Edit section :name', array(':name' => $ds->name)), Route::get('datasources')->uri(array(
 				'directory' => 'datasources',
 				'controller' => 'section',
 				'action' => 'edit',
@@ -105,7 +105,7 @@ class Controller_Hybrid_Field extends Controller_System_Datasource
 		
 		Session::instance()->delete('post_data');
 		
-		$this->go( Route::url('datasources', array(
+		$this->go( Route::get('datasources')->uri(array(
 			'directory' => 'hybrid',
 			'controller' => 'field',
 			'action' => 'edit',
@@ -124,11 +124,11 @@ class Controller_Hybrid_Field extends Controller_System_Datasource
 		}
 		
 		$this->breadcrumbs
-			->add($ds->name, Route::url('datasources', array(
+			->add($ds->name, Route::get('datasources')->uri(array(
 				'controller' => 'data',
 				'directory' => 'datasources',
 			)) . URL::query(array('ds_id' => $ds->id()), FALSE))
-			->add(__('Edit section :name', array(':name' => $ds->name)), Route::url('datasources', array(
+			->add(__('Edit section :name', array(':name' => $ds->name)), Route::get('datasources')->uri(array(
 				'directory' => 'datasources',
 				'controller' => 'section',
 				'action' => 'edit',
@@ -164,7 +164,7 @@ class Controller_Hybrid_Field extends Controller_System_Datasource
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go( Route::url('datasources', array(
+			$this->go( Route::get('datasources')->uri(array(
 				'directory' => 'datasources',
 				'controller' => 'section',
 				'action' => 'edit',

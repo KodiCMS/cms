@@ -1,14 +1,15 @@
 // Auto generated i18n lang file for lang ru-ru
-cms.addTranslation({
-	'Finish': 'Установить',
-	'Next': 'Далее',
-	'Previous': 'Назад',
-	'Loading ...': 'Загрузка ...'
-});
+// cms.addTranslation({
+//	'Finish': 'Установить',
+//	'Next': 'Далее',
+//	'Previous': 'Назад',
+//	'Loading ...': 'Загрузка ...'
+//});
 
 $(function() {
 	$('#wizard').on('change', '#current-lang', function() {
-		window.location = '/install/index?lang=' + $(this).val();
+	    // TODO: May need to add = SITE_URL + ...
+		window.location = 'install/index?lang=' + $(this).val();
 	})
 	
 	var password_generator_status = function() {

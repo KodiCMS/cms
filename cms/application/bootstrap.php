@@ -30,7 +30,7 @@ else
  * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/setlocale
  */
-setlocale( LC_ALL, 'ru_RU.utf-8' );
+setlocale( LC_ALL, 'en_US.utf-8' );
 
 /**
  * Enable the Kohana auto-loader.
@@ -89,7 +89,7 @@ else if(IS_INSTALLED)
 /**
  * Set the default language
  */
-I18n::lang('en_US');
+I18n::lang('en-us');
 
 if (isset($_SERVER['SERVER_PROTOCOL']))
 {
@@ -110,7 +110,7 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init( array(
-	'base_url'			=> '/',
+	'base_url'			=> '/kodicms/',
 	'index_file'		=> FALSE,
 	'cache_dir'			=> CMSPATH.'cache',
 	'caching'			=> Kohana::$environment === Kohana::PRODUCTION,
@@ -118,9 +118,9 @@ Kohana::init( array(
 	'errors'			=> TRUE
 ) );
 
-define('CMS_NAME',			'KodiCMS');
-define('CMS_SITE',			'http://www.kodicms.ru');
-define('CMS_VERSION',		'9.16.52');
+define('CMS_NAME',			'Nerret Technology');
+define('CMS_SITE',			'http://www.nerret-tech.com');
+define('CMS_VERSION',		'NT-9.16.52');
 
 define('PUBLICPATH',		DOCROOT . 'public' . DIRECTORY_SEPARATOR);
 define('TMPPATH',			PUBLICPATH . 'temp' . DIRECTORY_SEPARATOR);
@@ -133,7 +133,7 @@ if(PHP_SAPI != 'cli')
 	define('SITE_HOST',		str_replace('www.', '', $_SERVER['HTTP_HOST']));
 }
 
-if( ! defined( 'BASE_URL' ) ) define('BASE_URL', '/');
+if( ! defined( 'BASE_URL' ) ) define('BASE_URL', '/kodicms/');
 if( ! defined( 'SITE_HOST' ) ) define('SITE_HOST', 'test');
 
 define('ADMIN_RESOURCES',	BASE_URL . 'cms/media/');

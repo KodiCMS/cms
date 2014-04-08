@@ -13,7 +13,7 @@ Observer::observe('part_before_save', function($part) {
 });
 
 Observer::observe('part_option', function() {
-	$url = Route::url('backend', array(
+	$url = Route::get('backend')->uri(array(
 		'controller' => 'part',
 		'action' => 'revision',
 		'id' => '<%=id%>'

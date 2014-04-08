@@ -13,7 +13,7 @@ class Controller_Email_Templates extends Controller_System_Backend {
 
 		$this->breadcrumbs
 			->add(__('Email'))
-			->add(__('Email templates'), Route::url('email_controllers', array('controller' => 'templates')));
+			->add(__('Email templates'), Route::get('email_controllers')->uri(array('controller' => 'templates')));
 	}
 	
 	public function action_index()
@@ -82,7 +82,7 @@ class Controller_Email_Templates extends Controller_System_Backend {
 			if ( $template->create() )
 			{
 				Kohana::$log->add(Log::INFO, 'Template :template has been added by :user', array(
-					':template' => HTML::anchor(Route::url('email_controllers', array(
+					':template' => HTML::anchor(Route::get('email_controllers')->uri(array(
 						'controller' => 'templates',
 						'action' => 'edit',
 						'id' => $template->id
@@ -102,13 +102,13 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates'
 			)));
 		}
 		else
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates',
 				'action' => 'edit',
 				'id' => $template->id
@@ -125,7 +125,7 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		if( ! $template->loaded() )
 		{
 			Messages::errors( __('Email template not found!') );
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates'
 			)));
 		}
@@ -166,7 +166,7 @@ class Controller_Email_Templates extends Controller_System_Backend {
 			if ( $template->update() )
 			{
 				Kohana::$log->add(Log::INFO, 'Template :template has been updated by :user', array(
-					':template' => HTML::anchor(Route::url('email_controllers', array(
+					':template' => HTML::anchor(Route::get('email_controllers')->uri(array(
 						'controller' => 'templates',
 						'action' => 'edit',
 						'id' => $template->id
@@ -186,13 +186,13 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		// save and quit or save and continue editing?
 		if ( $this->request->post('commit') !== NULL )
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates'
 			)));
 		}
 		else
 		{
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates',
 				'action' => 'edit',
 				'id' => $template->id
@@ -211,7 +211,7 @@ class Controller_Email_Templates extends Controller_System_Backend {
 		if( ! $template->loaded() )
 		{
 			Messages::errors( __('Email template not found!') );
-			$this->go(Route::url('email_controllers', array(
+			$this->go(Route::get('email_controllers')->uri(array(
 				'controller' => 'templates'
 			)));
 		}
@@ -227,7 +227,7 @@ class Controller_Email_Templates extends Controller_System_Backend {
 			$this->go_back();
 		}
 
-		$this->go(Route::url('email_controllers', array(
+		$this->go(Route::get('email_controllers')->uri(array(
 			'controller' => 'templates'
 		)));
 	}

@@ -1,7 +1,7 @@
 <tr>
 	<th>
 		<?php if( ACL::check( 'widgets.edit')): ?>
-		<?php echo HTML::anchor(Route::url('backend', array(
+		<?php echo HTML::anchor(Route::get('backend')->uri(array(
 			'controller' => 'widgets', 'action' => 'edit', 'id' => $widget->id
 		)), $widget->name, array('target' => 'blank')); ?>
 		<?php else: ?>
@@ -20,7 +20,7 @@
 		<?php if( ACL::check( 'widgets.location')): ?>
 		<?php echo Form::hidden('widget['.$widget->id.'][block]', ! empty($widget->block) ? $widget->block : 0, array('class' => 'widget-select-block')); ?>
 		<?php echo UI::button(NULL, array(
-			'href' => Route::url('backend', array(
+			'href' => Route::get('backend')->uri(array(
 				'controller' => 'widgets', 
 				'action' => 'location',
 				'id' => $widget->id)), 

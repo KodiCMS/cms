@@ -4,7 +4,7 @@
 	<div class="tablenav form-inline widget-header page-actions">
 		<?php if(ACL::check($ds_type.$ds_id.'.document.edit')):?>
 		<?php echo UI::button(__('Create Document'), array(
-			'href' => Route::url('datasources', array(
+			'href' => Route::get('datasources')->uri(array(
 				'controller' => 'document',
 				'directory' => $ds_type,
 				'action' => 'create'

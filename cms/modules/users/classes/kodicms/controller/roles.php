@@ -11,8 +11,8 @@ class KodiCMS_Controller_Roles extends Controller_System_Backend {
 	{
 		parent::before();
 		$this->breadcrumbs
-			->add(__('Users'), Route::url( 'backend', array('controller' => 'users')))
-			->add(__('Roles'), Route::url( 'backend', array('controller' => 'roles')));
+			->add(__('Users'), Route::get('backend')->uri(array('controller' => 'users')))
+			->add(__('Roles'), Route::get('backend')->uri(array('controller' => 'roles')));
 	}
 
 	public function action_index()
