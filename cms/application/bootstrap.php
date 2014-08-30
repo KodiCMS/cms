@@ -158,7 +158,9 @@ Route::set( 'error', 'system/error(/<code>(/<message>))', array(
 		'action' => 'index'
 	) );
 
-Route::set( 'admin_media', 'cms/media/<file>', array(
+Route::set( 'admin_media', 'cms/<folder>/(<subfolder>/)<file>', array(
+	'folder' => '(media|plugins|modules)',
+	'subfolder' => '[a-z0-9]+/(media|vendors)',
 	'file' => '.*'
 ))
 	->defaults( array(

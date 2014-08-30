@@ -7,8 +7,18 @@
  */
 class KodiCMS_Controller_System_Media extends Controller
 {
+
 	public function action_media()
 	{
+		// Get the folder path from the request
+		$folder = $this->request->param('folder');
+
+		// Get the subfolder path from the request
+		if ($subfolder = $this->request->param('subfolder'))
+		{
+			$folder = basename($this->request->param('subfolder'));
+		}
+
 		// Get the file path from the request
 		$file = $this->request->param('file');
 
@@ -18,7 +28,7 @@ class KodiCMS_Controller_System_Media extends Controller
 		// Remove the extension from the filename
 		$file = substr($file, 0, -(strlen($ext) + 1));
 
-		if ($file = Kohana::find_file('media', $file, $ext))
+		if ($file = Kohana::find_file($folder, $file, $ext))
 		{
 			// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
 			$this->check_cache(sha1($this->request->uri()).filemtime($file));
@@ -35,4 +45,5 @@ class KodiCMS_Controller_System_Media extends Controller
 			throw new HTTP_Exception_404();
 		}
 	}
+
 }
