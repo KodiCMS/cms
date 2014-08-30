@@ -52,10 +52,12 @@ class KodiCMS_Model_File {
 	{
 		$this->set_name($name);
 		
-		if(strpos($this->name, DOCROOT) === FALSE)
+		if ($file = Kohana::find_file($this->_folder, $this->name))
 		{
-			$this->_path = DOCROOT . $this->_folder . DIRECTORY_SEPARATOR;
-			$this->_file = $this->_path . $this->name;
+			$this->_path = pathinfo($file, PATHINFO_DIRNAME);
+			$this->_file = $file;
+
+			$this->name = pathinfo($file, PATHINFO_FILENAME);
 		}
 		else
 		{
@@ -64,7 +66,7 @@ class KodiCMS_Model_File {
 
 			$this->name = pathinfo($this->name, PATHINFO_FILENAME);
 		}
-		
+
 		if(strpos($this->_file, EXT) === FALSE)
 		{
 			$this->_file .= EXT;
@@ -189,10 +191,9 @@ class KodiCMS_Model_File {
 		$object = new $class;
 
 		$files = array();
-		$paths = array(DOCROOT) + Kohana::include_paths();
+		$paths = Kohana::include_paths();
 		
 		$found_files = Kohana::list_files($object->_folder, $paths);
-		
 		foreach ($found_files as $file)
 		{
 			if(is_array($file) || strpos($file, EXT) === FALSE) continue;
