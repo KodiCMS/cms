@@ -7,11 +7,11 @@
  *
  * @see  http://php.net/manual/en/features.commandline.webserver.php
  **/
-if (php_sapi_name() == "cli-server" &&
-		($_SERVER['REQUEST_URI'] != '/') &&
+if (php_sapi_name() == "cli-server" AND ( $_SERVER['REQUEST_URI'] != '/') AND
 		file_exists(__DIR__ . DIRECTORY_SEPARATOR . $_SERVER['REQUEST_URI'])
-	 ) {
-	return false; // serve the requested resource as-is.
+)
+{
+	return FALSE; // serve the requested resource as-is.
 }
 
 $cms = 'cms' . DIRECTORY_SEPARATOR;
