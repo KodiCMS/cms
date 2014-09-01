@@ -9,5 +9,6 @@ return array(
 	'Public link' => 'Публичная ссылка',
 	'Archive day index' => 'Архив по дням',
 	'Archive month index' => 'Архив по месяцам',
-	'Archive year index' => 'Архив по годам'
+	'Archive year index' => 'Архив по годам',
+	'View archive' => 'Видеть раздел',
 );
