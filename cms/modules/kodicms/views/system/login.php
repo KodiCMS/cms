@@ -34,7 +34,7 @@
 				'id' => 'password_id', 'class' => 'form-control input-lg', 'placeholder' => __('Password')
 			)); ?>
 
-			<?php echo HTML::anchor(ADMIN_DIR_NAME . '/login/forgot', __('Forgot?'), array('class' => 'forgot')); ?>
+			<?php echo HTML::anchor(ADMIN_DIR_NAME . '/login/forgot', __('Forgot password?'), array('class' => 'forgot')); ?>
 		</div>
 
 		<div class="form-group">
