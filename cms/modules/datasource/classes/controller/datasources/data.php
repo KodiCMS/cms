@@ -7,6 +7,8 @@ class Controller_Datasources_Data extends Controller_System_Datasource
 		$cur_ds_id = (int) Arr::get($this->request->query(), 'ds_id', Cookie::get('ds_id'));
 		$tree = Datasource_Data_Manager::get_tree();
 
+		$ds_id = $cur_ds_id;
+
 		$cur_ds_id = Datasource_Data_Manager::exists($cur_ds_id) 
 				? $cur_ds_id
 				: Datasource_Data_Manager::$first_section;
@@ -39,12 +41,14 @@ class Controller_Datasources_Data extends Controller_System_Datasource
 				$this->section()->headline()->limit($limit);
 			}
 
+			$selected = ($cur_ds_id == $ds_id) ? 'active' : '';
+
 			$this->template->content->content->headline = $this->section()->headline()->render();
 			$this->template->content->content->toolbar = View::factory('datasource/' . $ds->type() . '/toolbar', array(
 				'keyword' => $keyword
 			));
 
-			$this->template->set_global(array('datasource' => $ds));
+			$this->template->set_global(array('datasource' => $ds, 'selected' => $selected));
 		}
 		else
 		{
