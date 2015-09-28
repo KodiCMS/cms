@@ -17694,6 +17694,14 @@ html body.page-signup {
 .select2-container-multi.select2-container-active .select2-choices {
   outline: none;
 }
+.select2-container-multi .select2-choices .ui-state-highlight.select2-search-choice {
+  height: 20px;
+  background: none;
+  border-style: dotted;
+}
+.select2-search-choice div {
+  white-space: nowrap;
+}
 .select2-locked {
   padding: 0 6px !important;
 }

@@ -53,5 +53,22 @@ $(function() {
 				}
 			}
 		});
+
+		$self.select2("container").find("ul.select2-choices").sortable({
+			containment: 'parent',
+			items: 'li:not(.select2-search-field)',
+			tolerance: 'pointer',
+			placeholder: 'ui-state-highlight select2-search-choice',
+			opacity:.8,
+			axis: "x",
+			start: function () {
+				$self.select2("onSortStart");
+			},
+			update: function () {
+				$self.select2("onSortEnd");
+			}
+		});
+
+		//$self.on("change", function() { console.log($self.val()); });
 	});
 });
